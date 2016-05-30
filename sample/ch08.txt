@@ -1,0 +1,637 @@
+第8章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P243
+■P245
+■P247
+■P248
+■P250
+■P252
+■P254
+■P256
+■P257
+■P261
+■P264
+■P266
+■P267
+■P268
+■P270
+・・・・・・・・・・・・・・・・・・・・・
+
+■P243
+class DivideByZero {
+  public static void main(String args[]) {
+    a();
+  }
+
+  static void a() {
+    b();
+  }
+
+  static void b() {
+    c();
+  }
+
+  static void c() {
+    d();
+  }
+
+  static void d() {
+    int i = 1;
+    int j = 0;
+    System.out.println(i / j); // 0で除算
+  }
+}
+
+■P245
+class Divider {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Before Division");
+      int i = Integer.parseInt(args[0]);
+      int j = Integer.parseInt(args[1]);
+      System.out.println(i / j);
+      System.out.println("After Division");
+    }
+    // 0で除算時の例外
+    catch (ArithmeticException e) {
+      System.out.println("ArithmeticException");
+    }
+    // 引数不足時の例外
+    catch (ArrayIndexOutOfBoundsException e) {
+      System.out.println("ArrayIndex" +
+        "OutOfBoundsException");
+    }
+    // 非整数時の例外
+    catch (NumberFormatException e) {
+      System.out.println("NumberFormatException");
+    }
+    // 必ず呼び出される
+    finally {
+      System.out.println("Finally block");
+    }
+  }
+}
+
+■P247
+class ClassCast {
+  public static void main(String args[]) {
+    try {
+      Object obj = new Integer("85");
+      System.out.println("Before cast");
+      Double dobj = (Double)obj;
+      System.out.println("After cast");
+    }
+    catch (Exception e) {
+      System.out.println(e);
+    }
+  }
+}
+
+■P248
+class CatchSearch {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Before a");
+      a();
+      System.out.println("After a");
+    }
+    catch (Exception e) {
+      System.out.println("main: " + e);
+    }
+    finally {
+      System.out.println("main: finally");
+    }
+  }
+
+  public static void a() {
+    try {
+      System.out.println("Before b");
+      b();
+      System.out.println("After b");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("a: " + e);
+    }
+    finally {
+      System.out.println("a: finally");
+    }
+  }
+
+  public static void b() {
+    try {
+      System.out.println("Before c");
+      c();
+      System.out.println("After c");
+    }
+    catch (ArrayIndexOutOfBoundsException e) {
+      System.out.println("b: " + e);
+    }
+    finally {
+      System.out.println("b: finally");
+    }
+  }
+
+  public static void c() {
+    try {
+      System.out.println("Before d");
+      d();
+      System.out.println("After d");
+    }
+    catch (NumberFormatException e) {
+      System.out.println("c: " + e);
+    }
+    finally {
+      System.out.println("c: finally");
+    }
+  }
+
+  public static void d() {
+    try {
+      int array[] = new int[4];
+      array[10] = 10; // 例外の発生
+    }
+    catch (ClassCastException e) {
+      System.out.println("d: " + e);
+    }
+    finally {
+      System.out.println("d: finally");
+    }
+  }
+}
+
+■P250
+class CatchSearch2 {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Before a");
+      a();
+      System.out.println("After a");
+    }
+    catch (Exception e) {
+      System.out.println("main: " + e);
+    }
+    finally {
+      System.out.println("main: finally");
+    }
+  }
+
+  public static void a() {
+    try {
+      System.out.println("Before b");
+      b();
+      System.out.println("After b");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("a: " + e);
+    }
+    finally {
+      System.out.println("a: finally");
+    }
+  }
+
+  public static void b() {
+    try {
+      System.out.println("Before c");
+      c();
+      System.out.println("After c");
+    }
+    catch (ArrayIndexOutOfBoundsException e) {
+      System.out.println("b: " + e);
+    }
+    finally {
+      System.out.println("b: finally");
+    }
+  }
+
+  public static void c() {
+    try {
+      System.out.println("Before d");
+      d();
+      System.out.println("After d");
+    }
+    catch (NumberFormatException e) {
+      System.out.println("c: " + e);
+    }
+    finally {
+      System.out.println("c: finally");
+    }
+  }
+
+  public static void d() {
+    try {
+      Object obj = new Float("85.56");
+      System.out.println("Before cast");
+      Double dobj = (Double)obj;   // 無効な型変換
+      System.out.println("After cast");
+    }
+    catch (ClassCastException e) {
+      System.out.println("d: " + e);
+      int i = 1;
+      int j = 0;
+      System.out.println("Before division");
+      int k = i / j;               // 0で除算
+      System.out.println("After division");
+      System.out.println(k);
+    }
+    finally {
+      System.out.println("d: finally");
+    }
+  }
+}
+
+■P252
+class CatchError {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Try Block");
+    }
+    catch (Exception e) {
+      System.out.println("Exception");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("ArithmeticException");
+    }
+  }
+}
+
+■P254
+class ThrowDemo {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Before a");
+      a();
+      System.out.println("After a");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("main: " + e);
+    }
+    finally {
+      System.out.println("main: finally");
+    }
+  }
+
+  public static void a() {
+    try {
+      System.out.println("Before b");
+      b();
+      System.out.println("After b");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("a: " + e);
+    }
+    finally {
+      System.out.println("a: finally");
+    }
+  }
+
+  public static void b() {
+    try {
+      System.out.println("Before c");
+      c();
+      System.out.println("After c");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("b: " + e);
+    }
+    finally {
+      System.out.println("b: finally");
+    }
+  }
+
+  public static void c() {
+    try {
+      System.out.println("Before d");
+      d();
+      System.out.println("After d");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("c: " + e);
+      throw e;
+    }
+    finally {
+      System.out.println("c: finally");
+    }
+  }
+
+  public static void d() {
+    try {
+      int i = 1;
+      int j = 0;
+      System.out.println("Before division");
+      System.out.println(i / j); // ここで例外が発生
+      System.out.println("After division");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("d: " + e);
+      throw e;
+    }
+    finally {
+      System.out.println("d: finally");
+    }
+  }
+}
+
+■P256
+class ThrowDemo2 {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Before a");
+      a();
+      System.out.println("After a");
+    }
+    catch (Exception e) {
+      System.out.println("main: " + e);
+    }
+    finally {
+      System.out.println("main: finally");
+    }
+  }
+
+  public static void a() {
+    try {
+      System.out.println("Before throw statement");
+      throw new ArithmeticException();
+    }
+    catch (Exception e) {
+      System.out.println("a: " + e);
+    }
+    finally {
+      System.out.println("a: finally");
+    }
+  }
+}
+
+■P257
+class ThrowExercise2 {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Before a");
+      a();
+      System.out.println("After a");
+    }
+    catch (NumberFormatException e) {
+      System.out.println("main: " + e);
+    }
+    finally {
+      System.out.println("main: finally");
+    }
+  }
+
+  public static void a() {
+    try {
+      System.out.println("Before b");
+      b();
+      System.out.println("After b");
+    }
+    catch (NumberFormatException e) {
+      System.out.println("a: " + e);
+    }
+    finally {
+      System.out.println("a: finally");
+    }
+  }
+
+  public static void b() {
+    try {
+      System.out.println("Before c");
+      c();
+      System.out.println("After c");
+    }
+    catch (NumberFormatException e) {
+      System.out.println("b: " + e);
+    }
+    finally {
+      System.out.println("b: finally");
+    }
+  }
+
+  public static void c() {
+    try {
+      System.out.println("Before d");
+      d();
+      System.out.println("After d");
+    }
+    catch (ArithmeticException e) {
+      System.out.println("c: " + e);
+    }
+    finally {
+      System.out.println("c: finally");
+    }
+  }
+
+  public static void d() {
+    try {
+      Integer iobj = new Integer("45.67");
+    }
+    catch (NumberFormatException e) {
+      throw e;
+    }
+    finally {
+      System.out.println("d: finally");
+    }
+  }
+}
+
+■P261
+class PrintStackTraceDemo {
+  public static void main(String args[]) {
+    try {
+      a();
+    }
+    catch (ArithmeticException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void a() {
+    try {
+      b();
+    }
+    catch (NullPointerException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void b() {
+    try {
+      c();
+    }
+    catch (NullPointerException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void c() {
+    try {
+      d();
+    }
+    catch (NullPointerException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void d() {
+    try {
+      int i = 1;
+      int j = 0;
+      System.out.println(i / j);
+    }
+    catch (NullPointerException e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+■P264
+class ThrowsDemo {
+  public static void main(String args[]) {
+    a();
+  }
+
+  public static void a() {
+    try {
+      b();
+    }
+    catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public static void b() throws ClassNotFoundException {
+    c();
+  }
+
+  public static void c() throws ClassNotFoundException {
+    Class cls = Class.forName("java.lang.Integer");
+    System.out.println(cls.getName());
+    System.out.println(cls.isInterface());
+  }
+}
+
+■P266
+import java.util.*;
+
+class ExceptionSubclass {
+  public static void main(String args[]) {
+    a();
+  }
+
+  static void a() {
+    try {
+      b();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  static void b() throws ExceptionA {
+    try {
+      c();
+    }
+    catch (ExceptionB e) {
+      e.printStackTrace();
+    }
+  }
+
+  static void c() throws ExceptionA, ExceptionB {
+    Random random = new Random();
+    int i = random.nextInt();
+    if (i % 2 == 0) {
+      throw new ExceptionA("We have a problem");
+    }
+    else {
+      throw new ExceptionB("We have a big problem");
+    }
+  }
+}
+
+class ExceptionA extends Exception {
+  public ExceptionA(String message) {
+    super(message);
+  }
+}
+
+class ExceptionB extends Exception {
+  public ExceptionB(String message) {
+    super(message);
+  }
+}
+
+■P267
+class ChainedExceptionDemo {
+  public static void main(String args[]) {
+    try {
+      a();
+    }
+    catch (ExceptionC e) {
+      System.out.println(e); // Exceptionオブジェクトの表示
+      System.out.println(e.getCause()); // 原因オブジェクトの表示
+    }
+  }
+
+  public static void a() throws ExceptionC {
+    try {
+      int i = 2 / 0; // 例外を発生させる
+    }
+    catch (ArithmeticException e) {
+      // ArithmeticExceptionを原因とするExceptionCクラスの
+      // 例外オブジェクトを投げる
+      throw new ExceptionC("/ by zero", e);
+    }
+  }
+}
+
+class ExceptionC extends Exception {
+  public ExceptionC(String message, Throwable cause) {
+    super(message, cause);
+  }
+}
+
+■P268
+class ExceptionSubclassQuestion {
+  public static void main(String args[]) {
+    a();
+  }
+
+  static void a() {
+    try {
+      try {
+        throw new ExceptionM("M");
+      }
+      catch (ExceptionN e) {
+        System.out.println("Inner catch");
+        e.printStackTrace();
+      }
+    }
+    catch (ExceptionM e) {
+      System.out.println("Outer catch");
+      e.printStackTrace();
+    }
+  }
+}
+
+class ExceptionM extends Exception {
+  public ExceptionM(String message) {
+    super(message);
+  }
+}
+
+
+class ExceptionN extends Exception {
+  public ExceptionN(String message) {
+    super(message);
+  }
+}
+
+■P270
+class AssertionDemo {
+  public static void main(String args[]) {
+    assert args.length == 2;
+    double d1 = Double.valueOf(args[0]).doubleValue();
+    double d2 = Double.valueOf(args[1]).doubleValue();
+    assert d2 != 0 : "/ by zero";
+    System.out.println(d1 / d2);
+  }
+}

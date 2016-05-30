@@ -1,0 +1,318 @@
+■第1章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+1.8：練習問題
+1.9：練習問題
+1.10：練習問題
+1.11：練習問題
+1.12：練習問題
+1.13：練習問題
+1.14：練習問題
+1.15：練習問題
+1.16：練習問題
+第1章：第1章の理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+1.8：練習問題
+
+【1】 （省略）
+
+1.9：練習問題
+
+【1】 
+class VariableDemo {
+  public static void main(String args[]) {
+    int num = 1000;
+    System.out.println(num + " is the value of num");
+  }
+}
+
+【2】 コンパイラは、変数cと変数flagが初期化されていないことを報告します。
+
+1.10：練習問題
+
+【1】
+class JulietQuote {
+  public static void main(String args[]) {
+    String s = "Juliet said: " +
+      "\"Romeo, where art thou?\"";
+    System.out.println(s);
+  }
+}
+
+これを実行すると、次のように二重引用符が埋め込まれた文字列が出力されます。
+
+Juliet said: "Romeo, where art thou?"
+
+【2】
+class ConcatenationDemo {
+  public static void main(String args[]) {
+    String myName = "Yamada " + "Taro";
+    System.out.println(myName);
+  }
+}
+
+これを実行すると、次のように姓（Yamada）と名（Taro）の文字列を連結した文字列が出力されます。
+
+YamadaTaro
+
+1.11：練習問題
+
+【1】 
+5 % 3 + 1 = 3
+5 / 3 + 1 = 2
+5 * 3 + 1 = 16
+
+%は剰余、/は除算、*は積算です。%、/、*は+よりも優先順位が高いので、先に評価されます。
+
+【2】
+class DrivingTime {
+  public static void main(String args[]) {
+    float h = 3000 / 75;
+    System.out.println(h +
+      " hours are required to drive " +
+      "from New York to Los Angeles ");
+  }
+}
+
+実行結果は次のようになります。
+
+40.0 hours are required to drive from New York to Los Angeles
+
+精度を上げるためにfloatを使っていますが、整数の精度でよければintを使ってもかまいません。
+
+【3】 有効。
+
+小括弧は開閉の入れ子が一致していればいくつでも指定できます。
+
+【4】 
+-5.6 % 3.3 = -2.3
+5.6 % -3.3 = 2.3
+
+剰余の結果の正負は左オペランドにのみ依存します。
+
+1.12：練習問題
+
+【1】 float型。
+
+この式の中で最も大きな型であるfloatに拡張されます。
+
+【2】 long型。
+
+この演算の中で最も大きな型であるlongに拡張されます。
+
+1.13：練習問題
+
+【1】 できない。「short s2 = s1 + 1;」という代入について、コンパイラはエラーメッセージを表示し、int型をshort型に変換するためには明示的な型変換が必要であることを報告します。代入ステートメントの右辺は自動的にint型に変換されます。
+
+【2】 代入ステートメントの左辺の変数に範囲外の不正な値が代入される可能性があるからです。
+
+1.14：練習問題
+
+【1】 正しい。
+
+【2】 正しい。
+
+【3】 （省略）
+
+1.15：練習問題
+
+【1】 できない。すべての配列要素の型は同じでなければなりません。
+
+【2】
+class FourByteArray {
+  public static void main(String args[]) {
+    // 要素を初期化する
+    byte array[] = new byte[4];
+    array[0] = 11;
+    array[1] = 26;
+    array[2] = 56;
+    array[3] = -90;
+
+    // 要素を表示する
+    System.out.println(array[0]);
+    System.out.println(array[1]);
+    System.out.println(array[2]);
+    System.out.println(array[3]);
+  }
+}
+
+実行結果は次のようになります。
+
+11
+26
+56
+-90
+
+【3】
+class AverageValue {
+  public static void main(String args[]) {
+    // 要素を初期化する
+    double da[] = new double[4];
+    da[0] = 1E307;
+    da[1] = 1.1E307;
+    da[2] = 1.2E307;
+    da[3] = 1.3E307;
+
+    // 合計をtotalに代入する
+    double total = da[0];
+    total += da[1];
+    total += da[2];
+    total += da[3];
+
+    // 平均を表示する
+    System.out.println("Average = " + total / 4);
+  }
+}
+
+実行結果は次のようになります。
+
+Average = 1.15E307
+
+1.16：練習問題
+
+【1】
+class FloatArray {
+  public static void main(String args[]) {
+    // 配列を宣言し、領域を割り当て、初期化する
+    float myarray[][] = {
+      { -56.7f },
+      { 500.1f, 70.70f },
+      { 100.9f, 0.5f, 20.20f }
+    };
+
+    // 要素数を表示する
+    System.out.println("myarray.length = " +
+      myarray.length);
+    System.out.println("myarray[0].length = " +
+      myarray[0].length);
+    System.out.println("myarray[1].length = " +
+      myarray[1].length);
+    System.out.println("myarray[2].length = " +
+      myarray[2].length);
+
+
+    // 要素を表示する
+    System.out.println(myarray[0][0]);
+    System.out.println(myarray[1][0]);
+    System.out.println(myarray[1][1]);
+    System.out.println(myarray[2][0]);
+    System.out.println(myarray[2][1]);
+    System.out.println(myarray[2][2]);
+  }
+}
+
+実行結果は次のようになります。
+
+myarray.length = 3
+-56.7
+500.1
+70.7
+100.9
+0.5
+20.2
+
+【2】
+class ArrayLengths {
+  public static void main(String args[]) {
+    // 要素を定義する
+    int iarray[][] = {
+      { 44 },
+      { -22, 16 },
+      { 11, -12, 99 }
+    };
+
+    // 要素数を表示する
+    System.out.println("iarray.length = " + iarray.length);
+
+    // 要素を表示する
+    System.out.println("iarray[0].length = " + iarray[0].length);
+    System.out.println("iarray[1].length = " + iarray[1].length);
+    System.out.println("iarray[2].length = " + iarray[2].length);
+  }
+}
+
+実行結果は次のようになります。
+
+iarray.length = 3
+iarray[0].length = 1
+iarray[1].length = 2
+iarray[2].length = 3
+
+【3】
+class Matrix3D {
+  public static void main(String args[]) {
+    // 要素を定義する
+    byte array[][][] = {
+      { { 4, 5, 6 }, { 1, 2, 3 }, { 5, 7, 8 } },
+      { { 2, 0, 5 }, { 9, 8, 7 }, { 4, 4, 3 } },
+      { { 0, 0, 0 }, { 1, 1, 1 }, { 2, 2, 2 } }
+    };
+
+    // 要素を表示する
+    System.out.print(array[0][0][0] + ", ");
+    System.out.print(array[0][0][1] + ", ");
+    System.out.print(array[0][0][2] + ", ");
+    System.out.print(array[0][1][0] + ", ");
+    System.out.print(array[0][1][1] + ", ");
+    System.out.print(array[0][1][2] + ", ");
+    System.out.print(array[0][2][0] + ", ");
+    System.out.print(array[0][2][1] + ", ");
+    System.out.println(array[0][2][2] + ", ");
+
+    System.out.print(array[1][0][0] + ", ");
+    System.out.print(array[1][0][1] + ", ");
+    System.out.print(array[1][0][2] + ", ");
+    System.out.print(array[1][1][0] + ", ");
+    System.out.print(array[1][1][1] + ", ");
+    System.out.print(array[1][1][2] + ", ");
+    System.out.print(array[1][2][0] + ", ");
+    System.out.print(array[1][2][1] + ", ");
+    System.out.println(array[1][2][2] + ", ");
+
+    System.out.print(array[2][0][0] + ", ");
+    System.out.print(array[2][0][1] + ", ");
+    System.out.print(array[2][0][2] + ", ");
+    System.out.print(array[2][1][0] + ", ");
+    System.out.print(array[2][1][1] + ", ");
+    System.out.print(array[2][1][2] + ", ");
+    System.out.print(array[2][2][0] + ", ");
+    System.out.print(array[2][2][1] + ", ");
+    System.out.println(array[2][2][2]);
+  }
+}
+
+実行結果は次のようになります。
+
+4, 5, 6, 1, 2, 3, 5, 7, 8,
+2, 0, 5, 9, 8, 7, 4, 4, 3,
+0, 0, 0, 1, 1, 1, 2, 2, 2
+
+第1章：第1章の理解度チェック
+
+【1】 アプレットを実行するには、Webブラウザまたはアプレットビューアのようなツールが必要です。アプリケーションはJavaインタープリタによって直接解釈されます。
+
+【2】 バイトコードとは、プログラムのプラットフォーム非依存表現です。Javaコンパイラによって生成されます。
+
+【3】 オブジェクトとは、状態と動作を定義する記憶領域のことです。
+
+【4】 クラスとはオブジェクトのテンプレートのことです。
+
+【5】 カプセル化とは、一連のデータとそれを操作するコードを関連付ける機構のことです。ほかのソフトウェアからこのデータに直接アクセスすることはできません。
+
+【6】 継承とは、1つのクラスを特化して別のクラスを定義する機構のことです。
+
+【7】 ポリモーフィズムとは、1つのインターフェイスに対して複数の異なる実装を作成することのできる機構のことです。
+
+【8】 main()メソッドです。
+
+【9】 boolean型、char型、byte型、short型、int型、long型、double型、float型。
+
+【10】 型変換はある型を別の型に変換します。縮小変換を行うときに必要となります。
+
+【11】 配列名を宣言し、配列要素に領域を割り当てます。
+
+【12】 varName.lengthという式を使用します。varNameには配列の名前を指定します。
+
+【13】 単一行コメント、複数行コメント、ドキュメンテーションコメント。
+
+【14】 キーワードではない。Javaのキーワードはいずれも小文字で表されます（classはキーワードです）。

@@ -1,0 +1,512 @@
+■第2章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第2章：前章の理解度チェック
+2.1：練習問題
+2.2：練習問題
+2.3：練習問題
+2.4：練習問題
+2.5：練習問題
+2.6：練習問題
+2.7：練習問題
+2.8：練習問題
+2.9：練習問題
+2.10：練習問題
+2.11：練習問題
+第2章：第2章の理解度チェック
+第2章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第2章：前章の理解度チェック
+
+【1】 Javaがプラットフォームに依存しないのは、それぞれのプラットフォームのJava Virtual Machine（JVM）が同一のバイトコードを解釈して実行するからです。
+
+【2】 例えば次のパッケージがあります。
+	・java.io：ファイルやネットワークでの入出力をサポートする
+	・java.lang：Javaの言語中枢機能を提供する
+	・java.net：ネットワークに関係するさまざまな機能を提供する
+
+【3】 型変換の際に変換先のビット数が変換元より小さいとき、縮小変換が行われます。
+
+【4】 print()とprintln()
+
+【5】 式の中でchar型、byte型、またはshort型の値が使われている場合、その値を式の評価中は自動的にint型に変換して評価すること。
+
+【6】 bとe。bは数字から始まっています。eは-を含んでいます。
+
+2.1：練習問題
+
+【1】 メソッドはプログラムステートメントの集合体に名前を付けたものです。値を返し、引数を取ることができます。
+
+【2】 String
+
+【3】 void
+
+【4】 ランタイムエラーが発生したときに生成されるオブジェクトです。
+
+【5】 throwsステートメントは、メソッドで発生する例外の型を指定しています。
+
+2.2：練習問題
+
+【1】 
+class SquareRoot {
+  public static void main(String args[]) {
+    System.out.println(Math.sqrt(23.45));
+  }
+}
+
+実行結果は次のとおりです。
+
+4.8425200051213
+
+【2】
+class Exponentiation {
+  public static void main(String args[]) {
+    System.out.println(Math.pow(2, 12));
+  }
+}
+
+実行結果は次のとおりです。
+
+4096.0
+
+Java 6では次のようにscalab()メソッドを使うこともできます。
+
+class Exponentiation2 {
+  public static void main(String args[]) {
+    System.out.println(Math.scalb(1, 12));
+  }
+}
+
+実行結果は先ほどと同じです。
+
+4096.0
+
+【3】
+class Triangle {
+  public static void main(String args[]) {
+    double a = 4.5;
+    double b = 8.9;
+    // 直角三角形の斜辺の長さは2辺を2乗したものの和の平方根
+    double hypotenuse = Math.sqrt(a * a + b * b);
+    System.out.println("Sides are " + a + " " + b);
+    System.out.println("Hypotenuse is " + hypotenuse);
+  }
+}
+
+実行結果は次のとおりです。
+
+Sides are 4.5 8.9
+Hypotenuse is 9.972963451251589
+
+2.3：練習問題
+
+【1】
+class Last10Chars {
+  public static void main(String args[]) {
+    String s = "One Two Three Four Five Six Seven";
+    int len = s.length();
+    String substring = s.substring(len - 10, len); // 末尾の10文字を抜き出す
+    System.out.println(substring);
+  }
+}
+
+実行結果は次のとおりです。
+
+ Six Seven
+
+【2】
+class LastNumber {
+  public static void main(String args[]) {
+    String s1 = "67.89,55.87,-56.45,11.22,78.9";
+    int i1 = s1.lastIndexOf(','); // 末尾から,を探し、その位置を返す
+    String s2 = s1.substring(i1 + 1); // i1の次の位置以降の文字列を抜き出す
+    System.out.println(s2);
+  }
+}
+
+実行結果は次のとおりです。
+
+78.9
+
+split()メソッドを使って次のように書くこともできます。
+
+class LastNumber2 {
+  public static void main(String args[]) {
+    String s1 = "67.89,55.87,-56.45,11.22,78.9";
+    String sa[] = s1.split(","); // ,で区切った文字列配列を作成する
+    System.out.println(sa[sa.length - 1]); // 最後の配列要素を表示する
+  }
+}
+
+実行結果は同じです。
+
+78.9
+
+
+2.4：練習問題
+
+【1】
+class IntToHexString {
+  public static void main(String args[]) {
+    System.out.println(Integer.toHexString(100)); // 100を16進数で表現
+  }
+}
+
+実行結果は次のとおりです。
+
+64
+
+【2】 
+class ParseInt {
+  public static void main(String args[]) {
+    String s = "125";
+    int i = Integer.parseInt(s);
+    i += 10;
+    System.out.println(i);
+  }
+}
+
+実行結果は次のとおりです。
+
+135
+
+2.5：練習問題
+
+【1】
+class IntegerEquals {
+  public static void main(String args[]) {
+    Integer iobj1 = new Integer(5); // intを引数としてオブジェクトを作成
+    Integer iobj2 = new Integer("5"); // Stringを引数としてオブジェクトを作成
+    System.out.println(iobj1.equals(iobj2));
+  }
+}
+
+実行結果は次のとおりです。
+
+true
+
+【2】 オブジェクト参照変数がどのオブジェクトも参照していないとき、その値はnullになります。
+
+2.6：練習問題
+
+【1】 ガーベジコレクションは、どの変数からも参照されなくなったオブジェクトのメモリリソースを回収する機構です。
+
+【2】 オブジェクトを誤って削除したため、あるいは削除すべきオブジェクトを削除しなかったためにランタイムエラーが生じるということがなくなります。
+
+【3】 オブジェクトがガーベジコレクションの候補となるのはどの変数からも参照されなくなったときです。ただし、オブジェクトの実際の削除のタイミングはJVMが決定します。
+
+2.7：練習問題
+
+【1】
+class CharacterDemo {
+  public static void main(String args[]) {
+    System.out.println(Character.isDigit('8')); // 数字かどうか
+    System.out.println(Character.isLetter('A')); // 文字かどうか
+    System.out.println(Character.isLetterOrDigit('A')); // 数字または文字かどうか
+    System.out.println(Character.isLowerCase('a')); // 小文字かどうか
+    System.out.println(Character.toLowerCase('A')); // 小文字に変換
+  }
+}
+
+実行結果は次のとおりです。
+
+true
+true
+true
+true
+a
+
+【2】
+class ShortDemo {
+  public static void main(String args[]) {
+    String strOctal = "77";
+    String strHex = "23";
+    String strDecimal = "156";
+    short o = Short.parseShort(strOctal, 8); // 8進数から変換
+    short h = Short.parseShort(strHex, 16); // 16進数から変換
+    short d = Short.parseShort(strDecimal, 10); // 10進数から変換
+    int sum = o + h + d;
+    System.out.println("The sum is " + sum); // 合計を表示
+  }
+}
+
+実行結果は次のとおりです。
+
+The sum is 254
+
+2.8：練習問題
+
+【1】
+class StringBufferAppend {
+  public static void main(String args[]) {
+    StringBuffer sb = new StringBuffer("abcde");
+    sb.append("fgh"); // fghを追加
+    sb.append("ijklmnop"); // ijklmnopを追加
+    System.out.println(sb);
+    System.out.println("sb.capacity = " + sb.capacity());
+    System.out.println("sb.length = " + sb.length());
+  }
+}
+
+実行結果は次のとおりです。
+
+abcdefghijklmnop
+sb.capacity = 21
+sb.length = 16
+
+【2】
+class StringBufferInsert {
+  public static void main(String args[]) {
+    StringBuffer sb = new StringBuffer("abcde");
+    sb.insert(0, "012345"); // 先頭に012345を挿入
+    System.out.println(sb);
+  }
+}
+
+実行結果は次のとおりです。
+
+012345abcde
+
+【3】
+class StringBufferReverse {
+  public static void main(String args[]) {
+    StringBuffer sb1 = new StringBuffer("abcde");
+    sb1.append("abcdefghij"); // 文字列を追加
+    System.out.println(sb1);
+    StringBuffer sb2 = sb1.reverse(); // 文字列を逆順にする
+    System.out.println(sb2);
+  }
+}
+
+実行結果は次のとおりです。
+
+abcdeabcdefghij
+jihgfedcbaedcba
+
+2.9：練習問題
+
+【1】
+class FloatArray {
+  public static void main(String args[]) {
+    Float array[] = new Float[5];
+    array[0] = new Float(3.4);
+    array[1] = new Float(-7);
+    array[2] = Float.valueOf("8.5");
+    array[3] = Float.valueOf("6.02e23");
+    array[4] = new Float(3.4e38);
+    System.out.println(array.length); // 要素数を表示
+    System.out.println(array[0]); // 各要素を表示
+    System.out.println(array[1]);
+    System.out.println(array[2]);
+    System.out.println(array[3]);
+    System.out.println(array[4]);
+  }
+}
+
+実行結果は次のとおりです。
+
+5
+3.4
+-7.0
+8.5
+6.02E23
+3.4E38
+
+【2】
+class ObjectArray {
+  public static void main(String args[]) {
+    Object array[] = new Object[5];
+    array[0] = new Integer(4);
+    array[1] = new String("Hello");
+    array[2] = new Boolean("true");
+    array[3] = new Character('a');
+    array[4] = new Double(45.67);
+    System.out.println(array[0]);
+    System.out.println(array[1]);
+    System.out.println(array[2]);
+    System.out.println(array[3]);
+    System.out.println(array[4]);
+  }
+}
+
+実行結果は次のとおりです。
+
+4
+Hello
+true
+a
+45.67
+
+2.10：練習問題
+
+【1】
+class Multiply2Doubles {
+  public static void main(String args[]) {
+    // 1番目のdouble型引数を取得
+    double d1 = Double.valueOf(args[0]).doubleValue();
+    // 2番目のdouble型引数を取得
+    double d2 = Double.valueOf(args[1]).doubleValue();
+    // 積を表示する
+    double product = d1 * d2;
+    System.out.println("Product is " + product);
+  }
+}
+
+引数に「1.3 2.55」を指定したときの実行結果は次のとおりです。
+
+Product is 3.315
+
+【2】
+class Circle {
+  public static void main(String args[]) {
+    // 半径を取得
+    double radius = Double.valueOf(args[0]).doubleValue();
+    // 面積を表示する
+    double area = Math.PI * radius * radius;
+    System.out.println("Area is " + area);
+  }
+}
+
+引数に「10」を指定したときの実行結果は次のとおりです。
+
+Area is 314.1592653589793
+
+2.11：練習問題
+
+【1】
+class CurrentTimeMillis {
+  public static void main(String args[]) {
+    System.out.println(System.currentTimeMillis());
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+1204006973168
+
+第2章：第2章の理解度チェック
+
+【1】 静的変数と静的メソッドはクラスに結び付けられています。クラスの名前を起点にして参照します。
+
+【2】 インスタンス変数とインスタンスメソッドはオブジェクトに結び付けられています。オブジェクト参照を起点にして参照します。
+
+【3】 type objRef = new clsName(args);
+
+【4】 Boolean、Character、Byte、Short、Integer、Long、Double、Float
+
+【5】 NaN (Not a Number)
+
+【6】
+class MoonWeight {
+  public static void main(String args[]) {
+    // 地球での体重を取得
+    double ew = Double.valueOf(args[0]).doubleValue();
+    // 月での体重を表示する
+    double mw = ew * .17;
+    System.out.println("Moon weight: " + mw);
+  }
+}
+
+実行結果はたとえば次のようになります（引数に60を指定）。
+
+Moon weight: 10.200000000000001
+
+【7】
+class Angle {
+  public static void main(String args[]) {
+    // 角度（度）を取得する
+    double degrees = Double.valueOf(args[0]).doubleValue();
+    // ラジアンに変換する
+    double radians = degrees * Math.PI / 180;
+    // 三角関数の値を表示する
+    System.out.println("cos = " + Math.cos(radians));
+    System.out.println("sin = " + Math.sin(radians));
+    System.out.println("tan = " + Math.tan(radians));
+  }
+}
+
+実行結果はたとえば次のようになります（角度に45を指定）。
+
+cos = 0.7071067811865476
+sin = 0.7071067811865475
+tan = 0.9999999999999999
+
+第2章：総合理解度チェック
+
+【1】 
+キーワード	意味
+boolean	boolean型
+byte	byte型
+char	char型
+class	クラス定義
+double	double型
+float	float型
+int	int型
+long	long型
+new	オブジェクト生成演算子
+short	short型
+static	静的変数または静的メソッド
+
+【2】
+class EightTypes {
+  public static void main(String args[]) {
+    Boolean bool = Boolean.valueOf(args[0]);
+    Character c = new Character(args[1].charAt(0));
+    Byte b = Byte.valueOf(args[2]);
+    Short s = Short.valueOf(args[3]);
+    Integer i = Integer.valueOf(args[4]);
+    Long l = Long.valueOf(args[5]);
+    Float f = Float.valueOf(args[6]);
+    Double d = Double.valueOf(args[7]);
+
+    System.out.println(bool);
+    System.out.println(c);
+    System.out.println(b);
+    System.out.println(s);
+    System.out.println(i);
+    System.out.println(l);
+    System.out.println(f);
+    System.out.println(d);
+  }
+}
+
+実行結果はたとえば次のようになります（true A 25 300 -50 2000 0.51 3.1e8を指定）。
+
+true
+A
+25
+300
+-50
+2000
+0.51
+3.1E8
+
+【3】 
+class CharacterArray {
+  public static void main(String args[]) {
+    // 配列を作成して初期化する
+    Character array[] = new Character[5];
+    array[0] = new Character('A');
+    array[1] = new Character('B');
+    array[2] = new Character('C');
+    array[3] = new Character('D');
+    array[4] = new Character('E');
+
+    // 文字列バッファを作成する
+    StringBuffer sb = new StringBuffer();
+
+    // 配列要素をバッファに付加する
+    sb.append(array[0]);
+    sb.append(array[1]);
+    sb.append(array[2]);
+    sb.append(array[3]);
+    sb.append(array[4]);
+
+    // 文字列バッファを表示する
+    System.out.println(sb);
+  }
+}
+
+実行結果は次のとおりです。
+
+ABCDE

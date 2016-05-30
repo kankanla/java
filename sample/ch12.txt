@@ -1,0 +1,206 @@
+第12章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P379
+■P382
+■P383
+■P387
+■P388
+■P390
+・・・・・・・・・・・・・・・・・・・・・
+
+■P379
+import java.net.*;
+
+class InetAddressDemo {
+  public static void main(String args[]) {
+    try {
+      // アドレスを取得する
+      InetAddress ias[] =
+        InetAddress.getAllByName(args[0]);
+      for(int i = 0; i < ias.length; i++) {
+        System.out.println(ias[i].getHostName());
+        System.out.println(ias[i].getHostAddress());
+        byte bytes[] = ias[i].getAddress();
+        for(int j = 0; j < bytes.length; j++) {
+          if (j > 0)
+            System.out.print(".");
+          if (bytes[j] >= 0)
+            System.out.print(bytes[j]);
+          else
+            System.out.print(bytes[j] + 256);
+        }
+        System.out.println("");
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+■P382
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+class ServerSocketDemo {
+  public static void main(String args[]) {
+    try {
+      // ポートを取得する
+      int port = Integer.parseInt(args[0]);
+
+      // 乱数ジェネレータを作成する
+      Random random = new Random();
+
+      // サーバーソケットを作成する
+      ServerSocket ss = new ServerSocket(port);
+
+      // 無限ループを作成する
+      while(true) {
+        // クライアントからの要求を受け取る
+        Socket s = ss.accept();
+
+        // 結果をクライアントに書き込む
+        OutputStream os = s.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(os);
+        dos.writeInt(random.nextInt());
+
+        // ストリームをクローズする
+        dos.close();
+      }
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P383
+import java.io.*;
+import java.net.*;
+
+class SocketDemo {
+  public static void main(String args[]) {
+    try {
+      // サーバーとポートを取得する
+      String server = args[0];
+      int port = Integer.parseInt(args[1]);
+
+      // ソケットを作成する
+      Socket s = new Socket(server, port);
+
+      // サーバーから乱数を読み取る
+      InputStream is = s.getInputStream();
+      DataInputStream dis = new DataInputStream(is);
+      int i = dis.readInt();
+
+      // 結果を表示する
+      System.out.println(i);
+
+      // ストリームをクローズする
+      dis.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P387
+import java.net.*;
+
+class DatagramReceiver {
+  private final static int BUFSIZE = 20;
+
+  public static void main(String args[]) {
+    try {
+      // ポートを取得する
+      int port = Integer.parseInt(args[0]);
+
+      // ポートのDatagramSocketオブジェクトを作成する
+      DatagramSocket ds = new DatagramSocket(port);
+
+      // 着信したデータを保持するバッファを作成する
+      byte buffer[] = new byte[BUFSIZE];
+
+      // 無限ループを作成する
+      while(true) {
+        // データグラムパケットを作成する
+        DatagramPacket dp =
+          new DatagramPacket(buffer, buffer.length);
+
+        // データを受け取る
+        ds.receive(dp);
+
+        // データグラムパケットからデータを得る
+        String str = new String(dp.getData());
+
+        // データを表示する
+        System.out.println(str);
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+■P388
+import java.net.*;
+
+class DatagramSender {
+  public static void main(String args[]) {
+    try  {
+      // 宛先のインターネットアドレスを作成する
+      InetAddress ia =
+        InetAddress.getByName(args[0]);
+
+      // 宛先ポートを取得する
+      int port = Integer.parseInt(args[1]);
+
+      // データグラムソケットを作成する
+      DatagramSocket ds = new DatagramSocket();
+
+      // データグラムパケットを作成する
+      byte buffer[] = args[2].getBytes();
+      DatagramPacket dp =
+        new DatagramPacket(buffer, buffer.length,
+          ia, port);
+
+      // データグラムパケットを送信する
+      ds.send(dp);
+      ds.close();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+■P390
+import java.io.*;
+import java.net.*;
+
+class URLDemo {
+  public static void main(String args[]) {
+    try {
+      // URLを取得する
+      URL url = new URL(args[0]);
+
+      // 入力ストリームを取得する
+      InputStream is = url.openStream();
+
+      // URLからデータを読み取り、表示する
+      byte buffer[] = new byte[1024];
+      int i;
+      while((i = is.read(buffer)) != -1) {
+        System.out.write(buffer, 0, i);
+      }
+      is.close();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}

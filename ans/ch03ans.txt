@@ -1,0 +1,319 @@
+■第3章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第3章：前章の理解度チェック
+3.1：練習問題
+3.2：練習問題
+3.3：練習問題
+3.4：練習問題
+3.5：練習問題
+3.6：練習問題
+3.7：練習問題
+3.8：練習問題
+第3章：第3章の理解度チェック
+第3章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第3章：前章の理解度チェック
+
+【1】 静的変数はクラスが存在している間ずっと存在します。インスタンス変数はオブジェクトの存続期間だけ存在します。ローカル変数はメソッドの実行期間中だけ存在します。
+
+【2】 例：
+      静的メソッド：Math.max()
+      静的変数：Math.PI
+
+【3】 byteValue()、doubleValue()、floatValue()、intValue()、longValue()、shortValue()。
+
+【4】 
+class Logarithm {
+  public static void main(String args[]) {
+    double d = Double.valueOf(args[0]).doubleValue();
+    System.out.println(Math.log(d)); // 自然対数を表示
+  }
+}
+
+実行結果はたとえば次のようになります（25を指定）。
+
+3.2188758248682006
+
+3.1：練習問題
+
+【1】 
+class EvenOdd {
+  public static void main(String args[]) {
+    int i = Integer.valueOf(args[0]).intValue();
+    if ((i % 2) == 0) System.out.println("Even"); // 偶数
+    if ((i % 2) == 1) System.out.println("Odd");  // 奇数
+    if ((i % 2) == -1) System.out.println("Odd"); // 奇数
+  }
+}
+
+奇数を指定したときの実行結果は次のとおりです。
+
+Odd
+
+偶数を指定したときの実行結果は次のとおりです。
+
+Even
+
+【2】 
+class LengthConverter {
+  public static void main(String args[]) {
+    double d = Double.valueOf(args[0]).doubleValue();
+    if (args[1].equalsIgnoreCase("Feet"))
+      System.out.println(d / 3.28 + " Meters"); // フィート→メートル変換
+    if (args[1].equalsIgnoreCase("Meters"))
+      System.out.println(d * 3.28 + " Feet"); // メートル→フィート変換
+    if (args[1].equalsIgnoreCase("Feet") != true &&
+      args[1].equalsIgnoreCase("Meters") != true)
+      System.out.println("Could not recognize such the unit"); // 無効な単位
+  }
+}
+
+実行結果はたとえば次のようになります（3 metersを指定）。
+
+9.84 Feet
+
+3.2：練習問題
+
+【1】 
+class ZeroDivide {
+  public static void main(String args[]) {
+    double d1 = Double.valueOf(args[0]).doubleValue();
+    double d2 = Double.valueOf(args[1]).doubleValue();
+    if (d2 == 0) System.out.println("Cannot divide by zero");
+    else System.out.println("Answer is: " + d1 / d2);
+  }
+}
+
+実行結果はたとえば次のようになります（3 0を指定）。
+
+Cannot divide by zero
+
+3.3：練習問題
+
+【1】 正しくない。最初の行の末尾に{がありません。
+
+3.4：練習問題
+
+【1】 
+public class CountTo100 {
+  public static void main(String args[]) {
+    for(int i = 1; i < 101; i = i + 1) // 1から100までループ
+        System.out.print(i + " ");
+    System.out.println("");
+  }
+}
+
+実行結果は次のとおりです。
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100
+
+【2】 
+class Multiple17 {
+  public static void main(String args[]) {
+    for(int i = 17; i < 101; i = i + 1) { // 17から100までループ
+         if ((i % 17) == 0) System.out.print(i + " "); // 17で割り切れるもののみ表示
+    }
+    System.out.println("");
+  }
+}
+
+実行結果は次のとおりです。
+
+17 34 51 68 85
+
+【3】 
+class Factors {
+  public static void main(String args[]) {
+    int num = Integer.valueOf(args[0]).intValue();
+    for(int i = 2; i < (num / 2) + 1; i = i + 1) { // 因数は2から開始
+      if ((num % i) == 0) System.out.print(i + " "); // 割り切れたら因数
+    }
+    System.out.println("");    
+  }
+}
+
+実行結果はたとえば次のようになります（99を指定）。
+
+3 9 11 33
+
+3.5：練習問題
+
+【1】 
+class Count20To30 {
+  public static void main(String args[]) {
+    for(int i = 20; i <= 30; i++) { // 20から30までインクリメント演算子を使ってループ
+          System.out.print(i + " ");
+    }
+    System.out.println("");    
+  }
+}
+
+実行結果は次のとおりです。
+
+20 21 22 23 24 25 26 27 28 29 30
+
+【2】 
+class AfterIncrementDecrement {
+  public static void main(String args[]) {
+    int a = 1;
+    ++a;
+    int b = a;
+    --b;
+    System.out.println(a + " " + b);
+  }
+}
+
+3.6：練習問題
+
+【1】 （省略）
+
+3.7：練習問題
+
+【1】 0から99までの数字を表示します。
+
+【2】 この式は真です。10 == 9が最初に評価され偽となります。これを!で真偽逆にするので、結果は真となります。
+
+【3】 aがゼロより小さい場合。||ショートカット演算子を使っているので、左のオペランドの評価結果が偽の場合のみ右のオペランドが評価されます。
+
+【4】 （省略）
+
+3.8：練習問題
+
+【1】 
+class TernaryOperatorDemo2 {
+  public static void main(String args[]) {
+    int i = 9;
+    System.out.println((i % 2 == 0) ? "Even" : "Odd"); // 除算の余りが0かどうかを判定
+  }
+}
+
+実行結果は次のとおりです（ここではiが9なので、Odd（奇数）と表示される）。
+
+Odd
+
+第3章：第3章の理解度チェック
+
+【1】 
+if (式) {
+  // ステートメントブロック
+}
+else {
+  // ステートメントブロック
+}
+
+【2】 
+for(初期化; テスト; インクリメント) {
+  // ステートメントブロック
+}
+
+【3】 
+関係演算子	意味
+==	等しい
+!=	等しくない
+>	より大きい
+<	より小さい
+>=	より大きいか等しい
+<=	より小さいか等しい
+
+【4】 
+論理演算子	意味
+&	論理積
+|	論理和
+^	排他的論理和
+!	否定
+&&	論理積（ショートカット）
+||	論理和（ショートカット）
+==	等しい
+!=	等しくない
+
+【5】 
+class IntArray {
+  public static void main(String args[]) {
+    int array[] = new int[10];
+    int i = -1;
+    for(int index = 0; index < 10; index++) { // 0から9までループ
+         array[index] = i--; // デクリメントしながら配列に代入
+    }
+    for(int index = 0; index < 10; index++) { // 配列の内容を表示
+         System.out.println(array[index]);
+    }
+  }
+}
+
+実行結果は次のとおりです。
+
+-1
+-2
+-3
+-4
+-5
+-6
+-7
+-8
+-9
+-10
+
+第3章：総合理解度チェック
+
+【1】 
+class SquaresCubes {
+  public static void main(String args[]) {
+    for(int i = 1; i < 11; i++) { // 1から10までループ
+      int square = i * i;    // 2乗値
+      int cube = square * i; // 3乗値
+      System.out.println(i + " " + square + " " + cube);
+    }
+  }
+}
+
+実行結果は次のとおりです。
+
+1 1 1
+2 4 8
+3 9 27
+4 16 64
+5 25 125
+6 36 216
+7 49 343
+8 64 512
+9 81 729
+10 100 1000
+
+【2】 インクリメント演算子は++で、変数の値を1増やします。デクリメント演算子は--で、変数の値を1減らします。
+
+【3】 
+class Table {
+  public static void main(String args[]) {
+    for(int i = 1; i < 100; i++) { // 1から99までループ
+      System.out.print(i + "\t");
+      if ((i % 5) == 0) System.out.println(""); // 5列ごとに改行
+    }
+    System.out.println("");
+  }
+}
+
+実行結果は次のとおりです。
+
+1       2       3       4       5
+6       7       8       9       10
+11      12      13      14      15
+16      17      18      19      20
+21      22      23      24      25
+26      27      28      29      30
+31      32      33      34      35
+36      37      38      39      40
+41      42      43      44      45
+46      47      48      49      50
+51      52      53      54      55
+56      57      58      59      60
+61      62      63      64      65
+66      67      68      69      70
+71      72      73      74      75
+76      77      78      79      80
+81      82      83      84      85
+86      87      88      89      90
+91      92      93      94      95
+96      97      98      99
+
+【4】 &演算子は常に両方のオペランドを評価します。&&演算子は左のオペランドが偽の場合に右のオペランドを評価しません。

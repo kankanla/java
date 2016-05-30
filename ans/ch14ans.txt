@@ -1,0 +1,651 @@
+■第14章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第14章：前章の理解度チェック
+14.1：練習問題
+14.2：練習問題
+14.3：練習問題
+14.4：練習問題
+14.5：練習問題
+14.6：練習問題
+14.7：練習問題
+14.8：練習問題
+第14章：第14章の理解度チェック
+第14章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第14章：前章の理解度チェック
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="AmplitudeModulation" width=300 height=200>
+  </applet>
+*/
+
+public class AmplitudeModulation extends Applet {
+  public void paint(Graphics g) {
+    // 軸を描画する
+    g.setColor(Color.lightGray);
+    Dimension d = getSize();
+    int width = d.width;
+    int height = d.height;
+    g.drawRect(0, 0, width - 1, height - 1);
+    g.drawLine(0, height / 2, width, height / 2);
+    g.drawLine(width / 2, 0, width / 2, height - 1);
+
+    // 波形を描画する
+    g.setColor(Color.blue);
+    double dx = 4 * Math.PI / width;
+    double x = -2 * Math.PI;
+    for(int i = 0; i < width - 1; i++) {
+      double f1 = Math.sin(x) * Math.sin(10 * x);
+      double f2 = Math.sin(x + dx) * Math.sin(10 * (x + dx));
+      int y1 = (int)((height - height * f1) / 2);
+      int y2 = (int)((height - height * f2) / 2);
+      g.drawLine(i, y1, i + 1, y2);
+      x += dx;
+    }
+  }
+}
+
+【2】
+import java.applet.*;
+import java.awt.*;
+import java.util.*;
+/*
+  <applet code="GaussianDots" width=200 height=200>
+  </applet>
+*/
+
+public class GaussianDots extends Applet
+implements Runnable {
+  int x, y;
+
+  public void init() {
+    x = y = -1;
+    Thread thread = new Thread(this);
+    thread.start();
+  }
+
+  public void run() {
+    Random random = new Random();
+    try {
+      while(true) {
+        Dimension d = getSize();
+        Thread.sleep(100);
+        x = (int)(d.width / 2 + d.width * random.nextGaussian() / 8); // nextGaussian()は平均0、標準偏差1のガウス分布を返す。8で割ることで大まかに300×300の範囲に点が納まるようにする
+        y = (int)(d.height / 2 + d.height * random.nextGaussian() / 8);
+        repaint();
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+
+  public void update(Graphics g) {
+    paint(g);
+  }
+
+  public void paint(Graphics g) {
+    g.fillRect(x, y, 1, 1);
+  }
+}
+
+14.1：練習問題
+
+【1】 イベントソースの3つの責任とは、登録/登録解除メソッドの提供、イベントの生成、登録済みリスナへのイベントの送信です。
+
+【2】 イベントリスナの3つの責任とは、通知の登録、リスナインターフェイスの実装、通知の登録解除です。
+
+【3】 
+public void add TypeListener(TypeListener el)
+public void add TypeListener(TypeListener el) throws TooManyListenersException
+public void removeTypeListener(TypeListener el)
+
+14.2：練習問題
+
+【1】 java.util.EventObject
+
+【2】 マウスのクリック、ドラッグ、入る、出る、移動、押す、離す、ホイール回転
+
+【3】 java.util.EventObject、java.awt.AWTEvent、java.awt.event.ComponentEvent、java.awt.event.InputEvent
+
+14.3：練習問題
+
+【1】 java.util.EventListener
+
+【2】 java.awt.event.MouseListener、java.awt.event.MouseMotionListener
+
+【3】
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="TrackMouse" width=300 height=300>
+  </applet>
+*/
+
+public class TrackMouse extends Applet
+implements MouseMotionListener {
+  Point p;
+
+  public void init() {
+    addMouseMotionListener(this);
+  }
+
+  public void mouseDragged(MouseEvent me) {
+    p = me.getPoint();
+    repaint();
+  }
+
+  public void mouseMoved(MouseEvent me) {
+    p = me.getPoint();
+    repaint();
+  }
+
+  public void paint(Graphics g) {
+    if (p != null) {
+      g.fillRect(p.x - 10, p.y - 10, 10, 10);
+    }
+  }
+}
+
+14.4：練習問題
+
+【1】 アダプタクラスは、特定のリスナインターフェイス内のすべてのメソッドの空実装を提供します。このクラスは、そのインターフェイスで定義されているメソッドの一部だけをオーバーライドしたい場合に役立ちます。
+
+【2】 
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseMotionAdapterDemo" width=100 height=100>
+  </applet>
+*/
+
+public class MouseMotionAdapterDemo extends Applet {
+  public void init() {
+    setBackground(Color.white);
+    addMouseListener(new Adapter1(this));
+    addMouseMotionListener(new Adapter2(this));
+  }
+}
+
+class Adapter1 extends MouseAdapter {
+  MouseMotionAdapterDemo mmad;
+
+  public Adapter1(MouseMotionAdapterDemo mmad) {
+    this.mmad = mmad;
+  }
+
+  public void mouseReleased(MouseEvent me) {
+    mmad.setBackground(Color.white);
+    mmad.repaint();
+  }
+}
+
+class Adapter2 extends MouseMotionAdapter {
+  MouseMotionAdapterDemo mmad;
+
+  public Adapter2(MouseMotionAdapterDemo mmad) {
+    this.mmad = mmad;
+  }
+
+  public void mouseDragged(MouseEvent me) {
+    mmad.setBackground(Color.cyan);
+    mmad.repaint();
+  }
+}
+
+14.5：練習問題
+
+【1】 インナクラスは、式や別のクラスのスコープ内に存在します。したがって、そのスコープ内の変数とメソッドを参照することができます。
+
+【2】
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseMotionAdapterInner" width=100 height=100>
+  </applet>
+*/
+
+public class MouseMotionAdapterInner extends Applet {
+  public void init() {
+    setBackground(Color.white);
+    addMouseListener(new Adapter1());
+    addMouseMotionListener(new Adapter2());
+  }
+
+  class Adapter1 extends MouseAdapter { // インナクラス
+    public void mouseReleased(MouseEvent me) {
+      setBackground(Color.white);
+      repaint();
+    }
+  }
+
+  class Adapter2 extends MouseMotionAdapter { // インナクラス
+    public void mouseDragged(MouseEvent me) {
+      setBackground(Color.cyan);
+      repaint();
+    }
+  }
+}
+
+14.6：練習問題
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseAnonymousDemo2" width=100 height=100>
+  </applet>
+*/
+
+public class MouseAnonymousDemo2 extends Applet {
+  public void init() {
+    setBackground (Color.white);
+    addMouseListener (new MouseAdapter() { // 無名インナクラス
+     public void mouseReleased(MouseEvent me) {
+        setBackground(Color.white);
+        repaint();
+      }
+    });
+    addMouseMotionListener (new MouseMotionAdapter() { // 無名インナクラス
+      public void mouseDragged (MouseEvent me) {
+        setBackground(Color.cyan);
+        repaint();
+      }
+    });
+  }
+}
+
+14.7：練習問題
+
+【1】 （省略）
+
+【2】
+import javax.swing.*;
+import java.awt.*;
+/*
+  <applet code="BufferedAnalogMeter" width=400 height=200>
+  <param name="amplitude" value="8">
+  <param name="frequency" value="0.5">
+  <param name="max" value="10">
+  <param name="min" value="-10">
+  </applet>
+*/
+
+public class BufferedAnalogMeter extends JApplet
+implements Runnable {
+  // 正弦波を表す変数を宣言する
+  double amplitude, frequency;
+
+  // 変数を宣言する
+  double time;
+  Thread t;
+
+  // メーターペインのオブジェクトを宣言する
+  MeterPanel mp;
+
+  public void init() {
+    // 正弦波を表すパラメータを読み取る
+    String samplitude = getParameter("amplitude");
+    amplitude = Double.valueOf(samplitude).doubleValue();
+    String sfrequency = getParameter("frequency");
+    frequency = Double.valueOf(sfrequency).doubleValue();
+
+    // メーターの範囲を表すパラメータを読み取る
+    String smax = getParameter("max");
+    double max = Double.valueOf(smax).doubleValue();
+    String smin = getParameter("min");
+    double min = Double.valueOf(smin).doubleValue();
+
+    // コンテンツペインに配置
+    mp = new MeterPanel(min, max);
+    getContentPane().add(mp);
+
+    // スレッドを起動する
+    t = new Thread(this);
+    t.start();
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        // ラジアンを計算する
+        double radians = 2 * Math.PI * frequency * time / 1000;
+
+        // 現在の正弦波の値を計算する
+        mp.setValue(amplitude * Math.sin(radians));
+
+        // サンプリングの間隔を計算する
+        long interval = (long)(10 / frequency);
+
+        // 時間を更新する
+        time += interval;
+
+        // ウィンドウの更新を要求する
+        repaint();
+
+        // 次のサンプリングまで休止する
+        Thread.sleep(interval);
+      }
+    }
+    catch (Exception ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class MeterPanel extends JPanel {
+  // メーターの範囲を表す変数を宣言する
+  double max, min;
+
+  // 変数を宣言する
+  double value;
+
+  public MeterPanel(double min, double max) {
+    super();
+    this.min = min;
+    this.max = max;
+  }
+
+  public void setValue(double value) {
+    this.value = value;
+  }
+
+  public void paintComponent(Graphics g) {
+    // ウィンドウのサイズを調べる
+    Dimension d = getSize();
+    int h = d.height;
+    int w = d.width;
+
+    // 文字盤のラジアンを計算する
+    int r1 = (int)(0.4 * w);
+    int r2 = (int)(0.8 * h);
+    int radius = (r1 < r2) ? r1 : r2;
+
+    // 文字盤を表す半円形を描画する
+    int centerx = (int)(w * 0.5);
+    int centery = (int)(h * 0.9);
+    int xa = centerx - radius;
+    int ya = centery - radius;
+    g.drawArc(xa, ya, 2 * radius, 2 * radius, 0, 180);
+
+    // メーターの底部を表す線を描画する
+    g.drawLine(centerx - radius, centery,
+      centerx + radius, centery);
+
+    // 針の位置を計算する
+    double angle;
+    if (value > max) {
+      angle = 180;
+    }
+    else if (value < min) {
+      angle = 0;
+    }
+    else {
+      angle = (int)(180 * (value - min) / (max - min));
+    }
+
+    // 針を表す線を描画する
+    double radians = angle * Math.PI / 180;
+    int x = (int)(centerx - radius * 0.9 * Math.cos(radians));
+    int y = (int)(centery - radius * 0.9 * Math.sin(radians));
+    g.setColor(Color.blue);
+    g.drawLine(centerx, centery, x, y);
+  }
+}
+
+14.8：練習問題
+
+【1】 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="ToggleButton" width=200 height=60>
+  </applet>
+*/
+
+public class ToggleButton extends JApplet
+implements ActionListener {
+  JButton b;
+
+  public void init() {
+    getContentPane().setLayout(new FlowLayout());
+    b = new JButton("Start");
+    b.addActionListener(this);
+    getContentPane().add(b);
+  }
+
+  public void actionPerformed(ActionEvent ae) {
+    if (b.getText().equals("Start"))
+      b.setText("Stop");
+    else
+      b.setText("Start");
+  }
+}
+
+【2】
+import javax.swing.*;
+import java.awt.*;
+/*
+  <applet code="NamePassword" width=300 height=100>
+  </applet>
+*/
+
+public class NamePassword extends JApplet {
+  public void init() {
+    getContentPane().setLayout(new FlowLayout());
+    JLabel l1 = new JLabel("Name: ");
+    getContentPane().add(l1);
+    JTextField tf1 = new JTextField("Joe O'Neil", 20); // 初期値に名前を入れたテキストフィールド
+    getContentPane().add(tf1);
+    JLabel l2 = new JLabel("Password: ");
+    getContentPane().add(l2);
+    JPasswordField tf2 = new JPasswordField("", 20); // 初期値が空のパスワードフィールド
+    getContentPane().add(tf2);
+  }
+}
+
+第14章：第14章の理解度チェック
+
+【1】 代行イベントモデルは、ソースがイベントを生成して一連のリスナに送信する標準メカニズムを提供します。ソースは、登録／登録解除メソッドの提供、イベントの生成、およびリスナへのイベントのユニキャスト／マルチキャストを行います。リスナは、イベント通知の受け取り、イベントを受け取るためのインターフェイスの実装、およびそのタイプのイベントを受け取る必要がなくなった場合の登録解除を行います。実際には、ソースが1つ以上のリスナの代行としてイベント処理を実行します。
+
+【2】 java.util.EventObject
+
+【3】 java.util.EventListener
+
+【4】 アダプタクラスは、特定のリスナインターフェイス内のすべてのメソッドの空実装を提供します。
+
+【5】 インナクラスは、式または別のクラスのスコープ内で定義することができるクラスです。このクラスは、このクラスを囲んでいるクラスの変数とメソッドを参照することができます。したがって、このクラスの参照を保存する必要はありません。
+
+【6】 無名インナクラスは名前のないインナクラスです。このクラスを使用すれば、イベントハンドラの作成がより簡単になります。
+
+【7】 JAppletクラスのgetContentPane()メソッドを使います。
+
+【8】 アクションイベント。
+
+第14章：総合理解度チェック
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="Brighter" width=300 height=300>
+  </applet>
+*/
+
+public class Brighter extends Applet
+implements MouseListener {
+  int i;
+  Color color;
+
+  public void init() {
+    color = new Color(i, i, i);
+    setBackground(color);
+    addMouseListener(this);
+  }
+
+  public void mouseClicked(MouseEvent me) {
+    i += 10;
+    if (i > 255)
+      i = 255;
+    color = new Color(i, i, i); // クリックするたびに白の濃度を上げる
+    setBackground(color);
+    repaint();
+  }
+
+  public void mouseEntered(MouseEvent me) {
+  }
+
+  public void mouseExited(MouseEvent me) {
+  }
+
+  public void mousePressed(MouseEvent me) {
+  }
+
+  public void mouseReleased(MouseEvent me) {
+  }
+}
+
+【2】 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="CircleMaker" width=300 height=300>
+  </applet>
+*/
+
+public class CircleMaker extends JApplet {
+  int xc, yc, x, y;
+  boolean down;
+  CirclePanel cp;
+
+  public void init() {
+    cp = new CirclePanel();
+    getContentPane().add(cp);
+
+    // マウスイベントの無名インナクラスを
+    // 定義する
+    addMouseListener(new MouseAdapter() {
+      public void mousePressed(MouseEvent me) {
+        xc = me.getX();
+        yc = me.getY();
+        down = true;
+      }
+      public void mouseReleased(MouseEvent me) {
+        down = false;
+      }
+    });
+
+    // マウスモーションイベントの無名インナクラスを
+    // 定義する
+    addMouseMotionListener(new MouseMotionAdapter() {
+      public void mouseDragged(MouseEvent me) {
+        int dx = Math.abs(xc - me.getX());
+        int dy = Math.abs(yc - me.getY());
+        int radius = (dx > dy) ? dx : dy;
+        if (down) {
+          cp.setValue(xc, yc, radius);
+          repaint();
+        }
+      }
+    });
+  }
+}
+
+class CirclePanel extends JPanel {
+    int xc, yc, radius;
+
+    void setValue(int xc, int yc, int radius) {
+        this.xc = xc;
+        this.yc = yc;
+        this.radius = radius;
+    }
+
+    public void paintComponent(Graphics g) {
+      g.drawOval(xc - radius, yc - radius, 2 * radius, 2 * radius);
+    }
+}
+
+【3】
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="ColorChanger" width=120 height=120>
+  </applet>
+*/
+
+public class ColorChanger extends JApplet
+implements Runnable {
+  boolean down;
+  ColorPanel cp;
+  JButton b;
+
+  public void init() {
+    cp = new ColorPanel(Color.BLACK);
+    getContentPane().add(cp);
+
+    b = new JButton("Stop");
+    b.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent ae) {
+        down = !down;
+        b.setText(down ? "Start" : "Stop");
+      }
+    });
+    getContentPane().add(b, BorderLayout.SOUTH);
+
+    Thread thread = new Thread(this);
+    thread.start();
+  }
+
+  public void run() {
+    try {
+      int angle = 0;
+      while(true) {
+        Thread.sleep(200);
+        if (!down) {
+          // 正弦波でなめらかに変化
+          double radians = angle * Math.PI / 180;
+          int r = (int)(127 * Math.sin(radians) + 127);
+          int g = (int)(127 * Math.sin(2 * radians) + 127);
+          int b = (int)(127 * Math.sin(3 * radians) + 127);
+          cp.setColor(new Color(r, g, b));
+          repaint();
+          ++angle;
+          if (angle > 360)
+            angle = 0;
+        }
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+}
+
+class ColorPanel extends JPanel {
+  Color color;
+
+  public ColorPanel(Color color) {
+    super();
+    this.color = color;
+  }
+
+  void setColor(Color color) {
+    this.color = color;
+  }
+
+  public void paintComponent(Graphics g) {
+    Dimension d = getSize();
+    g.setColor(color);
+    g.fillRect(0, 0, d.width, d.height); // 描画
+  }
+}

@@ -1,0 +1,376 @@
+第4章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P110
+■P111
+■P112
+■P113
+■P114
+■P115
+■P116
+■P117
+■P119
+■P120-1
+■P120-2
+■P121-1
+■P121-2
+■P122
+■P123
+■P125
+■P127-1
+■P127-2
+■P128
+■P130
+■P131
+■P132
+・・・・・・・・・・・・・・・・・・・・・
+
+■P110
+class IfElseLadder {
+  public static void main(String args[]) {
+    int i = Integer.valueOf(args[0]).intValue();
+    if (i < 0)
+      System.out.println("Negative number");
+    else if (i == 0)
+      System.out.println("Zero");
+    else if (i == 1)
+      System.out.println("One");
+    else if (i == 2)
+      System.out.println("Two");
+    else if (i == 3)
+      System.out.println("Three");
+    else
+      System.out.println("Greater than three");
+  }
+}
+
+■P111
+class IfElse {
+  public static void main(String args[]) {
+    int i = Integer.parseInt(args[0]);
+    if (i > 0)
+      if (i > 3)
+        System.out.println("i > 0 and i > 3");
+      else
+        System.out.println("i > 0 and i <= 3");
+    else
+      System.out.println("i <= 0");
+    }
+}
+
+■P112
+class ExpressionLoop {
+  public static void main(String args[]) {
+    int i = Integer.parseInt(args[0]);
+    for( ; i > 0; i--) System.out.print(i + " "); // カウントダウン
+    System.out.println("");
+  }
+}
+
+■P113
+class EmptyForIncrement {
+  public static void main(String args[]) {
+    int i;
+    for(i = 0; i < 10; ) {
+      System.out.println(i);
+      i++; // 手動でインクリメント
+    }
+  }
+}
+
+■P114
+class WhileDemo {
+  public static void main(String args[]) {
+    int i = Integer.parseInt(args[0]);
+    while(i > 0) { // iが0以上の間ループ
+      System.out.print(i + " ");
+      i--;
+    }
+    System.out.println("");
+  }
+}
+
+■P115
+class VowelCounter {
+  public static void main(String args[]) {
+    int vowels = 0;
+    int i = args[0].length() - 1; // 文字数-1
+    while(i >= 0) {
+      char c = args[0].charAt(i); // 1文字ずつ取り出し
+      if (c == 'A' || c == 'a')
+        ++vowels;
+      else if (c == 'e' || c == 'E')
+        ++vowels;
+      else if (c == 'i' || c == 'I')
+        ++vowels;
+      else if (c == 'o' || c == 'O')
+        ++vowels;
+      else if (c == 'u' || c == 'U')
+        ++vowels;
+      --i;
+    }
+    System.out.println("The number of vowels is " +
+      vowels);
+  }
+}
+
+■P116
+class PrimeNumbers {
+  public static void main(String args[]) {
+    int count = 0;
+    int number = 2;
+
+    do {
+      // 要素があるかどうかテストする
+      boolean prime = true;
+      for(int i = 2; i < number / 2 + 1; i++) {
+        if ((number % i) == 0) prime = false;
+      }
+      // 素数がある場合は、表示する
+      if (prime == true) {
+        System.out.print(number + " ");
+        ++count;
+      }
+
+      // 数値を増分する
+      ++number;
+    } while(count < 14);
+    System.out.println("");
+  }
+}
+
+■P117
+class Alphabet3 {
+  public static void main(String args[]) {
+    int i, j, k;
+    for(i = 0; i < 3; i++)     // 3回全体を表示するためのループ
+      for(j = 0; j < 26; j++)  // A～Zまで表示のためのループ
+        for(k = 0; k < 2; k++) // 2回表示のためのループ
+          System.out.print((char)('A' + j));
+          // Aの文字コードに加算してZまで表示
+    System.out.println();
+  }
+}
+
+■P119
+class BreakDemo {
+  public static void main(String args[]) {
+    int i;
+    for(i = 1; i < 100; i++) {
+      System.out.println(i);
+      // 10になったらループから抜ける
+      if (i == 10) break;
+    }
+  }
+}
+
+■P120-1
+class BreakDemo2 {
+  public static void main(String args[]) {
+    int i, j;
+    ILoop: for(i = 1; i < 100; i++) { // ILoopというラベルを定義
+      System.out.print(i + ": ");
+      for(j = 5; j < 10; j++) {
+        System.out.print(j);
+         // iとjの値が一致したらiのループから抜ける
+        if (i == j) break ILoop;
+      }
+      System.out.println("");
+    }
+    System.out.println("");
+  }
+}
+
+■P120-2
+class DollarArgument {
+  public static void main(String args[]) {
+    for(int i = 0; i < args.length; i++) {
+      // $から始まるかどうかを検査
+      if (args[i].startsWith("$")) {
+        System.out.println(args[i]);
+        break; // forループから抜ける
+      }
+    }
+  }
+}
+
+■P121-1
+class BreakNestedLoop {
+  public static void main(String args[]) {
+    for(int i = 0; i < 10; i++) {
+      for(int j = 0; j < 10; j++) {
+        System.out.print(j + " ");
+        if (j == 4) break;    // 4になったらループを抜ける
+      }
+      System.out.println(""); // ループが終わるか抜けると改行を表示
+    }
+  }
+}
+
+■P121-2
+class BreakNestedLoop2 {
+  public static void main(String args[]) {
+    ILoop: for(int i = 0; i < 10; i++) {
+      for(int j = 0; j < 10; j++) {
+        System.out.print(j + " ");
+        if (j == 4) break ILoop;    // 4になったらループを抜ける
+      }
+      System.out.println(""); // ループが終わるか抜けると改行を表示
+    }
+    System.out.println(""); // ループが終わるか抜けると改行を表示
+  }
+}
+
+■P122
+class ContinueDemo {
+  public static void main(String args[]) {
+    for(int x = 0; x < 100; x++) {
+      if (x < 95) continue; // 95以下ならループに戻る
+      System.out.println(x);
+    }
+  }
+}
+
+■P123
+class TenRandomNumbers {
+  public static void main(String args[]) {
+    int i = 0;
+    while(true) {
+      double d = Math.random();
+      if (d < .2 || d > .8)  // 0.2～0.8の範囲にない場合は無視
+        continue;
+      System.out.println(d); // 10個表示したらループを抜ける
+      if (++i == 10)
+        break;
+    }
+  }
+}
+
+■P125
+class SwitchDemo {
+  public static void main(String args[]) {
+    int i = Integer.parseInt(args[0]);
+    switch (i) {
+      case 1:
+        System.out.println("one");
+        break;
+      case 2:
+        System.out.println("two");
+        break;
+      case 3:
+        System.out.println("three");
+        break;
+      case 4:
+        System.out.println("four");
+        break;
+      default:
+        System.out.println("Unrecognized Number");
+    }
+  }
+}
+
+■P127-1
+class MissingBreaks {
+  public static void main(String args[]) {
+    int i = 3;
+    switch (i) {
+    case 5:
+      System.out.println("Greater than 4");
+    case 4:
+      System.out.println("Greater than 3");
+    case 3:
+      System.out.println("Greater than 2");
+    case 2:
+      System.out.println("Greater than 1");
+    case 1:
+      System.out.println("Greater than 0");
+      break; // 1～5の場合はここまで実行される
+    default:
+      System.out.println("Greater than 5" +
+        " or negative");
+    }
+  }
+}
+
+■P127-2
+class EmptyCase {
+  public static void main(String args[]) {
+    // 引数の先頭の文字を取得する
+    char ch = args[0].charAt(0);
+
+    // 先頭の文字が母音か子音かを判断する
+    switch (ch) {
+      case 'a':
+      case 'e':
+      case 'i':
+      case 'o':
+      case 'u':
+        System.out.println("Vowel");     // 母音
+        break;
+      default:
+        System.out.println("Consonant"); // 子音
+    }
+  }
+}
+
+■P128
+class BadSwitch {
+  public static void main(String args[]) {
+    int i = 1;
+    int j = 2;
+    switch (Integer.parseInt(args[0])) {
+      case i:
+        System.out.println("1");
+        break;
+      case j:
+        System.out.println("2");
+        break;
+      default:
+        System.out.println("Default");
+    }
+  }
+}
+
+■P130
+class BitwiseOperators {
+  public static void main(String args[]) {
+    char c = 'A';
+    byte b = 100;
+    short s = 100;
+    int i = -100;
+    long lo = 100;
+    System.out.println(c & 0xf);
+    System.out.println(b | 1);
+    System.out.println(s ^ 1);
+    System.out.println(lo | 1);
+    System.out.println(i >> 2);
+    System.out.println(s >>> 2);
+    System.out.println(i << 2);
+  }
+}
+
+■P131
+class ShowBits {
+  public static void main(String args[]) {
+    byte b = -5;
+    for(int i = 7; i >= 0; i--) {
+      if ((b & 0x80) == 0) // bの値とCx80との論理値
+        System.out.println("Bit " + i + " is 0");
+      else
+        System.out.println("Bit " + i + " is 1");
+      b <<= 1;
+    }
+  }
+}
+
+■P132
+class BitwiseOperators2 {
+  public static void main(String args[]) {
+    short s = 0xff;
+    System.out.println(s);
+    System.out.println(s & 0xf);
+    System.out.println(s | 1);
+    System.out.println(s ^ 1);
+    System.out.println(s << 2);
+  }
+}

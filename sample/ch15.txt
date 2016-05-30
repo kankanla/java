@@ -1,0 +1,80 @@
+第16章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P486
+■P487
+・・・・・・・・・・・・・・・・・・・・・
+
+■P486
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+
+class DOMParseDemo {
+  public static void main(String[] args) {
+    int i, j;
+    try {
+      // DOMパーサを構成
+      DocumentBuilderFactory factory =
+        DocumentBuilderFactory.newInstance();
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      Document doc = builder.parse(args[0]);
+
+      // addressエレメントのあるノードを取得
+      NodeList nl = doc.getElementsByTagName("address");
+      for(i = 0; i < nl.getLength(); i++) {
+        NodeList nl2 = nl.item(i).getChildNodes();
+        for(j = 0; j < nl2.getLength(); j++) {
+          // 各エレメントの中にあるテキストを表示
+          if (nl2.item(j).getNodeType() == Node.ELEMENT_NODE) {
+            System.out.print(nl2.item(j).getTextContent() + " ");
+          }
+        }
+        System.out.println("");
+      }
+    } catch (Exception e) { e.printStackTrace(); }
+  }
+}
+
+■P487
+import javax.xml.parsers.*;
+import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+
+class SAXParseDemo {
+  public static void main(String[] args) {
+    try {
+      // SAXパーサを構成
+      SAXParserFactory factory = SAXParserFactory.newInstance();
+      SAXParser sxp = factory.newSAXParser();
+      // MyHandlerをイベントハンドラとするパーサを実行
+      sxp.parse(args[0], new MyHandler());
+    } catch (Exception e) { e.printStackTrace(); }
+  }
+}
+
+class MyHandler extends DefaultHandler {
+  // XMLイベントを処理するハンドラ
+  String tag = ""; // XMLの開始エレメントを記録
+
+  public void characters(char[] ch, int start, int length)
+    throws SAXException {
+    // 文字列イベント
+    if (tag == "name" || tag == "tel" || tag == "email") {
+      System.out.print(new String(ch, start, length) + " ");
+    }
+  }
+
+  public void startElement(String uri, String localName, String qName,
+    Attributes atts) throws SAXException {
+    // 開始エレメントイベント
+    tag = qName;
+  }
+  public void endElement(String uri, String localName, String qName)
+    throws SAXException {
+    // 終了エレメントイベント
+    tag = "";
+    if (qName == "address") {
+      System.out.println("");
+    }
+  }
+}

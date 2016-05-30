@@ -1,0 +1,335 @@
+第14章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P455
+■P456
+■P460
+■P462
+■P464
+■P469
+■P477
+■P478
+■P479
+・・・・・・・・・・・・・・・・・・・・・
+
+■P455
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseEvents" width=300 height=300>
+  </applet>
+*/
+
+public class MouseEvents extends Applet
+implements MouseListener {
+  public void init() {
+    addMouseListener(this);
+  }
+
+  public void mouseClicked(MouseEvent me) {
+    setBackground(Color.blue);
+    repaint();
+  }
+
+  public void mouseEntered(MouseEvent me) {
+    setBackground(Color.green);
+    repaint();
+  }
+
+  public void mouseExited(MouseEvent me) {
+    setBackground(Color.red);
+    repaint();
+  }
+
+  public void mousePressed(MouseEvent me) {
+    setBackground(Color.white);
+    repaint();
+  }
+
+  public void mouseReleased(MouseEvent me) {
+    setBackground(Color.yellow);
+    repaint();
+  }
+}
+
+■P456
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseMotionEvents" width=300 height=300>
+  </applet>
+*/
+
+public class MouseMotionEvents extends Applet
+implements MouseListener, MouseMotionListener {
+  Point p;
+
+  public void init() {
+    addMouseListener(this);
+    addMouseMotionListener(this);
+  }
+
+  public void mouseClicked(MouseEvent me) {
+  }
+
+  public void mouseEntered(MouseEvent me) {
+  }
+
+  public void mouseExited(MouseEvent me) {
+  }
+
+  public void mousePressed(MouseEvent me) {
+    p = me.getPoint();
+    repaint();
+  }
+
+  public void mouseReleased(MouseEvent me) {
+    p = null;
+    repaint();
+  }
+
+  public void mouseDragged(MouseEvent me) {
+    p = me.getPoint();
+    repaint();
+  }
+
+  public void mouseMoved(MouseEvent me) {
+  }
+
+  public void paint(Graphics g) {
+    if (p != null) {
+      Dimension d = getSize();
+      int xc = d.width / 2;
+      int yc = d.height / 2;
+      g.drawLine(xc, yc, p.x, p.y);
+    }
+  }
+}
+
+■P460
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseAdapterDemo" width=100 height=100>
+  </applet>
+*/
+
+public class MouseAdapterDemo extends Applet {
+  public void init() {
+    setBackground(Color.green);
+    addMouseListener(new MyMouseAdapter(this));
+  }
+}
+
+class MyMouseAdapter extends MouseAdapter {
+  MouseAdapterDemo mad;
+
+  public MyMouseAdapter(MouseAdapterDemo mad) {
+    this.mad = mad;
+  }
+
+  public void mousePressed(MouseEvent me) {
+    mad.setBackground(Color.red);
+    mad.repaint();
+  }
+
+  public void mouseReleased(MouseEvent me) {
+    mad.setBackground(Color.green);
+    mad.repaint();
+  }
+}
+
+■P462
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseInnerDemo" width=100 height=100>
+  </applet>
+*/
+
+public class MouseInnerDemo extends Applet {
+  public void init() {
+    setBackground(Color.green);
+    addMouseListener(new MyMouseAdapter());
+  }
+
+  class MyMouseAdapter extends MouseAdapter {
+    // インナクラス
+    public void mousePressed(MouseEvent me) {
+      setBackground(Color.red);
+      repaint();
+    }
+
+    public void mouseReleased(MouseEvent me) {
+      setBackground(Color.green);
+      repaint();
+    }
+  }
+}
+
+■P464
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+/*
+  <applet code="MouseAnonymousDemo" width=100 height=100>
+  </applet>
+*/
+
+public class MouseAnonymousDemo extends Applet {
+  public void init() {
+    setBackground(Color.green);
+    addMouseListener(new MouseAdapter() {
+
+      // 無名インナクラス
+      public void mousePressed(MouseEvent me) {
+        setBackground(Color.red);
+        repaint();
+      }
+
+      public void mouseReleased(MouseEvent me) {
+        setBackground(Color.green);
+        repaint();
+      }
+    });
+  }
+}
+
+■P469
+import java.awt.*;
+import javax.swing.*;
+/*
+  <applet code="JFirstApplet" width=200 height=200>
+  </applet>
+*/
+
+public class JFirstApplet extends JApplet {
+  public void init() {
+    // MyPanel1のオブジェクトをコンテンツペインに配置
+    getContentPane().add(new MyPanel1());
+  }
+}
+
+class MyPanel1 extends JPanel {
+  public void paintComponent(Graphics g) {
+      g.drawString("This is my first applet!", 20, 100);
+  }
+}
+
+■P477
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+/*
+  <applet code="JButtonEvents" width=400 height=60>
+  </applet>
+*/
+
+public class JButtonEvents extends JApplet
+  implements ActionListener {
+  JLabel label;
+
+  public void init() {
+    // レイアウトをフローレイアウトに変更
+    getContentPane().setLayout(new FlowLayout());
+
+    // ボタンとラベルを配置
+    JButton b1 = new JButton("Apple");
+    b1.addActionListener(this);
+    getContentPane().add(b1);
+    JButton b2 = new JButton("Banana");
+    b2.addActionListener(this);
+    getContentPane().add(b2);
+    JButton b3 = new JButton("Orange");
+    b3.addActionListener(this);
+    getContentPane().add(b3);
+    label = new JLabel("                  ");
+    getContentPane().add(label);
+  }
+
+  public void actionPerformed(ActionEvent ae) {
+    label.setText(ae.getActionCommand());
+  }
+}
+
+■P478
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+/*
+  <applet code="JPasswordGuess" width=200 height=170>
+  </applet>
+*/
+
+public class JPasswordGuess extends JApplet {
+  // ラベル
+  JLabel label = new JLabel("Guess!");
+  // パスワードフィールド
+  JPasswordField question = new JPasswordField("secret", 16);
+  // テキストフィールド
+  JTextField ans = new JTextField(16);
+
+  public void init() {
+    // ボタンとアクションを定義
+    JButton button = new JButton("Guess");
+    button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent ae) {
+        if (new String(question.getPassword()).
+          equals(ans.getText())) {
+          label.setText("You win!");
+        } else {
+          label.setText("You miss!");
+        }
+      }
+    });
+
+    // レイアウトをフローレイアウトに変更
+    getContentPane().setLayout(new FlowLayout());
+
+    getContentPane().add(label);
+    getContentPane().add(question);
+    getContentPane().add(ans);
+    getContentPane().add(button);
+  }
+}
+
+■P479
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+/*
+  <applet code="JTextAreaEvents" width=400 height=200>
+  </applet>
+*/
+
+public class JTextAreaEvents extends JApplet {
+  JTextArea ta;
+  JLabel label;
+
+  public void init() {
+    getContentPane().setLayout(new FlowLayout());
+    label = new JLabel("Event type");
+    ta = new JTextArea(10, 20);
+    ta.getDocument().addDocumentListener(new
+      DocumentListener() {
+      public void changedUpdate(DocumentEvent de) {
+        label.setText("changedUpdate");
+      }
+
+      public void insertUpdate(DocumentEvent de) {
+        label.setText("insertUpdate");
+      }
+
+      public void removeUpdate(DocumentEvent de) {
+        label.setText("removeUpdate");
+      }
+    });
+    getContentPane().add(label);
+    getContentPane().add(ta);
+  }
+}

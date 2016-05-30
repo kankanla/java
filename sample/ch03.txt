@@ -1,0 +1,286 @@
+第3章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P85
+■P86
+■P87
+■P89
+■P90
+■P91-1
+■P91-2
+■P92-1
+■P92-2
+■P93
+■P94
+■P95-1
+■P95-2
+■P96-1
+■P96-2
+■P97
+■P98
+■P99
+■P101
+■P102
+■P103
+・・・・・・・・・・・・・・・・・・・・・
+
+■P85
+class IfDemo {
+  public static void main(String args[]) {
+    if (args.length == 0) // 引数の個数が0かどうか
+      System.out.println("You must have command line arguments");
+  }
+}
+
+■P86
+class SquareRoot {
+  public static void main(String args[]) {
+    double d = Double.valueOf(args[0]).doubleValue();
+    if (d < 0)
+      System.out.println(Math.sqrt(-d) + "i");
+    if (d >= 0)
+      System.out.println(Math.sqrt(d));
+  }
+}
+
+■P87
+class SquareRoot2 {
+  public static void main(String args[]) {
+    double d = Double.valueOf(args[0]).doubleValue();
+    if (d < 0)
+      System.out.println(Math.sqrt(-d) + "i");
+    else
+      System.out.println(Math.sqrt(d));
+  }
+}
+
+■P89
+class Angle {
+  public static void main(String args[]) {
+    if (args.length > 0) {
+      double angle =
+        Double.valueOf(args[0]).doubleValue(); // 角度
+      double radians = angle * Math.PI / 180;  // ラジアンに変換
+      System.out.println("cosine: " + Math.cos(radians));
+      System.out.println("sine: " + Math.sin(radians));
+      System.out.println("tangent: " +
+        Math.tan(radians));
+    }
+    else {
+      System.out.println("Provide an angle in degrees " +
+        "as command line argument");           // 引数の数値が0以下
+    }
+  }
+}
+
+■P90
+public class ForDemo {
+  public static void main(String args[]) {
+    for(int num = 1; num < 11; num = num + 1)
+      System.out.print(num + " ");
+    System.out.println("terminating");
+  }
+}
+
+■P91-1
+public class ForDemo2 {
+  public static void main(String args[]) {
+    for(int num = 11; num < 11; num = num + 1)
+      System.out.print(num + " ");
+    System.out.println("terminating");
+  }
+}
+
+■P91-2
+public class ProductAndSum {
+  public static void main(String args[]) {
+    int sum = 0;
+    int prod = 1;
+    // 1から5までのループ
+    for(int num = 1; num < 6; num = num + 1) {
+      sum = sum + num;   // 和
+      prod = prod * num; // 積
+    }
+    System.out.println("product and sum: " + prod + " " + sum);
+  }
+}
+
+■P92-1
+public class CountTo100By5 {
+  public static void main(String args[]) {
+    for(int i = 0; i < 101; i = i + 5) // 5刻みでカウント
+      System.out.print(i + " ");
+    System.out.println("");
+  }
+}
+
+■P92-2
+class CountLettersDigits {
+  public static void main(String args[]) {
+    int digits = 0;
+    int letters = 0;
+    for(int i = 0; i < args[0].length(); i = i + 1) {
+      char ch = args[0].charAt(i);    // 数字
+      if (Character.isDigit(ch))
+        digits += 1;
+      else if (Character.isLetter(ch)) // 英字
+        letters += 1;
+    }
+    System.out.println("There are " + digits + " digits");
+    System.out.println("There are " + letters + " letters");
+  }
+}
+
+■P93
+class PrimeTest {
+  public static void main(String args[]) {
+    // コマンドライン引数を変換する
+    int num = Integer.parseInt(args[0]);
+
+    // 要素を判定する
+    boolean prime = true;
+    for(int i = 2; i <= num / 2; i = i + 1)
+          if ((num % i) == 0) prime = false;
+
+    // 結果を表示する
+    if (prime == true)
+      System.out.println("The number is prime.");
+    else
+      System.out.println("The number is not prime.");
+  }
+}
+
+■P94
+class IncrementTest {
+  public static void main(String args[]) {
+    int i, j;
+    i = 10;
+    j = i++;
+    /* 11と10が出力されることになる */
+    System.out.println("i and j: " +  i + " " + j);
+  }
+}
+
+■P95-1
+class IncrementTest2 {
+  public static void main(String args[]) {
+    int i, j;
+    i = 10;
+    j = ++i;
+    /* 11と11が出力されることになる */
+    System.out.println("i and j: " +  i + " " + j);
+  }
+}
+
+■P95-2
+class CountLettersDigits2 {
+  public static void main(String args[]) {
+    int digits = 0;
+    int letters = 0;
+    for(int i = 0; i < args[0].length(); i++) {
+      char ch = args[0].charAt(i);    // 数字
+      if (Character.isDigit(ch))
+        ++digits;
+      else if (Character.isLetter(ch)) // 英字
+        ++letters;
+    }
+    System.out.println("There are " + digits +
+      " digits");
+    System.out.println("There are " + letters +
+      " letters");
+  }
+}
+
+■P96-1
+class IncrementDecrement {
+  public static void main(String args[]) {
+    int i;
+    i = 0;
+    System.out.println(++i);  // 1を表示
+    System.out.println(i++);  // 1を表示
+    System.out.println(i);    // 2を表示
+    System.out.println(--i);   // 1を表示
+    System.out.println(i--);   // 1を表示
+    System.out.println(i);    // 0を表示
+  }
+}
+
+■P96-2
+class BeforeIncrementDecrement {
+  public static void main(String args[]) {
+    int a, b;
+    a = 1;
+    a = a + 1;
+    b = a;
+    b = b - 1;
+    System.out.println(a + " " + b);
+  }
+}
+
+■P97
+class NewlineDemo {
+  public static void main(String args[]) {
+    System.out.print("This is line one\n");
+    System.out.print("This is line two\n");
+    System.out.print("This is line three\n");
+  }
+}
+
+■P98
+class SpecialCharacters {
+  public static void main(String args[]) {
+    System.out.print("\u00a0 \u00a1 \u00a2 \u00a3\n");
+  }
+}
+
+■P99
+class EmbeddedNewlines {
+  public static void main(String args[]) {
+    System.out.println("one\ntwo\nthree\nfour");
+  }
+}
+
+■P101
+class RelationalOperatorDemo {
+  public static void main(String args[]) {
+    int i = Integer.parseInt(args[0]);
+    int j = Integer.parseInt(args[1]);
+    System.out.println("i = " + i);
+    System.out.println("j = " + j);
+    System.out.println("Relational operators:");
+    System.out.println("i < j " + (i < j));
+    System.out.println("i <= j " + (i <= j));
+    System.out.println("i == j " + (i == j));
+    System.out.println("i > j " + (i > j));
+    System.out.println("i >= j " + (i >= j));
+    System.out.println("i != j " + (i != j));
+  }
+}
+
+■P102
+class LogicalOperatorDemo {
+  public static void main(String args[]) {
+    boolean i = Boolean.valueOf(args[0]).booleanValue();
+    boolean j = Boolean.valueOf(args[1]).booleanValue();
+    System.out.println("i = " + i);
+    System.out.println("j = " + j);
+    System.out.println("Logical operators:");
+    System.out.println("i & j " + (i & j));
+    System.out.println("i | j " + (i | j));
+    System.out.println("i ^ j " + (i ^ j));
+    System.out.println("!i " + !i);
+    System.out.println("i && j " + (i && j));
+    System.out.println("i || j " + (i || j));
+    System.out.println("i == j " + (i == j));
+    System.out.println("i != j " + (i != j));
+  }
+}
+
+■P103
+class TernaryOperatorDemo {
+  public static void main(String args[]) {
+    int i = 10;
+    int j = 5;
+    System.out.println((i > j) ? i : j);
+  }
+}

@@ -1,0 +1,721 @@
+■第6章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第6章：前章の理解度チェック
+6.1：練習問題
+6.2：練習問題
+6.3：練習問題
+6.4：練習問題
+6.5：練習問題
+6.6：練習問題
+6.7：練習問題
+6.8：練習問題
+6.9：練習問題
+6.10：練習問題
+第6章：第6章の理解度チェック
+第6章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第6章：前章の理解度チェック
+
+【1】 thisキーワードを使って、現在のオブジェクトを参照することができます。また、コンストラクタから同じクラスに属する別のコンストラクタを明示的に呼び出すときにも使います。
+
+【2】 引数は値で渡されます。
+
+【3】 メソッドのシグネチャとは、メソッド名とパラメータのデータ型のリストを合わせたものです。
+
+【4】 
+class Planet {
+  String name;
+  int moons;
+
+  Planet(String name, int moons) {
+    this.name = name;
+    this.moons = moons;
+  }
+
+  void display() {
+    System.out.println(name + " has " +
+      moons + " moons");
+  }
+}
+
+class SolarSystem {
+  Planet planets[];
+
+  SolarSystem() {
+    // 惑星の作成
+    planets = new Planet[9];
+    planets[0] = new Planet("Mercury", 0);
+    planets[1] = new Planet("Venus", 0);
+    planets[2] = new Planet("Earth", 1);
+    planets[3] = new Planet("Mars", 2);
+    planets[4] = new Planet("Jupiter", 16);
+    planets[5] = new Planet("Saturn", 18);
+    planets[6] = new Planet("Uranus", 15);
+    planets[7] = new Planet("Neptune", 8);
+    planets[8] = new Planet("Pluto", 1);
+  }
+
+  void display() {
+    for(int i = 0; i < planets.length; i++) {
+      planets[i].display();
+    }
+  }
+}
+
+class SolarSystemDemo {
+  public static void main(String args[]) {
+    SolarSystem solarSystem = new SolarSystem();
+    solarSystem.display();
+  }
+}
+
+実行結果は次のとおりです。
+
+Mercury has 0 moons
+Venus has 0 moons
+Earth has 1 moons
+Mars has 2 moons
+Jupiter has 16 moons
+Saturn has 18 moons
+Uranus has 15 moons
+Neptune has 8 moons
+Pluto has 1 moons
+
+6.1：練習問題
+
+【1】 c = new Parent()でコンパイルエラーになります。原因は、代入できないデータ型だからです。Childクラスのオブジェクトは常にParentクラスですが、ParentクラスのオブジェクトはChildクラスではありません。
+
+6.2：練習問題
+
+【1】
+class M {
+  float f;
+  String str;
+}
+
+class N extends M {
+  Double d1;
+}
+
+class Mn {
+  public static void main(String args[]) {
+    N obj = new N();
+    obj.f = 34.5f;
+    obj.str = "This is a string";
+    obj.d1 = new Double(-23.45e-2);
+    System.out.println("obj.f = " + obj.f);
+    System.out.println("obj.str = " + obj.str);
+    System.out.println("obj.d1 = " + obj.d1);
+  }
+}
+
+実行結果は次のとおりです。
+
+obj.f = 34.5
+obj.str = This is a string
+obj.d1 = -0.2345
+
+【2】 
+class S {
+  Integer x;
+}
+
+class T extends S {
+  StringBuffer x;
+}
+
+class St {
+  public static void main(String args[]) {
+    S s = new S();
+    s.x = new Integer(5);
+    System.out.println("s.x = " + s.x);
+    T t = new T();
+    t.x = new StringBuffer("Hello");
+    System.out.println("t.x = " + t.x);
+  }
+}
+
+実行結果は次のとおりです。
+
+s.x = 5
+t.x = Hello
+
+【3】 
+class G {
+  static int x = 100;
+}
+
+class H extends G {
+  int x = 50;
+
+  void display() {
+    System.out.println("x = " + x);
+    System.out.println("super.x = " + super.x);
+  }
+}
+
+class Gh {
+  public static void main(String args[]) {
+    H h = new H();
+    h.display();
+  }
+}
+
+実行結果は次のとおりです。
+
+x = 50
+super.x = 100
+
+6.3：練習問題
+
+【1】 Hello from B3
+呼び出されるのはC3のメソッドhello()（引数なし）ですが、C3にはこのメソッドはなく、スーパークラスのB3を参照します。このため、B3クラスのメソッドhello()の結果が表示されます。
+
+【2】 
+class Bond {
+  void display() {
+    System.out.println("Bond");
+  }
+}
+
+class ConvertibleBond extends Bond {
+  void display() {
+    System.out.println("Convertible Bond");
+  }
+}
+
+class MethodOverriding4 {
+  public static void main(String args[]) {
+    Bond bonds[] = new Bond[6];
+    // それぞれのオブジェクトで初期化する
+    bonds[0] = new Bond();
+    bonds[1] = new ConvertibleBond();
+    bonds[2] = new ConvertibleBond();
+    bonds[3] = new Bond();
+    bonds[4] = new Bond();
+    bonds[5] = new ConvertibleBond();
+    for(int i = 0; i < 6; i++)
+      bonds[i].display();
+  }
+}
+
+実行結果は次のとおりです。
+
+Bond
+Convertible Bond
+Convertible Bond
+Bond
+Bond
+Convertible Bond
+
+6.4：練習問題
+
+【1】 
+class I2 {
+  String getDescription() {
+    return "I2";
+  }
+}
+
+class J2 extends I2 {
+  String getDescription() {
+    return "J2 " + super.getDescription();
+  }
+}
+
+class K2 extends J2 {
+  String getDescription() {
+    return "K2 " + super.getDescription();
+  }
+}
+
+class SuperForMethods2 {
+  public static void main(String args[]) {
+    System.out.println("Instantiating I2");
+    I2 obj = new I2();
+    System.out.println(obj.getDescription());
+
+    System.out.println("Instantiating J2");
+    obj = new J2();
+    System.out.println(obj.getDescription());
+
+    System.out.println("Instantiating K2");
+    obj = new K2();
+    System.out.println(obj.getDescription());
+  }
+}
+
+実行結果は次のとおりです。
+
+Instantiating I2
+I2
+Instantiating J2
+J2 I2
+Instantiating K2
+K2 J2 I2
+
+6.5：練習問題
+
+【1】 （省略）
+
+【2】 スーパークラスのコンストラクタをサブクラスのコンストラクタより先に実行しなければならないからです。
+
+6.6：練習問題
+
+【1】 できません。この2つの修飾子は同時に指定できません。final修飾子を指定すると、クラスは拡張できなくなります。abstract修飾子を指定したクラスは、それ自体をインスタンス化するのではなく、ほかのクラスによって拡張されます。
+
+【2】 抽象クラスはインスタンス化できません。有形クラスはインスタンス化できます。通常、抽象クラスは1つまたは複数の有形クラスによって拡張されます。
+
+【3】
+abstract class Shape { // 抽象クラスShape
+  void display() {
+  }
+}
+
+class Circle extends Shape {
+  void display() {
+    System.out.println("Circle");
+  }
+}
+
+class Rectangle extends Shape {
+  void display() {
+    System.out.println("Rectangle");
+  }
+}
+
+class Rhombus extends Shape {
+  void display() {
+    System.out.println("Rhombus");
+  }
+}
+
+class Trapezoid extends Shape {
+  void display() {
+    System.out.println("Trapezoid");
+  }
+}
+
+class Triangle extends Shape {
+  void display() {
+    System.out.println("Triangle");
+  }
+}
+
+class AbstractClassDemo2 {
+  public static void main(String args[]) {
+    Shape s = new Circle();
+    s.display();
+    s = new Rectangle();
+    s.display();
+    s = new Rhombus();
+    s.display();
+    s = new Trapezoid();
+    s.display();
+    s = new Triangle();
+    s.display();
+  }
+}
+
+実行結果は次のとおりです。
+
+Circle
+Rectangle
+Rhombus
+Trapezoid
+Triangle
+
+6.7：練習問題
+
+【1】 
+class V {
+  static final int v = 5;
+}
+
+class StaticFinal {
+  public static void main(String args[]) {
+    System.out.println(V.v);
+  }
+}
+
+実行結果は次のとおりです。
+
+5
+
+【2】 コンパイルエラーが発生します。finalで宣言した定数の値を変更することはできません。
+
+6.8：練習問題
+
+【1】 （省略）
+
+6.9：練習問題
+
+【1】 public：このキーワードを指定したメソッドは、このクラスにアクセスできるすべてのコードから呼び出すことができます。
+   static：このメソッドは静的です。
+   void：このメソッドには戻り値はありません。
+
+【2】 
+abstract class Vehicle { // 抽象クラスVehicle
+  abstract int numWheels();
+}
+
+class Car extends Vehicle {
+  int numWheels() {
+    return 4;
+  }
+}
+
+class Truck extends Vehicle {
+  int numWheels() {
+    return 8;
+  }
+}
+
+class VehicleTest {
+  public static void main(String args[]) {
+    Vehicle v1 = new Car();
+    System.out.println("A car has " + v1.numWheels() + " wheels");
+    Vehicle v2 = new Truck();
+    System.out.println("A truck has " + v2.numWheels() + " wheels");
+  }
+}
+
+実行結果は次のとおりです。
+
+A car has 4 wheels
+A truck has 8 wheels
+
+6.10：練習問題
+
+【1】 
+class Foo {
+  static int i = 7; // 静的変数
+  int j;            // インスタンス変数
+
+  Foo(int j) { // コンストラクタ
+    this.j = j;
+  }
+
+  public String toString() {
+    return "Foo: i = " + i + "; j = " + j; // Fooの変数の内容を文字列として表現する
+  }
+}
+
+class ToString {
+  public static void main(String args[]) {
+    Foo foo = new Foo(23);
+    System.out.println(foo);
+  }
+}
+
+実行結果は次のとおりです。
+
+Foo: i = 7; j = 23
+
+【2】 
+class ClassDemo2 {
+  public static void main(String args[]) {
+    Integer obj = new Integer("7");
+    Class cls = obj.getClass();
+    Class supercls = cls.getSuperclass();
+    System.out.println(supercls.getName());
+  }
+}
+
+実行結果は次のとおりです。
+
+java.lang.Number
+
+第6章：第6章の理解度チェック
+
+【1】 ポリモーフィズムとは、「多くの形態」という意味です。実行時のポリモーフィズムとは、実行時に適切なメソッドの実装が選択されることを意味します。
+
+【2】 動的メソッドディスパッチによって、実行中オブジェクトのクラスに基づいて適切な実装が選択されます。これにより、メソッドの実装形態が異なる複数のサブクラスをクラスから派生できるので、実行時のポリモーフィズムを実現する基盤ができあがります。
+
+【3】 
+abstract class Fruit { // 抽象クラスFruit
+  String color;
+
+  public String toString() { // toStringをオーバーライド
+    return getClass().getName() + ": " +
+      color;
+  }
+}
+
+class Apple extends Fruit {
+  Apple() {
+    color = "Red";
+  }
+}
+
+class Banana extends Fruit {
+  Banana() {
+    color = "Yellow";
+  }
+}
+
+class Orange extends Fruit {
+  Orange() {
+    color = "Orange";
+  }
+}
+
+class Strawberry extends Fruit {
+  Strawberry() {
+    color = "Red";
+  }
+}
+
+class FruitTypes {
+  public static void main(String args[]) {
+    Fruit fruit = new Apple();
+    System.out.println(fruit);
+    fruit = new Banana();
+    System.out.println(fruit);
+    fruit = new Orange();
+    System.out.println(fruit);
+    fruit = new Strawberry();
+    System.out.println(fruit);
+  }
+}
+
+実行結果は次のとおりです。
+
+Apple: Red
+Banana: Yellow
+Orange: Orange
+Strawberry: Red
+
+【4】 
+abstract class Airplane { // 抽象クラスAirplane
+  String serial;
+
+  public Airplane(String serial) {
+    this.serial = serial;
+  }
+
+  abstract int getPassengers();
+
+  public String toString() {
+    Class cls = getClass();
+    return cls.getName() + ": " +
+      serial + " " + getPassengers();
+  }
+}
+
+class B747 extends Airplane {
+  final static int PASSENGERS = 500;
+
+  public B747(String serial) {
+    super(serial);
+  }
+
+  public int getPassengers() {
+    return PASSENGERS;
+  }
+}
+
+class B757 extends Airplane {
+  final static int PASSENGERS = 300;
+
+  public B757(String serial) {
+    super(serial);
+  }
+
+  public int getPassengers() {
+    return PASSENGERS;
+  }
+}
+
+class B767 extends Airplane {
+  final static int PASSENGERS = 400;
+
+  public B767(String serial) {
+    super(serial);
+  }
+
+  public int getPassengers() {
+    return PASSENGERS;
+  }
+}
+
+class AirplaneTypes {
+  static int NUMAIRPLANES = 6;
+
+  public static void main(String args[]) {
+    // 領域を宣言して割り当てる
+    Airplane airplanes[] = new Airplane[NUMAIRPLANES];
+
+    // 航空機の作成
+    airplanes[0] = new B747("UA1233");
+    airplanes[1] = new B767("UA8793");
+    airplanes[2] = new B757("UA6733");
+    airplanes[3] = new B757("UA4523");
+    airplanes[4] = new B747("UA9772");
+    airplanes[5] = new B767("UA2331");
+
+    // 航空機の表示
+    for(int i = 0; i < NUMAIRPLANES; i++) {
+      Airplane a = airplanes[i];
+      System.out.println(a);
+    }
+  }
+}
+
+実行結果は次のとおりです。
+
+B747: UA1233 500
+B767: UA8793 400
+B757: UA6733 300
+B757: UA4523 300
+B747: UA9772 500
+B767: UA2331 400
+
+第6章：総合理解度チェック
+
+【1】 メソッドのオーバーロードは、名前は同じだがシグネチャの異なるメソッドが同じクラスに複数あることです。メソッドのオーバーライドとは、スーパークラスで定義されたメソッドと同じ名前とシグネチャを持つメソッドがサブクラスで定義されていることです。
+
+【2】 1つ上のスーパークラスに定義されたメソッドまたは変数にアクセスするために使用します。また、コンストラクタから、1つ上のスーパークラスに定義されたコンストラクタを明示的に呼び出すためにも使用できます。
+
+【3】 
+abstract class Monster {
+  public String toString() {
+    return getClass().getName();
+  }
+}
+
+class Vampire extends Monster {
+}
+
+class Werewolf extends Monster {
+}
+
+class Zombie extends Monster {
+}
+
+class MonsterTypes {
+  static int NUMMONSTERS = 6;
+
+  public static void main(String args[]) {
+    // モンスターを格納する領域を宣言して割り当てる
+    Monster monsters[] = new Monster[NUMMONSTERS];
+
+    // モンスターを作成する
+    monsters[0] = new Zombie();
+    monsters[1] = new Vampire();
+    monsters[2] = new Werewolf();
+    monsters[3] = new Zombie();
+    monsters[4] = new Werewolf();
+    monsters[5] = new Vampire();
+
+    // モンスターを表示する
+    for(int i = 0; i < NUMMONSTERS; i++)
+      System.out.println(monsters[i]);
+  }
+}
+
+実行結果は次のとおりです。
+
+Zombie
+Vampire
+Werewolf
+Zombie
+Werewolf
+Vampire
+
+【4】 
+abstract class Widget {
+  String color;
+  abstract int getMass();
+  public String toString() {
+    return getClass().getName() + ": " +
+      color + ", " + getMass();
+  }
+}
+
+class WidgetA extends Widget {
+  final static int MASS = 4;
+
+  WidgetA(String color) {
+    this.color = color;
+  }
+
+  int getMass() {
+    return MASS;
+  }
+}
+
+class WidgetB extends Widget {
+  final static int MASS = 1;
+
+  WidgetB(String color) {
+    this.color = color;
+  }
+
+  int getMass() {
+    return MASS;
+  }
+}
+
+class WidgetC extends Widget {
+  final static int MASS = 5;
+
+  WidgetC(String color) {
+    this.color = color;
+  }
+
+  int getMass() {
+    return MASS;
+  }
+}
+
+class WidgetD extends Widget {
+  final static int MASS = 17;
+
+  WidgetD(String color) {
+    this.color = color;
+  }
+
+  int getMass() {
+    return MASS;
+  }
+}
+
+class WidgetTypes {
+  static int NUMWIDGETS = 6;
+
+  public static void main(String args[]) {
+    // 部品を格納する領域を宣言して割り当てる
+    Widget widgets[] = new Widget[NUMWIDGETS];
+
+    // 部品を作成する
+    widgets[0] = new WidgetC("Red");
+    widgets[1] = new WidgetA("Green");
+    widgets[2] = new WidgetD("Yellow");
+    widgets[3] = new WidgetB("Magenta");
+    widgets[4] = new WidgetA("Black");
+    widgets[5] = new WidgetC("White");
+
+    // 部品を処理する
+    int totalMass = 0;
+    for(int i = 0; i < NUMWIDGETS; i++) {
+      Widget w = widgets[i];
+      System.out.println(w);
+      totalMass += w.getMass();
+    }
+
+    // 総重量を表示する
+    System.out.println("Total mass = " + totalMass);
+  }
+}
+
+実行結果は次のとおりです。
+
+WidgetC: Red, 5
+WidgetA: Green, 4
+WidgetD: Yellow, 17
+WidgetB: Magenta, 1
+WidgetA: Black, 4
+WidgetC: White, 5
+Total mass = 36

@@ -1,0 +1,268 @@
+第10章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P306
+■P308
+■P313-1
+■P313-2
+■P314
+■P320-1
+■P320-2
+■P321
+■P322
+■P323
+■P325
+■P327
+■P329
+・・・・・・・・・・・・・・・・・・・・・
+
+■P306
+import java.util.*;
+
+class RandomInts {
+  public static void main(String args[]) {
+    // 乱数ジェネレータを作成する
+    Random generator = new Random();
+
+    // 10個のint型の乱数を生成する
+    for(int i = 0; i < 10; i++)
+      System.out.println(generator.nextInt());
+  }
+}
+
+■P308
+import java.util.*;
+
+class DateDemo {
+  public static void main(String args[]) {
+    // Dateオブジェクトを現在の
+    // 日付/時刻で初期化する
+    Date currentDate = new Date();
+
+    // 現在の日付を表示する
+    System.out.println(currentDate);
+
+    // Dateオブジェクトを基準時
+    // （1970/1/1）に初期化する
+    Date epoch = new Date(0);
+
+    // 基準時を表示する
+    System.out.println(epoch);
+  }
+}
+
+■P313-1
+import java.util.*;
+
+class CalendarDemo {
+  public static void main(String args[]) {
+    Calendar calendar = Calendar.getInstance();
+    System.out.println(calendar.get(Calendar.YEAR));
+    System.out.println(calendar.get(Calendar.HOUR));
+    System.out.println(calendar.get(
+      Calendar.HOUR_OF_DAY));
+    System.out.println(calendar.get(Calendar.MINUTE));
+  }
+}
+
+■P313-2
+import java.util.*;
+
+class CalendarDemo2 {
+  public static void main(String args[]) {
+    Calendar calendarEST = Calendar.getInstance(TimeZone.getTimeZone("US/Eastern"));
+    Calendar calendarJST = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
+    System.out.println("EST hour: " + calendarEST.get(Calendar.HOUR_OF_DAY) +
+      ":" + calendarEST.get(Calendar.MINUTE));
+    System.out.println("JST hour: " + calendarJST.get(Calendar.HOUR_OF_DAY) +
+      ":" + calendarJST.get(Calendar.MINUTE));
+  }
+}
+
+■P314
+import java.util.*;
+
+class DayOfWeek {
+  public static void main(String[] args) {
+    Calendar today = Calendar.getInstance();
+    // 英語、米国
+    System.out.println(today.getDisplayName(Calendar.DAY_OF_WEEK,
+      Calendar.LONG, new Locale("en", "US")));
+    // フランス語、フランス
+    System.out.println(today.getDisplayName(Calendar.DAY_OF_WEEK,
+      Calendar.LONG, new Locale("fr", "FR")));
+    // 日本語、日本
+    System.out.println(today.getDisplayName(Calendar.DAY_OF_WEEK,
+      Calendar.LONG, new Locale("ja", "JP")));
+  }
+}
+
+■P320-1
+import java.util.*;
+
+class VectorDemo {
+  public static void main(String args[]) {
+    // ベクトルとその要素を作成する
+    Vector<Object> vector = new Vector<Object>();
+    vector.add(new Integer(5));
+    vector.add(new Float(-14.14f));
+    vector.add(new String("Hello"));
+    vector.add(new Long(120000000));
+    vector.add(new Double(-23.45e-11));
+
+    // ベクトルの要素を表示する
+    System.out.println(vector);
+
+    // ベクトルに要素を挿入する
+    String s = new String("String to be inserted");
+    vector.insertElementAt(s, 1);
+    System.out.println(vector);
+
+    // ベクトルから要素を削除する
+    Object removedObj = vector.remove(3);
+    System.out.println(vector);
+  }
+}
+
+■P320-2
+import java.util.*;
+
+class GenericsDemo1 {
+  public static void main(String args[]) {
+    Vector v = new Vector();
+    v.add(1);
+    v.add(2);
+    v.add(3);
+    // 次の行の行頭のコメントを外すと、実行時にエラーが発生する
+    // v.add("4");
+
+    int sum = 0;
+    for(int i = 0; i < v.size(); i++) {
+      sum += (Integer)v.get(i);
+    }
+    System.out.println("Total: " + sum);
+  }
+}
+
+■P321
+import java.util.*;
+
+class GenericsDemo2 {
+  public static void main(String args[]) {
+    Vector<Integer> v = new Vector<Integer>();
+    v.add(1);
+    v.add(2);
+    v.add(3);
+    // 次の行の行頭のコメントを外すと、コンパイル時にエラーが発生する
+    // v.add("4");
+
+    int sum = 0;
+    for(int i = 0; i < v.size(); i++) {
+      sum += v.get(i);
+    }
+    System.out.println("Total: " + sum);
+  }
+}
+
+■P322
+import java.util.*;
+
+class EnumerationDemo {
+  public static void main(String args[]) {
+    // ベクトルとその要素を作成する
+    Vector<Object> vector = new Vector<Object>();
+    vector.add(new Integer(5));
+    vector.add(new Float(-14.14f));
+    vector.add(new String("Hello"));
+    vector.add(new Long(120000000));
+    vector.add(new Double(-23.45e-11));
+
+    // ベクトルの要素を表示する
+    Enumeration<Object> e = vector.elements();
+    while(e.hasMoreElements()) {
+      Object obj = e.nextElement();
+      System.out.println(obj);
+    }
+  }
+}
+
+■P323
+import java.util.*;
+
+class IteratorDemo {
+  public static void main(String args[]) {
+    // ベクトルとその要素を作成する
+    Vector<Object> vector = new Vector<Object>();
+    vector.add(new Integer(5));
+    vector.add(new Float(-14.14f));
+    vector.add(new String("Hello"));
+    vector.add(new Long(120000000));
+    vector.add(new Double(-23.45e-11));
+
+    // ベクトルの要素を表示する
+    for(Object obj : vector) System.out.println(obj);
+  }
+}
+
+■P325
+import java.util.*;
+
+class PushPop {
+  public static void main(String args[]) {
+    // スタックを作成する
+    Stack<Integer> stack = new Stack<Integer>();
+
+    // 要素をスタックにプッシュする
+    for(int i = 0; i < args.length; i++)
+      stack.push(new Integer(args[i]));
+
+    // スタックから要素をポップして表示する
+    while(!stack.empty()) {
+      Integer obj = stack.pop();
+      System.out.println(obj);
+    }
+  }
+}
+
+■P327
+import java.util.*;
+
+class HashtableDemo {
+  public static void main(String args[]) {
+    // ハッシュ表を作成し、情報を設定する
+    Hashtable<String, String> hashtable = new Hashtable<String, String>();
+    hashtable.put("apple", "red");
+    hashtable.put("strawberry", "red");
+    hashtable.put("lime", "green");
+    hashtable.put("banana", "yellow");
+    hashtable.put("orange", "orange");
+
+    // ハッシュ表の要素を表示する
+    Enumeration<String> e = hashtable.keys();
+    while(e.hasMoreElements()) {
+      String k = e.nextElement();
+      String v = hashtable.get(k);
+      System.out.println("key = " + k + "; value = " + v);
+    }
+
+    // appleの値を表示する
+    System.out.print("\nThe color of an apple is: ");
+    String v = hashtable.get("apple");
+    System.out.println(v);
+  }
+}
+
+■P329
+import java.util.*;
+
+class StringTokenizerDemo {
+  public static void main(String args[]) {
+    String str =
+      "123/45.6/-11.2/41/-90.1/100/99.99/-50/-20";
+    StringTokenizer st = new StringTokenizer(str, "/");
+    while(st.hasMoreTokens()) {
+      String s = st.nextToken();
+      System.out.println(s);
+    }
+  }
+}

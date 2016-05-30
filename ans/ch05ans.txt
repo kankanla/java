@@ -1,0 +1,688 @@
+■第5章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第5章：前章の理解度チェック
+5.2：練習問題
+5.3：練習問題
+5.4：練習問題
+5.5：練習問題
+5.6：練習問題
+5.7：練習問題
+5.8：練習問題
+5.9：練習問題
+5.10：練習問題
+第5章：第5章の理解度チェック
+第5章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第5章：前章の理解度チェック
+
+【1】 初期化、テスト、インクリメント。
+
+【2】 doループでは、ループを制御する式がループの最後で評価されるため、ループ内のコードが少なくとも一回は実行されます。これに対して、whileループでは、制御式がループの先頭で評価されるため、ループ内のコードが一度も実行されない場合があります。
+
+【3】 
+class RandomTotal {
+  public static void main(String args[]) {
+    double total = 0;
+    while(true) {
+      double random = 9 * Math.random() + 1; // 1～10のあいだで乱数を生成
+      System.out.println(random);
+      total += random;                       // 合計
+      System.out.println("Total = " + total);
+      if (total > 100)                       // 100を超えたらループを抜ける
+        break;
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+4.4001478062136155
+Total = 4.4001478062136155
+2.4160666852866344
+Total = 6.81621449150025
+3.954499667570933
+Total = 10.770714159071183
+8.387699992782231
+Total = 19.158414151853414
+9.361343063900158
+Total = 28.51975721575357
+1.5651234252532342
+Total = 30.084880641006805
+2.8565539132356768
+Total = 32.941434554242484
+8.582254596300348
+Total = 41.523689150542836
+8.677604033052464
+Total = 50.2012931835953
+1.2264407469788494
+Total = 51.42773393057415
+8.673020573442292
+Total = 60.10075450401644
+4.002255219193886
+Total = 64.10300972321033
+7.532655189287987
+Total = 71.63566491249833
+1.2376558853598036
+Total = 72.87332079785813
+2.2471891280763776
+Total = 75.1205099259345
+6.706465136995968
+Total = 81.82697506293047
+9.918501310128649
+Total = 91.74547637305912
+4.385588704164828
+Total = 96.13106507722395
+2.484472548547796
+Total = 98.61553762577175
+7.7871289287727965
+Total = 106.40266655454455
+
+【4】 
+class SortNumbers {
+  public static void main(String args[]) {
+    // 配列の宣言、割り当て、初期化
+    int size = args.length;
+    double data[] = new double[size];
+    for(int i = 0; i < size; i++)
+      data[i] = Double.valueOf(args[i]).doubleValue();
+    // 配列のソート
+    for(int i = 0; i < size - 1; i++) {
+      for(int j = i; j < size; j++) {
+        if (data[j] > data[i]) {
+          double temp = data[j];
+          data[j] = data[i];
+          data[i] = temp;
+        }
+      }
+    }
+    // 配列を昇順に表示する
+    for(int i = 0; i < size; i++)
+      System.out.print(data[i] + " ");
+    System.out.println("");
+  }
+}
+
+実行結果はたとえば次のようになります（5.0 2.3 7.2 12.9を指定）。
+
+12.9 7.2 5.0 2.3
+
+【5】 &（論理積）、|（論理和）、^（排他的論理和）、~（補数）、>>（符号付きで右シフト）、>>>（0を詰めながら右シフト）、<<（0を詰めながら左シフト）、&=（論理積をとって代入）、|=（論理和をとって代入）、^=（排他的論理和をとって代入）、>>=（符号付きで右シフトして代入）、>>>=（0を詰めながら右シフトして代入）、<<=（0を詰めながら左シフトして代入）
+
+5.2：練習問題
+
+【1】 
+class Person {
+  String name;
+  int age;
+  float salary;
+}
+
+class PersonExample {
+  public static void main(String args[]) {
+    Person p = new Person();
+    p.name = "John Doe"; // 各インスタンス変数に代入
+    p.age = 21;
+    p.salary  = 29100f;
+    System.out.println("p.name = " + p.name);
+    System.out.println("p.age = " + p.age);
+    System.out.println("p.salary = " + p.salary);
+  }
+}
+
+実行結果は次のとおりです。
+
+p.name = John Doe
+p.age = 21
+p.salary = 29100.0
+
+【2】 
+class Sphere {
+  double x;
+  double y;
+  double z;
+  double radius;
+}
+
+class SphereExample {
+  public static void main(String args[]) {
+    Sphere s = new Sphere();
+    s.x = 100;
+    s.y = -40;
+    s.z = 56.5;
+    s.radius = 8;
+    System.out.println("s.x = " + s.x);
+    System.out.println("s.y = " + s.y);
+    System.out.println("s.z = " + s.z);
+    System.out.println("s.radius = " + s.radius);
+  }
+}
+
+実行結果は次のとおりです。
+
+s.x = 100.0
+s.y = -40.0
+s.z = 56.5
+s.radius = 8.0
+
+【3】 クラスは、多数のオブジェクトの作成に使用できるテンプレートです。クラスには、オブジェクトの形式が規定されています。
+
+5.3：練習問題
+
+【1】 
+class Person2 {
+  String name;
+  int age;
+  float salary;
+
+  Person2(String aname, int aage, float asalary) { // コンストラクタ
+    name = aname;
+    age = aage;
+    salary = asalary;
+  }
+}
+
+class PersonConstructor {
+  public static void main(String args[]) {
+    Person2 p = new Person2("John Doe", 21, 29100f);
+    System.out.println("p.name = " + p.name);
+    System.out.println("p.age = " + p.age);
+    System.out.println("p.salary = " + p.salary);
+  }
+}
+
+実行結果は次のとおりです。
+
+p.name = John Doe
+p.age = 21
+p.salary = 29100.0
+
+【2】 
+class Sphere2 {
+  double x;
+  double y;
+  double z;
+  double radius;
+
+  Sphere2(double ax, double ay, double az, double aradius) { // コンストラクタ
+    x = ax;
+    y = ay;
+    z = az;
+    radius = aradius;
+  }
+}
+
+class SphereConstructor {
+  public static void main(String args[]) {
+    Sphere2 s = new Sphere2(100, -40, 56.5, 8);
+    System.out.println("s.x = " + s.x);
+    System.out.println("s.y = " + s.y);
+    System.out.println("s.z = " + s.z);
+    System.out.println("s.radius = " + s.radius);
+  }
+}
+
+実行結果は次のとおりです。
+
+s.x = 100.0
+s.y = -40.0
+s.z = 56.5
+s.radius = 8.0
+
+5.4：練習問題
+
+【1】 
+class Circle {
+  double x;
+  double y;
+  double radius;
+
+  // シグネチャの異なる2つのコンストラクタを定義
+  Circle(double aradius) {
+    radius = aradius;
+  }
+
+  Circle(double ax, double ay, double aradius) {
+    x = ax;
+    y = ay;
+    radius = aradius;
+  }
+}
+
+class CircleOverloadConstructors {
+  public static void main(String args[]) {
+    Circle c1 = new Circle(4);
+    System.out.println("c1.x = " + c1.x);
+    System.out.println("c1.y = " + c1.y);
+    System.out.println("c1.radius = " + c1.radius);
+    Circle c2 = new Circle(17.5, 18.4, 6);
+    System.out.println("c2.x = " + c2.x);
+    System.out.println("c2.y = " + c2.y);
+    System.out.println("c2.radius = " + c2.radius);
+  }
+}
+
+実行結果は次のとおりです。
+
+c1.x = 0.0
+c1.y = 0.0
+c1.radius = 4.0
+c2.x = 17.5
+c2.y = 18.4
+c2.radius = 6.0
+
+【2】 
+class Sphere {
+  double x;
+  double y;
+  double z;
+  double radius;
+
+  // シグネチャの異なる3つのコンストラクタを定義
+  Sphere() {
+    radius = 1;
+  }
+
+  Sphere(double aradius) {
+    radius = aradius;
+  }
+
+  Sphere(double ax, double ay, double az, double aradius) {
+    x = ax;
+    y = ay;
+    z = az;
+    radius = aradius;
+  }
+}
+
+class SphereOverloadConstructors {
+  public static void main(String args[]) {
+    Sphere s1 = new Sphere();
+    System.out.println("s1.x = " + s1.x);
+    System.out.println("s1.y = " + s1.y);
+    System.out.println("s1.z = " + s1.z);
+    System.out.println("s1.radius = " + s1.radius);
+    Sphere s2 = new Sphere(2);
+    System.out.println("s2.x = " + s2.x);
+    System.out.println("s2.y = " + s2.y);
+    System.out.println("s2.z = " + s2.z);
+    System.out.println("s2.radius = " + s2.radius);
+    Sphere s3 = new Sphere(100, -40, 56.5, 8);
+    System.out.println("s3.x = " + s3.x);
+    System.out.println("s3.y = " + s3.y);
+    System.out.println("s3.z = " + s3.z);
+    System.out.println("s3.radius = " + s3.radius);
+  }
+}
+
+実行結果は次のとおりです。
+
+s1.x = 0.0
+s1.y = 0.0
+s1.z = 0.0
+s1.radius = 1.0
+s2.x = 0.0
+s2.y = 0.0
+s2.z = 0.0
+s2.radius = 2.0
+s3.x = 100.0
+s3.y = -40.0
+s3.z = 56.5
+s3.radius = 8.0
+
+5.5：練習問題
+
+【1】 
+class Sphere {
+  double x;
+  double y;
+  double z;
+  double radius;
+
+  // thisメソッドで3つ目のコンストラクタに集約
+  Sphere() {
+    this(0, 0, 0, 1);
+  }
+
+  Sphere(double radius) {
+    this(0, 0, 0, radius);
+  }
+
+  Sphere(double x, double y, double z, double radius) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.radius = radius;
+  }
+}
+
+class SphereThis {
+  public static void main(String args[]) {
+    Sphere s = new Sphere(1.1, 3.4, -9.8, 10);
+    System.out.println("s.x = " + s.x);
+    System.out.println("s.y = " + s.y);
+    System.out.println("s.z = " + s.z);
+    System.out.println("s.radius = " + s.radius);
+  }
+}
+
+実行結果は次のとおりです。
+
+s.x = 1.1
+s.y = 3.4
+s.z = -9.8
+s.radius = 10.0
+
+5.6：練習問題
+
+【1】 
+class Sphere {
+  double x;
+  double y;
+  double z;
+  double radius;
+
+  Sphere() {
+    this(0, 0, 0, 1);
+  }
+
+  Sphere(double radius) {
+    this(0, 0, 0, radius);
+  }
+
+  Sphere(double x, double y, double z, double radius) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.radius = radius;
+  }
+
+  void move(double x, double y, double z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  void scale(double a) {
+    radius *= a;
+  }
+}
+
+class SphereMethods {
+  public static void main(String args[]) {
+    Sphere s = new Sphere(1.1, 3.4, -9.8, 10);
+    s.move(-40, -40, -40);
+    s.scale(0.1);
+    System.out.println("s.x = " + s.x);
+    System.out.println("s.y = " + s.y);
+    System.out.println("s.z = " + s.z);
+    System.out.println("s.radius = " + s.radius);
+  }
+}
+
+実行結果は次のとおりです。
+
+s.x = -40.0
+s.y = -40.0
+s.z = -40.0
+s.radius = 1.0
+
+5.7：練習問題
+
+【1】 
+class SpanishTranslator {
+  static String translate(String english) {
+    // 翻訳する
+    String spanish;
+    english = english.toLowerCase();
+    if (english.equals("one"))
+      spanish = "Uno";
+    else if (english.equals("two"))
+      spanish = "Dos";
+    else if (english.equals("three"))
+      spanish = "Tres";
+    else if (english.equals("four"))
+      spanish = "Quatro";
+    else if (english.equals("five"))
+      spanish = "Cinco";
+    else
+      spanish = "Unknown";
+    return spanish;
+  }
+}
+
+class SpanishTranslatorDemo {
+  public static void main(String args[]) {
+    String s = SpanishTranslator.translate(args[0]);
+    System.out.println(s);
+  }
+}
+
+実行結果はたとえば次のようになります（Oneを指定）。
+
+Uno
+
+5.8：練習問題
+
+【1】 
+100
+1000
+
+fメソッドではローカル変数の値、gメソッドでは静的変数の値が表示されます。
+
+【2】 
+1000
+0 1 2 3 4
+1000
+
+最初にインスタンス変数の値、次にforループのローカル変数の値、最後に元のインスタンス変数の値が表示されます。
+
+5.9：練習問題
+
+【1】 
+class Sphere {
+  double x;
+  double y;
+  double z;
+  double radius;
+
+  Sphere() {
+    this(0, 0, 0, 1);
+  }
+
+  Sphere(double radius) {
+    this(0, 0, 0, radius);
+  }
+
+  Sphere(double x, double y, double z, double radius) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.radius = radius;
+  }
+
+  // オーバーロードで置き換え
+  void move(double x) {
+    this.x = x;
+  }
+
+  void move(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  void move(double x, double y, double z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  void scale(double a) {
+    radius *= a;
+  }
+}
+
+class SphereOverloadMethod {
+  public static void main(String args[]) {
+    Sphere s = new Sphere(1.1, 3.4, -9.8, 10);
+    s.move(-40, -40, -40);
+    s.scale(0.1);
+    System.out.println("s.x = " + s.x);
+    System.out.println("s.y = " + s.y);
+    System.out.println("s.z = " + s.z);
+    System.out.println("s.radius = " + s.radius);
+  }
+}
+
+実行結果は次のとおりです。
+
+s.x = -40.0
+s.y = -40.0
+s.z = -40.0
+s.radius = 1.0
+
+5.10：練習問題
+
+【1】 
+abcde
+abcde
+
+新しいオブジェクトの生成は、呼び出し元には伝わりません。
+
+【2】 
+sba = aaaaa
+sbb = bbbbb
+sba = aaaaa
+sbb = bbbbbddddd
+
+fメソッドの中で、sb1は新しいオブジェクトの生成なので、呼び出し元には伝わりません。sb2は参照された既存のオブジェクトの修正なので、呼び出し元にも反映されます。
+
+第5章：第5章の理解度チェック
+
+【1】 
+class clsName {
+  // インスタンス変数の宣言
+  type1 varName1 = value1;
+  type2 varName2 = value2;
+  ...
+  typeN varNameN = valueN;
+
+  // コンストラクタ
+  clsName(cparams1) {
+    // コンストラクタの本体
+  }
+  clsName(cparams2) {
+    // コンストラクタの本体
+  }
+  ...
+  clsName(cparamsN) {
+    // コンストラクタの本体
+  }
+
+  // メソッド
+  rtype1 mthName1(mparams1) {
+    // メソッドの本体
+  }
+  rtype2 mthName2(mparams2) {
+    // メソッドの本体
+  }
+  ...
+  rtypeN mthNameN(mparamsN) {
+    // メソッドの本体
+  }
+}
+
+【2】 コンストラクタとは、特定のクラスのオブジェクトを作成して初期化する特殊なメソッドのことです。
+
+【3】 データ型のシグネチャとは、メソッド名とパラメータのデータ型の列記を合わせたものです。同一のシグネチャを持つメソッドが複数あった場合、Javaコンパイラからエラーメッセージが表示されます。
+
+【4】 変数のスコープとは、変数を直接参照できるプログラム内の範囲のことです。
+
+【5】 変数を隠すとは、ローカル変数が静的またはインスタンス変数と同じ名前を持つ場合、ローカル変数が優先されることを指します。
+
+【6】 メソッドのオーバーロードとは、名前は同じだけれどもシグネチャの異なるメソッドが複数あることです。
+
+【7】 メソッドへの引数はすべて値で渡されます。指定できるのは、基本データ型、配列への参照、オブジェクトへの参照です（メソッドでは、配列またはオブジェクト全体のコピーではなく、参照のコピーを受け取ります）。
+
+【8】 ローカル変数のスコープは、それを宣言したメソッドの内部に限定されます。インスタンス変数は、クラスのすべてのメソッドから使用できます。また、インスタンス変数にはオブジェクト作成時に既定値が設定されます。ローカル変数には、このような初期化はなされません。
+
+【9】 変数iのスコープはforループの内部に限定されます。したがって、最後の命令ではiは未定義と見なされます。
+
+第5章：総合理解度チェック
+
+【1】 
+class Rock {
+  float mass;
+
+  Rock(float mass) {
+    this.mass = mass;
+  }
+}
+
+class RockArray {
+  static int NUMROCKS = 10;
+
+  public static void main(String args[]) {
+    // 岩石を作成する
+    Rock rocks[] = new Rock[NUMROCKS];
+    for(int i = 0; i < NUMROCKS; i++) {
+      float mass = (float)(9 * Math.random() + 1);
+      rocks[i] = new Rock(mass); // 重さをコンストラクタに指定してオブジェクトを生成
+    }
+
+    // それぞれの岩石の重量を表示する
+    float total = 0f;
+    for(int i = 0; i < NUMROCKS; i++) {
+      float mass = rocks[i].mass;
+      System.out.println(mass);
+      total += mass;
+    }
+
+    // 総重量を表示する
+    System.out.println("Total = " + total);
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+8.460947
+7.7644196
+2.3604958
+6.7700825
+2.2031617
+3.5961137
+4.8543134
+2.7332897
+2.5121596
+3.6105614
+Total = 44.865543
+
+【2】 
+class Trapezoid {
+  double height, base1, base2;
+
+  public Trapezoid(double height, double base1, double base2) {
+    this.height = height;
+    this.base1 = base1;
+    this.base2 = base2;
+  }
+
+  public double getArea() {
+    return 0.5 * height * (base1 + base2); // 面積を返す
+  }
+}
+
+class TrapezoidDemo {
+  public static void main(String args[]) {
+    Trapezoid trapezoid = new Trapezoid(6, 5, 8);
+    System.out.println(trapezoid.getArea());
+  }
+}
+
+実行結果は次のとおりです。
+
+39.0
+
+【3】 i = 3; s = New string; d = 6.02E23
+
+ao1とao2は同じ参照を持ちます。このため、ao1のインスタンス変数の内容を変更すると、ao2の内容も同様に変更したことになります。

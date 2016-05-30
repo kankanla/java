@@ -1,0 +1,833 @@
+■第10章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第10章：前章の理解度チェック
+10.1：練習問題
+10.2：練習問題
+10.3：練習問題
+10.4：練習問題
+10.5：練習問題
+10.6：練習問題
+10.7：練習問題
+第10章：第10章の理解度チェック
+第10章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第10章：前章の理解度チェック
+
+【1】 notify()メソッドは、オブジェクトへのアクセスを待機しているスレッドの1つに通知を送ります。notifyAll()メソッドは、そういったスレッドのすべてに通知を送ります。
+
+【2】 
+class Mouse extends Thread {
+  Box box;
+
+  Mouse(Box box) {
+    this.box = box;
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        // 箱の外で10以上20未満の秒間過ごす
+        long out = (long)(10000 * Math.random() + 10000);
+        Thread.sleep(out);
+
+        // 箱に入る
+        box.enter(this);
+
+        // 箱の中に5以上8未満の秒間留まる
+        long in = (long)(5000 * Math.random() + 3000);
+        Thread.sleep(in);
+
+        // 箱から出る
+        box.exit(this);
+      }
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+class Box {
+  private static int CAPACITY = 4;
+  int count;
+
+  synchronized void enter(Mouse mouse) {
+    // 箱がいっぱいのうちは待機する
+    try {
+      while(count == CAPACITY) {
+        wait();
+      }
+    }
+    catch(InterruptedException ie) {
+      ie.printStackTrace();
+      System.exit(0);
+    }
+
+    // カウンターを1つ増やす
+    ++count;
+
+    // カウンターを表示する
+    System.out.println(count);
+  }
+
+  synchronized void exit(Mouse mouse) {
+    // カウンターを1つ減らす
+    --count;
+
+    // カウンターを表示する
+    System.out.println(count);
+
+    // 待機中のスレッドに通知を送る
+    notify();
+  }
+}
+
+class BoxAndMice {
+  public static void main(String args[]) {
+    Box box = new Box();
+
+    for(int i = 0; i < 10; i++)
+      new Mouse(box).start();
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+1
+2
+3
+2
+3
+4
+…
+
+【3】 
+class MyThread extends Thread {
+  String name;
+
+  public MyThread(String name) {
+    this.name = name;
+  }
+
+  public void run() {
+    try {
+      System.out.println("Thread " + name + " starting");
+      int t = (int)(20000 * Math.random() + 10000);
+      Thread.sleep(t);
+      System.out.println("Thread " + name + " terminating");
+    }
+    catch(Exception e) {
+    }
+  }
+}
+
+class JoinDemo {
+  public static void main(String args[]) {
+    // スレッドを作成する
+    MyThread a1 = new MyThread("A1");
+    MyThread a2 = new MyThread("A2");
+    MyThread a3 = new MyThread("A3");
+
+    // スレッドを起動する
+    a1.start();
+    a2.start();
+    a3.start();
+
+    // スレッドの完了を待機する
+    try {
+      a1.join();
+      a2.join();
+      a3.join();
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+
+    // スレッドを作成する
+    MyThread b1 = new MyThread("B1");
+    MyThread b2 = new MyThread("B2");
+
+    // スレッドを起動する
+    b1.start();
+    b2.start();
+
+    // スレッドの完了を待機する
+    try {
+      b1.join();
+      b2.join();
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+Thread A1 starting
+Thread A3 starting
+Thread A2 starting
+Thread A3 terminating
+Thread A1 terminating
+Thread A2 terminating
+Thread B1 starting
+Thread B2 starting
+Thread B1 terminating
+Thread B2 terminating
+
+10.1：練習問題
+
+【1】
+import java.util.*;
+
+class GaussianMean {
+  public static void main(String args[]) {
+    // 乱数の数を決める
+    int count = 100;
+    if (args.length > 0) {
+      count = Integer.parseInt(args[0]);
+    }
+
+    // 乱数を生成する
+    Random generator = new Random();
+    double total = 0;
+    for(int i = 0; i < count; i++) {
+      total += generator.nextGaussian();
+    }
+
+    // これらの乱数の平均を表示する
+    System.out.println("Mean = " + total / count);
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+Mean = 0.09099416748767702
+
+ガウス分布では平均は0に近い数値となります。引数に大きな数値を指定して繰り返してみるとよいでしょう。
+
+【2】 
+import java.util.*;
+
+class RandomSeed {
+  public static void main(String args[]) {
+    // 1つ目の乱数ジェネレータを作成する
+    Random generator = new Random(100);
+
+    // 10個の乱数を生成して表示する
+    System.out.println("First generator:");
+    for(int i = 0; i < 10; i++)
+      System.out.println(generator.nextInt());
+
+    // 2つ目の乱数ジェネレータを作成する
+    generator = new Random(100);
+
+    // 10個の乱数を生成して表示する
+    System.out.println("Second generator:");
+    for(int i = 0; i < 10; i++)
+      System.out.println(generator.nextInt());
+  }
+}
+
+実行結果はたとえば次のようになります。2組の乱数は完全に一致します。
+
+First generator:
+-1193959466
+-1139614796
+837415749
+-1220615319
+-1429538713
+118249332
+-951589224
+1301674577
+-1638067850
+-1279751870
+Second generator:
+-1193959466
+-1139614796
+837415749
+-1220615319
+-1429538713
+118249332
+-951589224
+1301674577
+-1638067850
+-1279751870
+
+10.2：練習問題
+
+【1】 
+import java.util.*;
+
+class DaysSinceEpoch {
+  public static void main(String args[]) {
+    // 現在の日付と時刻に初期化された
+    // Dateオブジェクトを取得する
+    Date currentDate = new Date();
+
+    // 基準時からの経過時間（ミリ秒）を取得する
+    long msec = currentDate.getTime();
+
+    // 日数に換算する
+    long days = msec / (24 * 60 * 60 * 1000);
+
+    // 日数を表示する
+    System.out.println(days);
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+13966
+
+【2】 
+import java.util.*;
+
+class Add100Days {
+  public static void main(String args[]) {
+    // 現在の日付と時刻に初期化された
+    // Dateオブジェクトを取得する
+    Date date = new Date();
+
+    // 基準時からの経過時間（ミリ秒）を取得する
+    long msec = date.getTime();
+
+    // 経過時間に100日を足す（intの範囲を超えるので、longへの型変換が必要）
+    msec += 100 * 24 * 60 * 60 * 1000L;
+
+    // 時刻を更新する
+    date.setTime(msec);
+
+    // 未来の日付情報を表示する
+    System.out.println(date);
+  }
+}
+
+実行結果はたとえば次のようになります（Sun Mar 28 23:44:37 JST 2008に実行）。
+
+Sun Jul 06 23:44:37 JST 2008
+
+10.3：練習問題
+
+【1】 
+import java.util.*;
+
+class GregorianCalendarDemo {
+  public static void main(String args[]) {
+    GregorianCalendar gc = new GregorianCalendar();
+    int year = gc.get(Calendar.YEAR);
+    System.out.println(year);
+    System.out.println(gc.isLeapYear(year)); // うるう年ならtrue
+    System.out.println("Month = " +
+      (gc.get(Calendar.MONTH) + 1));
+    System.out.println("Week of year = " +
+      gc.get(Calendar.WEEK_OF_YEAR));
+    System.out.println("Week of month = " +
+      gc.get(Calendar.WEEK_OF_MONTH));
+    System.out.println("Day of year = " +
+      gc.get(Calendar.DAY_OF_YEAR));
+    System.out.println("Day of week = " +
+      gc.get(Calendar.DAY_OF_WEEK));
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+2008
+true
+Month = 3
+Week of year = 13
+Week of month = 5
+Day of year = 89
+Day of week = 7
+
+10.4：練習問題
+
+【1】 
+import java.util.*;
+
+class RandomDoubleVector {
+  public static void main(String args[]) {
+    // ベクトルを作成する
+    Vector<Double> v = new Vector<Double>();
+
+    // 10以上25未満の乱数を生成する
+    int count = (int)(15 * Math.random() + 10);
+
+    // ガウス分布のdouble型の乱数
+    // を生成する
+    Random random = new Random();
+    for(int i = 0; i < count; i++) {
+      double d = random.nextGaussian();
+      v.add(d);
+    }
+
+    // ベクトルの要素を表示する
+    Enumeration<Double> e = v.elements();
+    while(e.hasMoreElements())
+      System.out.println(e.nextElement());
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+-1.0733247346109256
+2.4162215705019747
+0.24607570192466602
+-0.3208888391815252
+1.2199435012214201
+-0.5651314067729329
+1.9702589358859288
+-0.9653518897307574
+0.5256122472652709
+-1.6729287810156928
+
+【2】
+import java.util.*;
+
+class RandomDoubleIterator {
+  public static void main(String args[]) {
+    // ベクトルを作成する
+    Vector<Double> v = new Vector<Double>();
+
+    // 10以上25未満の乱数を生成する
+    int count = (int)(15 * Math.random() + 10);
+
+    // ガウス分布のdouble型の乱数
+    // を生成する
+    Random random = new Random();
+    for(int i = 0; i < count; i++) {
+      double d = random.nextGaussian();
+      v.add(d);
+    }
+
+    // ベクトルの要素を表示する
+    for(Double e : v) System.out.println(e);
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+-1.0733247346109256
+2.4162215705019747
+0.24607570192466602
+-0.3208888391815252
+1.2199435012214201
+-0.5651314067729329
+1.9702589358859288
+-0.9653518897307574
+0.5256122472652709
+-1.6729287810156928
+
+【3】 
+import java.util.*;
+
+class ReverseVector {
+  public static void main(String args[]) {
+    // ベクトルを作成する
+    Vector<Double> v = new Vector<Double>();
+
+    // 引数をDoubleオブジェクトに
+    // 変換してベクトルに格納する
+    for(int i = 0; i < args.length; i++) {
+      v.add(new Double(args[i]));
+    }
+
+    // 要素を逆順で表示する
+    for(int i = v.size() - 1; i >= 0; i--) {
+      System.out.print(v.elementAt(i) + " ");
+    }
+    System.out.println("");
+  }
+}
+
+実行結果はたとえば次のようになります（1.51 2 3.2を指定）。
+
+3.2 2.0 1.51
+
+10.5：練習問題
+
+【1】 
+import java.util.*;
+
+class PushPop2 {
+  public static void main(String args[]) {
+    // スタックを作成する
+    Stack<Integer> stack = new Stack<Integer>();
+
+    // 重複しない要素だけをスタックにプッシュする
+    for(int i = 0; i < args.length; i++) {
+      Integer obj = new Integer(args[i]);
+      if (stack.search(obj) == -1)
+        stack.push(obj);
+    }
+
+    // 要素をスタックからポップして表示する
+    while(!stack.empty()) {
+      Integer obj = stack.pop();
+      System.out.println(obj);
+    }
+  }
+}
+
+実行結果はたとえば次のようになります（1 1 2 2 3を指定）。
+
+3
+2
+1
+
+10.6：練習問題
+
+【1】 
+import java.util.*;
+
+class Person {
+  String name, telephone, fax, email;
+
+  Person(String name, String telephone, String fax, String email) {
+    this.name = name;
+    this.telephone = telephone;
+    this.fax = fax;
+    this.email = email;
+  }
+
+  public String toString() {
+    return name + "; " + telephone + "; " + fax + "; " + email;
+  }
+}
+
+class PeopleHashtable {
+  public static void main(String args[]) {
+    // ハッシュ表を作成し、データを設定する
+    Hashtable<String, Person> hashtable = new Hashtable<String, Person>();
+    Person p1 = new Person("Susan", "5634", "2343", "sue");
+    hashtable.put("111111111", p1);
+    Person p2 = new Person("Claire", "4545", "3331", "claire");
+    hashtable.put("222222222", p2);
+    Person p3 = new Person("Kim", "9821", "9899", "kim");
+    hashtable.put("333333333", p3);
+    Person p4 = new Person("Viviane", "4689", "2211", "viv");
+    hashtable.put("444444444", p4);
+    Person p5 = new Person("Barbara", "1212", "6655", "barb");
+    hashtable.put("555555555", p5);
+
+    // ハッシュ表の要素を表示する
+    Enumeration<String> e = hashtable.keys();
+    while(e.hasMoreElements()) {
+      String k = e.nextElement();
+      Person v = hashtable.get(k);
+      System.out.println("key = " + k + "; value = " + v);
+    }
+  }
+}
+
+実行結果は次のとおりです。
+
+key = 222222222; value = Claire; 4545; 3331; claire
+key = 111111111; value = Susan; 5634; 2343; sue
+key = 444444444; value = Viviane; 4689; 2211; viv
+key = 333333333; value = Kim; 9821; 9899; kim
+key = 555555555; value = Barbara; 1212; 6655; barb
+
+10.7：練習問題
+
+【1】 
+import java.util.*;
+
+class StringTokenizerDemo2 {
+  public static void main(String args[]) {
+    String str =
+      "123/45.6/-11.2/41/-90.1/100/99.99/-50/-20";
+    StringTokenizer st = new StringTokenizer(str, "/");
+    while(st.hasMoreElements()) {
+      String s = (String)st.nextElement();
+      System.out.println(s);
+    }
+  }
+}
+
+第10章：第10章の理解度チェック
+
+【1】 ベクトルとは、要素が追加されるにつれて自動的にサイズが拡張されるオブジェクトの集合のことです。
+
+【2】 Enumerationインターフェイスは、オブジェクト群に対して一定の操作を繰り返すために使います。
+
+【3】 ハッシュ表とは、複数のキー／値ペアを含むデータ構造です。キーと値は、どちらもオブジェクトです。キーは一意でなければなりません。値は重複していてもかまいません。
+
+【4】 
+import java.util.*;
+
+class DaysTillChristmas {
+  public static void main(String args[]) {
+     // 今日付けのカレンダーを取得する
+     GregorianCalendar today = new GregorianCalendar();
+
+     // 現在の月を取得する
+     int todayMonth = today.get(Calendar.MONTH);
+
+     // 日を取得する
+     int todayDayOfMonth = today.get(Calendar.DAY_OF_MONTH);
+
+     // 年を取得する
+     int todayYear = today.get(Calendar.YEAR);
+
+     // 今年の何日目かを取得する
+     int todayDayOfYear = today.get(Calendar.DAY_OF_YEAR);
+
+     // クリスマスまでの日数を計算する
+     int numDays;
+     if (todayMonth == 11 && todayDayOfMonth > 25) {
+       GregorianCalendar xmas = new GregorianCalendar(todayYear + 1, 11,
+         25);
+       int xmasDayOfYear = xmas.get(Calendar.DAY_OF_YEAR);
+       numDays = xmasDayOfYear + 31 - todayDayOfMonth;
+     }
+     else {
+       GregorianCalendar xmas = new GregorianCalendar(todayYear, 11, 25);
+       int xmasDayOfYear = xmas.get(Calendar.DAY_OF_YEAR);
+       numDays = xmasDayOfYear - todayDayOfYear;
+     }
+
+     // クリスマスまでの日数を表示する
+     System.out.println("The number of days till Christmas is " +
+       numDays);
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+The number of days till Christmas is 269
+
+【5】 
+import java.util.*;
+
+class CitiesCountries {
+  public static void main(String args[]) {
+    Hashtable<String, String> ht = new Hashtable<String, String>();
+    ht.put("Tokyo", "Japan");
+    ht.put("Beijing", "China");
+    ht.put("Bangkok", "Thailand");
+    ht.put("Taipei", "Taiwan");
+    ht.put("Shanghai", "China");
+    ht.put("Seoul", "South Korea");
+    ht.put("Bombay", "India");
+
+    if (args.length == 0) {
+      // 引数がない
+      System.out.println("Supply the name of a city as " +
+        "a command line argument!");
+      return;
+    }
+
+    String city = args[0];
+    String country = ht.get(city); // ハッシュ表から国名を取得
+    if (country != null)
+      System.out.println(city + " is located in " + country);
+    else
+      System.out.println(city + " is not located in the hashtable");
+  }
+}
+
+実行結果はたとえば次のようになります（Tokyoを指定）。
+
+Tokyo is located in Japan
+
+ハッシュ表に存在しない都市名を指定すると別のメッセージになります（Utopiaを指定）。
+
+Utopia is not located in the hashtable
+
+第10章：総合理解度チェック
+
+【1】 
+import java.util.*;
+
+class MonthCalendar {
+  static String dayNames[] = { "Sun", "Mon",
+    "Tue", "Wed", "Thu", "Fri", "Sat" };
+  static String monthNames[] = { "January",
+    "February", "March", "April", "May",
+    "June", "July", "August", "September",
+    "October", "November", "December" };
+  static int daysInMonths[] = { 31, 28, 31, 30, 31, 30,
+      31, 31, 30, 31, 30, 31 };
+
+  public static void main(String args[]) {
+    // 年、月、日、曜日を取得する
+    GregorianCalendar gc = new GregorianCalendar();
+    int year = gc.get(Calendar.YEAR);
+    int month = gc.get(Calendar.MONTH);
+    int date = gc.get(Calendar.DATE);
+    int dow = gc.get(Calendar.DAY_OF_WEEK);
+
+    // うるう年を処理する
+    daysInMonths[1] +=
+      gc.isLeapYear(year) ? 1 : 0;
+
+    // 月の最初の日に変更する
+    gc.add(Calendar.DATE, -date + 1);
+
+    // 曜日を確認する
+    int fdow = gc.get(Calendar.DAY_OF_WEEK);
+
+    // 変数domを計算する
+    //（必要な場合、値は負になる）
+    int dom = 2 - fdow;
+
+    // 月と年を表示する
+    System.out.println(monthNames[month] + " " + year + "\n");
+
+    // 曜日を表示する
+    for(int i = 0; i < 7; i++) {
+      String s = dayNames[i];
+      System.out.print(s + " ");
+    }
+    System.out.println("");
+
+    // 日を表示する
+    for(int row = 0; row < 6; row++) {
+      for(int col = 0; col < 7; col++) {
+        if (dom > daysInMonths[month]) {
+          break;
+        }
+        if (dom > 0) {
+          // グリッド内に日を表示する
+          if (dom < 10)
+            System.out.print("  " + dom + " ");
+          else
+            System.out.print(" " + dom + " ");
+        }
+        else {
+          System.out.print("    ");
+        }
+        ++dom;
+      }
+      System.out.println("");
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+March 2008
+
+Sun Mon Tue Wed Thu Fri Sat
+                          1
+  2   3   4   5   6   7   8
+  9  10  11  12  13  14  15
+ 16  17  18  19  20  21  22
+ 23  24  25  26  27  28  29
+ 30  31
+
+【2】 
+import java.util.*;
+
+class Task extends Thread {
+  ResourceCoordinator rc;
+  int id;
+
+  public Task(ResourceCoordinator rc, int id) {
+    this.rc = rc;
+    this.id = id;
+  }
+
+  public void run() {
+    try {
+      // 無限ループを作成する
+      while(true) {
+        // リソースを取得する
+        Resource r = rc.getResource();
+
+        // リソースを使う
+        int t = (int)(10000 * Math.random() + 1000);
+        Thread.sleep(t);
+
+        // リソースを解放する
+        rc.releaseResource(r);
+
+        // 次の作業をする前に休眠する
+        Thread.sleep(8000);
+      }
+    }
+    catch(Exception e) {
+    }
+  }
+}
+
+class Resource {
+  int id;
+
+  public Resource(int id) {
+    this.id = id;
+  }
+
+  public String toString() {
+    return "" + id;
+  }
+}
+
+class ResourceCoordinator {
+  Stack<Resource> resources = new Stack<Resource>();
+
+  public ResourceCoordinator() {
+    for(int i = 0; i < 4; i++) {
+      resources.push(new Resource(i));
+    }
+  }
+
+  public synchronized Resource getResource() {
+    while(true) {
+      // リソースが使用可能かチェックする
+      if (!resources.empty()) {
+        Resource r = resources.pop();
+        System.out.println("Get resource " + r);
+        return r;
+      }
+
+      // 使用可能なリソースを待機する
+      try {
+        wait();
+      }
+      catch(InterruptedException ie) {
+        ie.printStackTrace();
+      }
+    }
+  }
+
+  public synchronized void releaseResource(Resource r) {
+    // リソースをスタックにプッシュする
+    System.out.println("Release resource " + r);
+    resources.push(r);
+
+    // 待機中のスレッドすべてに通知を送る
+    notifyAll();
+  }
+}
+
+class ResourcesTasks {
+  public static void main(String args[]) {
+    // リソースの調整役を作成する
+    ResourceCoordinator rc = new ResourceCoordinator();
+
+    // 作業を作成する
+    for(int i = 0; i < 10; i++) {
+      new Task(rc, i).start();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+Get resource 3
+Get resource 2
+Get resource 1
+Get resource 0
+Release resource 1
+Get resource 1
+Release resource 0
+Get resource 0
+Release resource 1
+Get resource 1
+Release resource 1
+Get resource 1
+…

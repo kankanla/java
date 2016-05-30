@@ -1,0 +1,530 @@
+第13章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P396
+■P398
+■P400
+■P403-1
+■P403-2
+■P406
+■P407
+■P408
+■P412
+■P413
+■P416
+■P417
+■P426
+■P427
+■P431-1
+■P431-2
+■P433
+■P435
+■P437
+・・・・・・・・・・・・・・・・・・・・・
+
+■P396
+import java.applet.Applet;
+import java.awt.Graphics;
+/*
+  <applet code="FirstApplet" width=200 height=200>
+  </applet>
+*/
+
+public class FirstApplet extends Applet {
+  public void paint(Graphics g) {
+    g.drawString("This is my first applet!", 20, 100);
+  }
+}
+
+■P398
+import java.applet.Applet;
+import java.awt.Graphics;
+/*
+  <applet code="DrawLine" width=200 height=200>
+  </applet>
+*/
+
+public class DrawLine extends Applet {
+  public void paint(Graphics g) {
+    g.drawLine(10, 10, 180, 110);
+  }
+}
+
+■P400
+import java.applet.Applet;
+import java.awt.Graphics;
+/*
+  <applet code="AppletLifecycle" width=300 height=50>
+  </applet>
+*/
+
+public class AppletLifecycle extends Applet {
+  String str = "";
+
+  public void init() {
+    str += "init; ";
+  }
+
+  public void start() {
+    str += "start; ";
+  }
+
+  public void stop() {
+    str += "stop; ";
+  }
+
+  public void destroy() {
+    System.out.println("destroy");
+  }
+
+  public void paint(Graphics g) {
+    g.drawString(str, 10, 25);
+  }
+}
+
+■P403-1
+import java.applet.Applet;
+import java.awt.Graphics;
+/*
+  <applet code="DrawArc" width=200 height=200>
+  </applet>
+*/
+
+public class DrawArc extends Applet {
+  public void paint(Graphics g) {
+    g.drawArc(20, 20, 160, 160, 0, 135);
+  }
+}
+
+■P403-2
+import java.applet.Applet;
+import java.awt.Graphics;
+/*
+  <applet code="DrawPolygon" width=200 height=200>
+  </applet>
+*/
+
+public class DrawPolygon extends Applet {
+  public void paint(Graphics g) {
+    int n = 5;
+    int xdata[] = new int[n];
+    int ydata[] = new int[n];
+    xdata[0] = 10;
+    ydata[0] = 100;
+    xdata[1] = 60;
+    ydata[1] = 10;
+    xdata[2] = 70;
+    ydata[2] = 140;
+    xdata[3] = 140;
+    ydata[3] = 90;
+    xdata[4] = 190;
+    ydata[4] = 10;
+    g.drawPolygon(xdata, ydata, n);
+  }
+}
+
+■P406
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Graphics;
+/*
+  <applet code="BlueString" width=300 height=100>
+  </applet>
+*/
+
+public class BlueString extends Applet {
+  public void paint(Graphics g) {
+    g.setColor(Color.blue);
+    g.drawString("Blue String", 100, 50);
+  }
+}
+
+■P407
+import java.applet.Applet;
+import java.awt.*;
+
+/*
+  <applet code="ColorBars" width=260 height=260>
+  </applet>
+*/
+
+public class ColorBars extends Applet {
+  Color colors[] = { Color.black, Color.blue, Color.cyan,
+    Color.darkGray, Color.gray, Color.green,
+    Color.lightGray, Color.magenta, Color.orange, Color.pink,
+    Color.red, Color.white, Color.yellow };
+
+  public void paint(Graphics g) {
+    int deltax = 260 / colors.length;
+    for(int i = 0; i < colors.length; i++) {
+      g.setColor(colors[i]);
+      g.fillRect(i * deltax, 0, deltax, 260);
+    }
+  }
+}
+
+■P408
+import java.applet.Applet;
+import java.awt.*;
+/*
+  <applet code="ColoredTriangle" width=400 height=200>
+  </applet>
+*/
+
+public class ColoredTriangle extends Applet {
+  public void paint(Graphics g) {
+    int n = 3;
+    int xdata[] = new int[n];
+    int ydata[] = new int[n];
+    xdata[0] = 50;
+    ydata[0] = 150;
+    xdata[1] = 200;
+    ydata[1] = 50;
+    xdata[2] = 350;
+    ydata[2] = 150;
+    int rgb = Color.HSBtoRGB(1.0f, 1.0f, 1.0f);
+    g.setColor(new Color(rgb));
+    g.fillPolygon(xdata, ydata, n);
+  }
+}
+
+■P412
+import java.applet.Applet;
+import java.awt.*;
+/*
+  <applet code="FontDemo" width=200 height=200>
+  </applet>
+*/
+
+public class FontDemo extends Applet {
+  public void paint(Graphics g) {
+    // ベースラインの描画
+    int baseline = 100;
+    g.setColor(Color.lightGray);
+    g.drawLine(0, baseline, 200, baseline);
+
+    // 文字列の描画
+    g.setFont(new Font("Serif", Font.BOLD, 36));
+    g.setColor(Color.black);
+    g.drawString("Wxyz", 5, baseline);
+  }
+}
+
+■P413
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="FontMetricsDemo" width=300 height=200>
+  </applet>
+*/
+
+public class FontMetricsDemo extends Applet {
+  public void paint(Graphics g) {
+    // ベースラインの描画
+    int baseline = 100;
+    g.setColor(Color.lightGray);
+    g.drawLine(0, baseline, 300, baseline);
+
+    // 文字列の描画
+    Font font = new Font("Serif", Font.BOLD, 36);
+    g.setFont(font);
+    g.setColor(Color.black);
+    g.drawString("Wxyz", 5, baseline);
+    g.setColor(Color.lightGray);
+
+    // FontMetricsの取得
+    FontMetrics fm = g.getFontMetrics(font);
+
+    // ベースラインからアセントを引いた位置に線を描画する
+    int ascent = fm.getAscent();
+    int y = baseline - ascent;
+    g.drawLine(0, y, 300, y);
+
+    // ベースラインにディセントを足した位置に線を描画する
+    int descent = fm.getDescent();
+    y = baseline + descent;
+    g.drawLine(0, y, 300, y);
+
+    // ベースラインとディセントとレディングを足した位置に線を描画する
+    int leading = fm.getLeading();
+    y = baseline + descent + leading;
+    g.drawLine(0, y, 300, y);
+
+    // ベースラインと高さを足した位置に線を描画する
+    int height = fm.getHeight();
+    y = baseline + height;
+    g.drawLine(0, y, 300, y);
+
+    // 文字列の描画
+    g.setColor(Color.black);
+    g.drawString("\"'?/^{9}|[0]*@#", 5, y);
+    g.setColor(Color.lightGray);
+
+    // ベースラインとディセントと高さを足した位置に線を描画する
+    y = baseline + height + descent;
+    g.drawLine(0, y, 300, y);
+  }
+}
+
+■P416
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="Circle" width=200 height=200>
+  </applet>
+*/
+
+public class Circle extends Applet {
+  public void paint(Graphics g) {
+    Dimension d = getSize();
+    int xc = d.width / 2;
+    int yc = d.height / 2;
+    int radius = (int)((d.width < d.height) ?
+      0.4 * d.width : 0.4 * d.height);
+    g.drawOval(xc - radius, yc - radius, 2 * radius, 2 *
+      radius);
+  }
+}
+
+■P417
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="CenterString" width=300 height=200>
+  </applet>
+*/
+
+public class CenterString extends Applet {
+  public void paint(Graphics g) {
+    // 文字列の設定
+    String s = "Teach Yourself Java";
+
+    // フォントの作成と設定
+    Font f = new Font("SansSerif", Font.BOLD, 20);
+    g.setFont(f);
+
+    // フォントメトリックスの取得
+    FontMetrics fm = g.getFontMetrics();
+
+    // 文字列の先頭の位置を計算する
+    Dimension d = getSize();
+    int x = d.width / 2 - fm.stringWidth(s) / 2;
+    int y = d.height / 2 + fm.getDescent();
+
+    // 文字列の描画
+    g.drawString(s, x, y);
+  }
+}
+
+■P426
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="BackgroundForeground" width=200
+    height=200>
+  </applet>
+*/
+
+public class BackgroundForeground extends Applet {
+  public void paint(Graphics g) {
+    setBackground(Color.yellow);
+    g.setColor(Color.blue);
+    g.drawLine(0, 0, 200, 200);
+    g.fillRect(100, 40, 50, 50);
+  }
+}
+
+■P427
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="AppletParameters" width=300 height=300>
+  <param name="background" value="0xffffff">
+  <param name="foreground" value="0x000000">
+  <param name="message" value="Testing Applet Parameters">
+  </applet>
+*/
+
+public class AppletParameters extends Applet {
+  public void paint(Graphics g) {
+    String background = getParameter("background");
+    String foreground = getParameter("foreground");
+    String message = getParameter("message");
+    setBackground(Color.decode(background));
+    g.setColor(Color.decode(foreground));
+    Font font = getFont();
+    FontMetrics fm = getFontMetrics(font);
+    Dimension d = getSize();
+    int x = (d.width - fm.stringWidth(message)) / 2;
+    int y = d.height / 2;
+    g.drawString(message, x, y);
+  }
+}
+
+■P431-1
+import java.applet.*;
+import java.awt.*;
+import java.net.*;
+/*
+  <applet code="ShowDocument" width=200 height=50>
+  </applet>
+*/
+
+public class ShowDocument extends Applet {
+  public void init() {
+    AppletContext ac = getAppletContext();
+    try {
+      URL url = new URL("http://www.osborne.com");
+      ac.showDocument(url, "frame2");
+    }
+    catch(Exception e) {
+      showStatus("Exception: " + e);
+     }
+  }
+
+  public void paint(Graphics g) {
+    g.drawString("ShowDocument Applet", 10, 25);
+  }
+}
+
+■P431-2
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="ShowDimension" width=200 height=200>
+  </applet>
+*/
+
+public class ShowDimension extends Applet {
+  public void paint(Graphics g) {
+    // サイズの取得
+    Dimension d = getSize();
+
+    // ステータス行に表示する
+    showStatus("width = " + d.width + "; height = " +
+      d.height);
+  }
+}
+
+■P433
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="DrawImage" width=400 height=400>
+  <param name="file" value="sphere.jpg">
+  </applet>
+*/
+
+public class DrawImage extends Applet {
+  Image image;
+
+  public void init() {
+    image = getImage(getDocumentBase(),
+      getParameter("file"));
+  }
+
+  public void paint(Graphics g) {
+    g.drawImage(image, 0, 0, this);
+  }
+}
+
+■P435
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="Counter" width=250 height=100>
+  </applet>
+*/
+
+public class Counter extends Applet
+implements Runnable {
+  int counter;
+  Thread t;
+
+  public void init() {
+    // カウンタを初期化する
+    counter = 0;
+
+    // スレッドを開始する
+    t = new Thread(this);
+    t.start();
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        // 再描画を要求する
+        repaint();
+
+        // 次のカウンタを表示する前に休止する
+        Thread.sleep(1000);
+
+        // カウンタを1つ進める
+        ++counter;
+      }
+    }
+    catch(Exception e) {
+    }
+  }
+
+  public void paint(Graphics g) {
+    // フォントを設定する
+    g.setFont(new Font("Serif", Font.BOLD, 36));
+
+    // フォントメトリックスを取得する
+    FontMetrics fm = g.getFontMetrics();
+
+    // カウンタを表示する
+    String str = "" + counter;
+    Dimension d = getSize();
+    int x = d.width / 2 - fm.stringWidth(str) / 2;
+    g.drawString(str, x, d.height / 2);
+  }
+}
+
+■P437
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="Dots" width=250 height=100>
+  </applet>
+*/
+
+public class Dots extends Applet
+implements Runnable {
+  Thread t;
+
+  public void init() {
+    // スレッドを開始する
+    t = new Thread(this);
+    t.start();
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        // 再描画を要求する
+        repaint();
+
+        // 次の点を表示する前に休止する
+        Thread.sleep(200);
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+
+  public void update(Graphics g) {
+    paint(g);
+  }
+
+  public void paint(Graphics g) {
+    // ウィンドウ内の無作為な場所を選択する
+    Dimension d = getSize();
+    int x = (int)(Math.random() * d.width);
+    int y = (int)(Math.random() * d.height);
+
+    // そこに点を描画する
+    g.fillRect(x, y, 2, 2);
+  }
+}

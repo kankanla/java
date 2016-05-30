@@ -1,0 +1,582 @@
+第7章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P211
+■P213
+■P214
+■P217-1
+■P217-2
+■P219
+■P221-1
+■P221-2
+■P223
+■P224
+■P227
+■P228-1
+■P228-2
+■P228-3
+■P233-1
+■P233-2
+■P233-3
+■P235-1
+■P235-2
+■P236-1
+■P236-2
+・・・・・・・・・・・・・・・・・・・・・
+
+■P211
+interface Shape2D {
+  double getArea();
+}
+
+interface Shape3D {
+  double getVolume();
+}
+
+class Point3D {
+  double x, y, z;
+
+  Point3D(double x, double y, double z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+}
+
+abstract class Shape {
+  abstract void display();
+}
+
+class Circle extends Shape
+implements Shape2D {
+  Point3D center, p; // pは円周上の任意の1点
+
+  Circle(Point3D center, Point3D p) {
+    this.center = center;
+    this.p = p;
+  }
+
+  public void display() {
+    System.out.println("Circle");
+  }
+
+  public double getArea() {
+    double dx = center.x - p.x;
+    double dy = center.y - p.y;
+    double d = dx * dx + dy * dy;
+    double radius = Math.sqrt(d);
+    return Math.PI * radius * radius;
+  }
+}
+
+class Sphere extends Shape
+implements Shape3D {
+  Point3D center;
+  double radius;
+
+  Sphere(Point3D center, double radius) {
+    this.center = center;
+    this.radius = radius;
+  }
+
+  public void display() {
+    System.out.println("Sphere");
+  }
+
+  public double getVolume() {
+    return 4 * Math.PI * radius * radius * radius / 3;
+  }
+}
+
+class Shapes {
+  public static void main(String args[]) {
+    Circle c = new Circle(new Point3D(0, 0, 0), new
+      Point3D(1, 0, 0));
+    c.display();
+    System.out.println(c.getArea());
+    Sphere s = new Sphere(new Point3D(0, 0, 0), 1);
+    s.display();
+    System.out.println(s.getVolume());
+  }
+}
+
+■P213
+interface Material {
+  String bronze = "bronze";
+  String gold = "gold";
+  String marble = "marble";
+  String silver = "silver";
+  String wood = "wood";
+}
+
+abstract class MaterialObject {
+  String material;
+}
+
+class Ball extends MaterialObject {
+  Ball(String material) {
+    this.material = material;
+  }
+}
+
+class Coin extends MaterialObject {
+  Coin(String material) {
+    this.material = material;
+  }
+}
+
+class Ring extends MaterialObject {
+  Ring(String material) {
+    this.material = material;
+  }
+}
+
+class MaterialObjects {
+  public static void main(String args[]) {
+    Ball ball = new Ball(Material.wood);
+    Coin coin = new Coin(Material.silver);
+    Ring ring = new Ring(Material.gold);
+    System.out.println(ball.material);
+    System.out.println(coin.material);
+    System.out.println(ring.material);
+  }
+}
+
+■P214
+enum Material {
+  bronze,
+  gold,
+  marble,
+  silver,
+  wood;
+}
+
+abstract class MaterialObject {
+  Material material;
+}
+
+class Ball extends MaterialObject {
+  Ball(Material material) {
+    this.material = material;
+  }
+}
+
+class Coin extends MaterialObject {
+  Coin(Material material) {
+    this.material = material;
+  }
+}
+
+class Ring extends MaterialObject {
+  Ring(Material material) {
+    this.material = material;
+  }
+}
+
+class MaterialObjects2 {
+  public static void main(String args[]) {
+    Ball ball = new Ball(Material.wood);
+    Coin coin = new Coin(Material.silver);
+    Ring ring = new Ring(Material.gold);
+    System.out.println(ball.material);
+    System.out.println(coin.material);
+    System.out.println(ring.material);
+  }
+}
+
+■P217-1
+interface A {
+  void display(String s);
+}
+
+class C1 implements A {
+  public void display(String s) {
+    System.out.println("C1: " + s);
+  }
+}
+
+class C2 implements A {
+  public void display(String s) {
+    System.out.println("C2: " + s);
+  }
+}
+
+class C3 implements A {
+  public void display(String s) {
+    System.out.println("C3: " + s);
+  }
+}
+
+class InterfaceReferenceVariable {
+  public static void main(String args[]) {
+    A a;
+    a = new C1();
+    a.display("String 1");
+    a = new C2();
+    a.display("String 2");
+    a = new C3();
+    a.display("String 3");
+  }
+}
+
+■P217-2
+interface B {
+  void display();
+}
+
+class D1 {
+}
+
+class D2 implements B {
+  public void display() {
+    System.out.println("D2");
+  }
+}
+
+class D3 implements B {
+  public void display() {
+    System.out.println("D3");
+  }
+}
+
+class InterfaceReferenceVariable2 {
+  public static void main(String args[]) {
+    B b;
+    b = new D1();
+    b.display();
+    b = new D2();
+    b.display();
+    b = new D3();
+    b.display();
+  }
+}
+
+■P219
+interface J {
+  int j = 200;
+  int j1();
+}
+
+interface K {
+  double k1();
+}
+
+interface L extends J, K {
+  boolean l1();
+}
+
+class I implements L {
+
+  public int j1() {
+    return 4;
+  }
+
+  public double k1() {
+    return 6.8;
+  }
+
+  public boolean l1() {
+    return true;
+  }
+}
+
+class InterfaceInheritance {
+  public static void main(String args[]) {
+    I i = new I();
+    System.out.println(i.j);
+    System.out.println(i.j1());
+    System.out.println(i.k1());
+    System.out.println(i.l1());
+  }
+}
+
+■P221-1
+interface Base {
+  int base = 0;
+  int ambiguous = 1000;
+}
+
+interface Set1 extends Base {
+  int set1 = 1;
+  int ambiguous = 1000;
+}
+
+interface Set2 extends Base {
+  int set2 = 2;
+}
+
+interface Total extends Set1, Set2 {
+  int total = 3;
+}
+
+class Z implements Total {
+}
+
+class AmbiguousVariable {
+  public static void main(String args[]) {
+    Z z = new Z();
+    System.out.println(z.base);
+    System.out.println(z.set1);
+    System.out.println(z.set2);
+    System.out.println(z.total);
+    System.out.println(z.ambiguous);  // エラー発生!
+  }
+}
+
+■P221-2
+interface L1 {
+  void f();
+  void g();
+}
+
+interface L2 extends L1 {
+  void f();
+  int g(); // 戻り値が違う
+}
+
+class CompileError {
+  public static void main(String args[]) {
+    System.out.println("Compile-time error");
+  }
+}
+
+■P223
+abstract class Fish {
+  abstract void display();
+}
+
+abstract class FreshWaterFish extends Fish {
+}
+
+abstract class SaltWaterFish extends Fish {
+}
+
+class Trout extends FreshWaterFish {
+  void display() {
+    System.out.println("Trout");
+  }
+}
+
+class Flounder extends SaltWaterFish {
+  void display() {
+    System.out.println("Flounder");
+  }
+}
+
+class Tuna extends SaltWaterFish {
+  void display() {
+    System.out.println("Tuna");
+  }
+}
+
+class InstanceofClass {
+  public final static int NUMFISH = 4;
+
+  public static void main(String args[]) {
+    // 魚類の配列を作成する
+    Fish fishes[] = new Fish[NUMFISH];
+
+    // オブジェクトを作成する
+    fishes[0] = new Trout();
+    fishes[1] = new Flounder();
+    fishes[2] = new Tuna();
+    fishes[3] = new Trout();
+
+    // instanceof演算子を利用する
+    for(int i = 0; i < NUMFISH; i++) {
+      Fish fish = fishes[i];
+      if (fish instanceof SaltWaterFish) {
+        fish.display();
+      }
+    }
+  }
+}
+
+■P224
+interface Vehicle {
+  void drive();
+}
+
+abstract class Mammal {
+}
+
+class Bear extends Mammal {
+}
+
+class Elephant extends Mammal
+implements Vehicle {
+  public void drive() {
+    System.out.println("Elephant: drive");
+  }
+}
+
+class Horse extends Mammal
+implements Vehicle {
+  public void drive() {
+    System.out.println("Horse: drive");
+  }
+}
+
+class Lion extends Mammal {
+}
+
+class InstanceofInterface {
+  public final static int NUMMAMMALS = 4;
+
+  public static void main(String args[]) {
+    // 哺乳動物の配列を作成する
+    Mammal mammals[] = new Mammal[NUMMAMMALS];
+
+    // オブジェクトを作成する
+    mammals[0] = new Bear();
+    mammals[1] = new Elephant();
+    mammals[2] = new Horse();
+    mammals[3] = new Lion();
+
+    // instanceof演算子を利用する
+    for(int i = 0; i < NUMMAMMALS; i++) {
+      if (mammals[i] instanceof Vehicle) {
+        Vehicle v = (Vehicle)mammals[i];
+        v.drive();
+      }
+    }
+  }
+}
+
+■P227
+package p;
+
+class PackageDemo {
+  public static void main(String args[]) {
+    A a = new A();
+    a.a1();
+    B b = new B();
+    b.b1();
+    C c = new C();
+    c.c1();
+  }
+}
+
+
+■P228-1
+package p;
+
+class A {
+  void a1() {
+    System.out.println("a1");
+  }
+}
+
+■P228-2
+package p;
+
+class B {
+  void b1() {
+    System.out.println("b1");
+  }
+}
+
+■P228-3
+package p;
+
+class C {
+  void c1() {
+    System.out.println("c1");
+  }
+}
+
+■P233-1
+package q;
+import r.*;
+import s.*;
+
+class ImportDemo {
+  public static void main(String args[]) {
+    R r = new R();
+    r.r1();
+    S s = new S();
+    s.s1();
+  }
+}
+
+■P233-2
+package r;
+
+public class R {
+  public void r1() {
+    System.out.println("r1");
+  }
+}
+
+■P233-3
+package s;
+
+public class S {
+  public void s1() {
+    System.out.println("s1");
+  }
+}
+
+■P235-1
+package e;
+
+public class E {
+  public int e1 = 11;
+  protected int e2 = 22;
+  private int e3 = 33;
+}
+
+■P235-2
+package f;
+import e.*;
+
+public class F extends E {
+  public void display() {
+    // publicメンバにアクセスできる
+    System.out.println(e1);
+
+    // スーパークラスのprotectedメンバに
+    // アクセスできる
+    System.out.println(e2);
+
+    // privateメンバにはアクセスできない
+    // System.out.println(e3);
+  }
+}
+
+■P236-1
+package g;
+import e.*;
+
+public class G {
+  public void display() {
+    // Eのインスタンスを作成する
+    E e = new E();
+
+    // publicメンバにアクセスできる
+    System.out.println(e.e1);
+
+    // protectedメンバにアクセスできない
+    // System.out.println(e.e2);
+
+    // privateメンバにアクセスできない
+    // System.out.println(e.e3);
+  }
+}
+
+■P236-2
+package h;
+import f.F;
+import g.G;
+
+class ProtectedDemo {
+  public static void main(String args[]) {
+    // 別のパッケージ内のサブクラスをテストする
+    F f = new F();
+    f.display();
+
+    // 別のパッケージ内の非サブクラスをテストする
+    G g = new G();
+    g.display();
+  }
+}

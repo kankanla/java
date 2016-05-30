@@ -1,0 +1,528 @@
+第9章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P274
+■P280
+■P281
+■P282
+■P287
+■P289
+■P292
+■P295
+■P298
+■P299
+・・・・・・・・・・・・・・・・・・・・・
+
+■P274
+class NestedTryBlocks {
+  public static void main(String args[]) {
+    a();
+  }
+
+  static void a() {
+    try {
+      try {
+        System.out.println("Before " +
+          "integer division-by-zero");
+        int i = 1;
+        int j = 0;
+        System.out.println(i / j);
+        System.out.println("After " +
+          "integer division-by-zero");
+      }
+      catch(Exception e) {
+        System.out.println("Inner catch block");
+        throw e;
+      }
+      finally {
+        System.out.println("Inner finally block");
+      }
+    }
+    catch(Exception e) {
+      System.out.println("Outer catch block");
+    }
+    finally {
+      System.out.println("Outer finally block");
+    }
+  }
+}
+
+■P280
+class ThreadX extends Thread {
+  // ThreadXのスレッド内容
+  public void run() {
+    try {
+      while(true) {
+        Thread.sleep(2000);
+        System.out.println("Hello");
+      }
+    }
+    catch(InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class ThreadDemo1 {
+  public static void main(String args[]) {
+    // ThreadXクラスからtxオブジェクトを生成
+    ThreadX tx = new ThreadX();
+    // txオブジェクトを開始
+    tx.start();
+  }
+}
+
+■P281
+class RunnableY implements Runnable {
+  // スレッドの内容
+  public void run() {
+    try {
+      while(true) {
+        Thread.sleep(2000);
+        System.out.println("Hello");
+      }
+    }
+    catch(InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class ThreadDemo2 {
+  public static void main(String args[]) {
+    // RunnableYオブジェクトをインスタンス化
+    RunnableY ry = new RunnableY();
+    // Threadオブジェクトをインスタンス化
+    Thread t = new Thread(ry);
+    // tオブジェクトを開始
+    t.start();
+  }
+}
+
+■P282
+class ThreadM extends Thread {
+  public void run() {
+    try {
+      for(int i = 0; i < 10; i++) {
+        Thread.sleep(1000);
+        System.out.println("ThreadM");
+      }
+    }
+    catch (InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class ThreadN extends Thread {
+  public void run() {
+    try {
+      for(int i = 0; i < 20; i++) {
+        Thread.sleep(2000);
+        System.out.println("ThreadN");
+      }
+    }
+    catch(InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class JoinDemo1 {
+  public static void main(String args[]) {
+    // ThreadMクラスのオブジェクトを作成して開始
+    ThreadM tm = new ThreadM();
+    tm.start();
+    // ThreadNクラスのオブジェクトを作成して開始
+    ThreadN tn = new ThreadN();
+    tn.start();
+    // 待機
+    try {
+      tm.join();
+      tn.join();
+      System.out.println("Both threads have finished");
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+■P287
+class Account {
+  private int balance = 0;
+
+  synchronized void deposit(int amount) {
+    balance += amount;
+  }
+
+  int getBalance() {
+    return balance;
+  }
+}
+
+class Customer extends Thread {
+  Account account;
+
+  Customer(Account account) {
+    this.account = account;
+  }
+
+  public void run() {
+    try {
+      for(int i = 0; i < 100000; i++) {
+        account.deposit(10);
+      }
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+class BankDemo {
+  private final static int NUMCUSTOMERS = 10;
+
+  public static void main(String args[]) {
+    // 口座の作成
+    Account account = new Account();
+
+    // スレッドの作成と起動
+    Customer customers[] = new Customer[NUMCUSTOMERS];
+    for(int i = 0; i < NUMCUSTOMERS; i++) {
+      customers[i] = new Customer(account);
+      customers[i].start();
+    }
+
+    // スレッドの完了を待機する
+    for(int i = 0; i < NUMCUSTOMERS; i++) {
+      try {
+        customers[i].join();
+      }
+      catch(InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+
+    // 口座の残高を表示する
+    System.out.println(account.getBalance());
+  }
+}
+
+■P289
+class A {
+  B b;
+
+  synchronized void a1() {
+    System.out.println("Starting a1");
+    b.b2();
+  }
+
+  synchronized void a2() {
+    System.out.println("Starting a2");
+  }
+}
+
+class B {
+  A a;
+
+  synchronized void b1() {
+    System.out.println("Starting b1");
+    a.a2();
+  }
+
+  synchronized void b2() {
+    System.out.println("Starting b2");
+  }
+}
+
+class Thread1 extends Thread {
+  A a;
+
+  Thread1(A a) {
+    this.a = a;
+  }
+
+  public void run() {
+    for(int i = 0; i < 100000; i++)
+      a.a1();
+  }
+}
+
+class Thread2 extends Thread {
+  B b;
+
+  Thread2(B b) {
+    this.b = b;
+  }
+
+  public void run() {
+    for(int i = 0; i < 100000; i++)
+      b.b1();
+  }
+}
+
+class DeadlockDemo {
+  public static void main(String args[]) {
+    // オブジェクトの作成
+    A a = new A();
+    B b = new B();
+    a.b = b;
+    b.a = a;
+
+    // スレッドの作成
+    Thread1 t1 = new Thread1(a);
+    Thread2 t2 = new Thread2(b);
+    t1.start();
+    t2.start();
+
+    // スレッドの完了を待つ
+    try {
+      t1.join();
+      t2.join();
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+
+    // メッセージの表示
+    System.out.println("Done!");
+  }
+}
+
+■P292
+class X {
+  synchronized void x1() {
+    x2();
+  }
+
+  synchronized void x2() {
+  }
+}
+
+class ThreadX extends Thread {
+  X x;
+
+  ThreadX(X x) {
+    this.x = x;
+  }
+
+  public void run() {
+    for(int i = 0; i < 100000; i++)
+      x.x1();
+  }
+}
+
+class DeadlockQuestion {
+  private final static int NUMTHREADS = 10;
+
+  public static void main(String args[]) {
+    // オブジェクトの作成
+    X x = new X();
+
+    // スレッドの作成と起動
+    ThreadX threads[] = new ThreadX[NUMTHREADS];
+    for(int i = 0; i < NUMTHREADS; i++) {
+      threads[i] = new ThreadX(x);
+      threads[i].start();
+    }
+
+    // スレッドの完了を待つ
+    for(int i = 0; i < NUMTHREADS; i++)
+      try {
+        threads[i].join();
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+
+    // メッセージの表示
+    System.out.println("Done!");
+  }
+}
+
+■P295
+class Producer extends Thread {
+  Queue queue;
+
+  Producer(Queue queue) {
+    this.queue = queue;
+  }
+
+  public void run() {
+    int i = 0;
+    while(true) {
+      queue.add(i++);
+    }
+  }
+}
+
+class Consumer extends Thread {
+  String str;
+  Queue queue;
+
+  Consumer(String str, Queue queue) {
+    this.str = str;
+    this.queue = queue;
+  }
+
+  public void run() {
+    while(true) {
+      System.out.println(str + ": " + queue.remove());
+    }
+  }
+}
+
+class Queue {
+  private final static int SIZE = 10;
+  int array[] = new int[SIZE];
+  int r = 0;
+  int w = 0;
+  int count = 0;
+
+  synchronized void add(int i) {
+    // 待ち行列がいっぱいの場合は待機する
+    while(count == SIZE) {
+      try {
+        wait();
+      }
+      catch(InterruptedException ie) {
+        ie.printStackTrace();
+        System.exit(0);
+      }
+    }
+
+    // 配列にデータを追加して書き込みポインタを更新する
+    array[w++] = i;
+    if (w >= SIZE)
+      w = 0;
+
+    // countカウントを1つ増やす
+    ++count;
+
+    // 待機中のスレッドに通知する
+    notifyAll();
+  }
+
+  synchronized int remove() {
+    // 待ち行列が空の場合は待機する
+    while(count == 0) {
+      try {
+        wait();
+      }
+      catch(InterruptedException ie) {
+        ie.printStackTrace();
+        System.exit(0);
+      }
+    }
+
+    // 配列からデータを読み取って読み取りポインタを更新する
+    int element = array[r++];
+    if (r >= SIZE)
+      r = 0;
+
+    // countを1つ減らす
+    --count;
+
+    // 待機中のスレッドに通知する
+    notifyAll();
+
+    // データを返す
+    return element;
+  }
+}
+
+class ProducerConsumers {
+  public static void main(String args[]) {
+    Queue queue = new Queue();
+    new Producer(queue).start();
+    new Consumer("ConsumerA", queue).start();
+    new Consumer("ConsumerB", queue).start();
+    new Consumer("ConsumerC", queue).start();
+  }
+}
+
+■P298
+class K {
+  boolean flag;
+
+  synchronized void k1() {
+    if (flag == false) {
+      flag = true;
+      try {
+        System.out.println("Calling wait");
+        wait();
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    else {
+      flag = false;
+      System.out.println("Calling notifyAll");
+      notifyAll();
+    }
+  }
+}
+
+class ThreadK extends Thread {
+  K k;
+
+  ThreadK(K k) {
+    this.k = k;
+  }
+
+  public void run() {
+    k.k1();
+    System.out.println("Done");
+  }
+}
+
+class WaitNotifyDemo {
+  public static void main(String args[]) {
+    K k = new K();
+    new ThreadK(k).start();
+    new ThreadK(k).start();
+  }
+}
+
+■P299
+class NormPriorityThread extends Thread {
+  public void run() {
+    for(int i = 0; i < 20; i++)
+      System.out.println("Normal priority thread");
+  }
+}
+
+class LowPriorityThread extends Thread {
+  public void run() {
+    setPriority(MIN_PRIORITY);
+    try {
+      for(int i = 0; i < 1000; i++)
+        System.out.println("Low priority thread: " + i);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+class PriorityDemo {
+  public static void main(String args[]) {
+    // 優先順位の低いスレッドを作成して起動する
+    LowPriorityThread lpt = new LowPriorityThread();
+    lpt.start();
+
+    // 2000ミリ秒間待機する
+    try {
+      Thread.sleep(2000);
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+
+    // 通常の優先順位のスレッドを作成して起動する
+    NormPriorityThread npt = new NormPriorityThread();
+    npt.start();
+  }
+}

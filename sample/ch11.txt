@@ -1,0 +1,528 @@
+第11章 サンプルコード
+・・・・・・・・・・・・・・・・・・・・・
+目次（ページ番号）
+■P336
+■P341
+■P342
+■P345
+■P346
+■P347
+■P348
+■P357
+■P358
+■P359
+■P360
+■P361
+■P362
+■P363
+■P365
+■P369
+■P371
+・・・・・・・・・・・・・・・・・・・・・
+
+■P336
+import java.io.*;
+
+class FileDemo {
+  public static void main(String args[]) {
+    try {
+      // 定数を表示する
+      System.out.println("pathSeparatorChar = " +
+        File.pathSeparatorChar);
+      System.out.println("separatorChar = " +
+        File.separatorChar);
+
+      // いくつかのメソッドをテストする
+      File file = new File(args[0]);
+      System.out.println("getName() = " +
+        file.getName());
+      System.out.println("getParent() = " +
+        file.getParent());
+      System.out.println("getAbsolutePath() = " +
+        file.getAbsolutePath());
+      System.out.println("getCanonicalPath() = " +
+        file.getCanonicalPath());
+      System.out.println("getPath() = " +
+        file.getPath());
+      System.out.println("canRead() = " +
+        file.canRead());
+      System.out.println("canWrite() = " +
+        file.canWrite());
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+■P341
+import java.io.*;
+
+class FileWriterDemo {
+  public static void main(String args[]) {
+    try {
+      // FileWriterオブジェクトを作成する
+      FileWriter fw = new FileWriter(args[0]);
+
+      // ファイルに文字列を書き込む
+      for(int i = 0; i < 12; i++) {
+        fw.write("Line " + i + "\n");
+      }
+
+      // FileWriterオブジェクトをクローズする
+      fw.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P342
+import java.io.*;
+
+class FileReaderDemo {
+  public static void main(String args[]) {
+    try {
+      // FileReaderオブジェクトを作成する
+      FileReader fr = new FileReader(args[0]);
+
+      // 文字を読み取って、表示する
+      int i;
+      while((i = fr.read()) != -1) {
+        System.out.print((char)i);
+      }
+
+      // FileReaderオブジェクトをクローズする
+      fr.close();
+    }
+    catch(Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P345
+import java.io.*;
+
+class BufferedWriterDemo {
+  public static void main(String args[]) {
+    try {
+      // FileWriterオブジェクトを作成する
+      FileWriter fw = new FileWriter(args[0]);
+
+      // BufferedWriterオブジェクトを作成する
+      BufferedWriter bw = new BufferedWriter(fw);
+
+      // ファイルに文字列を書き込む
+      for(int i = 0; i < 12; i++) {
+        bw.write("Line " + i + "\n");
+      }
+
+      // BufferedWriterオブジェクトをクローズする
+      bw.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P346
+import java.io.*;
+
+class BufferedReaderDemo {
+  public static void main(String args[]) {
+    try {
+      // FileReaderオブジェクトを作成する
+      FileReader fr = new FileReader(args[0]);
+
+      // BufferedReaderオブジェクトを作成する
+      BufferedReader br = new BufferedReader(fr);
+
+      // ファイルから行を読み取って、表示する
+      String s;
+      while((s = br.readLine()) != null)
+        System.out.println(s);
+
+      // BufferedReaderオブジェクトをクローズする
+      br.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P347
+import java.io.*;
+
+class ReadConsole {
+  public static void main(String args[]) {
+    try {
+      // InputStreamReaderオブジェクトを作成する
+      InputStreamReader isr =
+        new InputStreamReader(System.in);
+
+      // BufferedReaderオブジェクトを作成する
+      BufferedReader br = new BufferedReader(isr);
+
+      // コンソールから行を読み取って、処理する
+      String s;
+      while((s = br.readLine()) != null) {
+        System.out.println(s.length());
+      }
+
+      // BufferedReaderオブジェクトをクローズする
+      br.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P348
+import java.io.*;
+
+class PrintWriterDemo {
+  public static void main(String args[]) {
+    try {
+      // PrintWriterオブジェクトを作成する
+      PrintWriter pw = new PrintWriter(System.out);
+
+      // いくつかのメソッドを実行する
+      pw.println(true);
+      pw.println('A');
+      pw.println(500);
+      pw.println(40000L);
+      pw.println(45.67f);
+      pw.println(45.67);
+      pw.println("Hello");
+      pw.println(new Integer("99"));
+
+      // PrintWriterオブジェクトをクローズする
+      pw.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P357
+import java.io.*;
+
+class FileOutputStreamDemo {
+  public static void main(String args[]) {
+    try {
+      // FileOutputStreamオブジェクトを作成する
+      FileOutputStream fos =
+        new FileOutputStream(args[0]);
+
+      // ファイルに12バイトを書き込む
+      for(int i = 0; i < 12; i++) {
+        fos.write(i);
+      }
+
+      // FileOutputStreamオブジェクトをクローズする
+      fos.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P358
+import java.io.*;
+
+class FileInputStreamDemo {
+  public static void main(String args[]) {
+    try {
+      // FileInputStreamオブジェクトを作成する
+      FileInputStream fis =
+        new FileInputStream(args[0]);
+
+      // データを読み取って、表示する
+      int i;
+      while((i = fis.read()) != -1) {
+        System.out.println(i);
+      }
+
+      // FileInputStreamオブジェクトをクローズする
+      fis.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P359
+import java.io.*;
+
+class BufferedOutputStreamDemo {
+  public static void main(String args[]) {
+    try {
+      // FileOutputStreamオブジェクトを作成する
+      FileOutputStream fos =
+        new FileOutputStream(args[0]);
+
+      // BufferedOutputStreamオブジェクトを作成する
+      BufferedOutputStream bos =
+        new BufferedOutputStream(fos);
+
+      // ファイルに12バイトを書き込む
+      for(int i = 0; i < 12; i++) {
+        bos.write(i);
+      }
+
+      // BufferedOutputStreamオブジェクトをクローズする
+      bos.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P360
+import java.io.*;
+
+class BufferedInputStreamDemo {
+  public static void main(String args[]) {
+    try {
+      // FileInputStreamを作成する
+      FileInputStream fis =
+        new FileInputStream(args[0]);
+
+      // BufferedInputStreamオブジェクトを作成する
+      BufferedInputStream bis =
+        new BufferedInputStream(fis);
+
+      // データを読み取って、表示する
+      int i;
+      while((i = bis.read()) != -1) {
+        System.out.println(i);
+      }
+
+      // BufferedInputStreamオブジェクトをクローズする
+      bis.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P361
+import java.io.*;
+
+class DataOutputStreamDemo {
+  public static void main(String args[]) {
+    try {
+      // FileOutputStreamオブジェクトを作成する
+      FileOutputStream fos =
+        new FileOutputStream(args[0]);
+
+      // DataOutputStreamオブジェクトを作成する
+      DataOutputStream dos =
+        new DataOutputStream(fos);
+
+      // 各種のデータ型を書き込む
+      dos.writeBoolean(false);
+      dos.writeByte(Byte.MAX_VALUE);
+      dos.writeChar('A');
+      dos.writeDouble(Double.MAX_VALUE);
+      dos.writeFloat(Float.MAX_VALUE);
+      dos.writeInt(Integer.MAX_VALUE);
+      dos.writeLong(Long.MAX_VALUE);
+      dos.writeShort(Short.MAX_VALUE);
+
+      // DataOutputStreamオブジェクトをクローズする
+      dos.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P362
+import java.io.*;
+
+class DataInputStreamDemo {
+  public static void main(String args[]) {
+    try {
+      // FileInputStreamオブジェクトを作成する
+      FileInputStream fis =
+        new FileInputStream(args[0]);
+
+      // DataInputStreamオブジェクトを作成する
+      DataInputStream dis =
+        new DataInputStream(fis);
+
+      // データを読み取り、表示する
+      System.out.println(dis.readBoolean());
+      System.out.println(dis.readByte());
+      System.out.println(dis.readChar());
+      System.out.println(dis.readDouble());
+      System.out.println(dis.readFloat());
+      System.out.println(dis.readInt());
+      System.out.println(dis.readLong());
+      System.out.println(dis.readShort());
+
+      // DataInputStreamオブジェクトをクローズする
+      dis.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P363
+import java.util.*;
+
+class FormatDemo {
+  public static void main(String args[]) {
+    System.out.format("Boolean: %b\n", new Boolean("true"));
+    System.out.format("String: %s\n", "ABC");
+    System.out.format("Number with zero padding: %08d\n", -301);
+    System.out.format("Hex number: %x\n", 301);
+    System.out.format("Floating(%%f): %f\n", Math.PI);
+    System.out.format("Floating(%%g): %g\n", Math.PI);
+    System.out.format("Floating(%%a): %a\n", Math.PI);
+    System.out.format("Time: %tR\n", Calendar.getInstance());
+  }
+}
+
+■P365
+import java.io.*;
+
+class Tail {
+  public static void main(String args[]) {
+    try {
+      // RandomAccessFileオブジェクトを作成する
+      RandomAccessFile raf =
+        new RandomAccessFile(args[0], "r");
+
+      // ファイルの終わりに表示する
+      // バイト数を決める
+      long count = Long.valueOf(args[1]).longValue();
+
+      // ファイルの長さを決める
+      long position = raf.length();
+
+      // 現在の位置にシークする
+      position -= count;
+      if (position < 0)
+        position = 0;
+      raf.seek(position);
+
+      // バイトを読み取って、表示する
+      while(true) {
+        // バイトを読み取る
+        try {
+          byte b = raf.readByte();
+
+          // 文字として表示する
+          System.out.print((char)b);
+        }
+        catch (EOFException eofe) {
+          break;
+        }
+      }
+      raf.close();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+■P369
+import java.io.*;
+
+class StreamTokenizerDemo {
+  public static void main(String args[]) {
+    try {
+      // FileReaderオブジェクトを作成する
+      FileReader fr = new FileReader(args[0]);
+
+      // BufferedReaderオブジェクトを作成する
+      BufferedReader br = new BufferedReader(fr);
+
+      // StreamTokenizerオブジェクトを作成する
+      StreamTokenizer st = new StreamTokenizer(br);
+
+      // ピリオドを通常文字として定義する
+      st.ordinaryChar('.');
+
+      // アポストロフィを単語文字として定義する
+      st.wordChars('\'', '\'');
+
+      // トークンを処理する
+      while(st.nextToken() != StreamTokenizer.TT_EOF) {
+        switch(st.ttype) {
+          case StreamTokenizer.TT_WORD:
+            System.out.format("%02d) %s\n", st.lineno(), st.sval);
+            break;
+          case StreamTokenizer.TT_NUMBER:
+            System.out.format("%02d) %s\n", st.lineno(), st.nval);
+            break;
+          default:
+            System.out.format("%02d) %c\n", st.lineno(), (char)st.ttype);
+        }
+      }
+
+      // BufferedReaderオブジェクトをクローズする
+      br.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+■P371
+import java.io.*;
+
+class StreamTokenizerDemo2 {
+  public static void main(String args[]) {
+    try {
+      // FileReaderオブジェクトを作成する
+      FileReader fr = new FileReader(args[0]);
+
+      // BufferedReaderオブジェクトを作成する
+      BufferedReader br = new BufferedReader(fr);
+
+      // StreamTokenizerオブジェクトを作成する
+      StreamTokenizer st = new StreamTokenizer(br);
+
+      // コンマを空白と見なす
+      st.whitespaceChars(',', ',');
+
+      // トークンを処理する
+      while(st.nextToken() != StreamTokenizer.TT_EOF) {
+        switch(st.ttype) {
+          case StreamTokenizer.TT_WORD:
+            System.out.format("%02d) %s\n", st.lineno(), st.sval);
+            break;
+          case StreamTokenizer.TT_NUMBER:
+            System.out.format("%02d) %s\n", st.lineno(), st.nval);
+            break;
+          default:
+            System.out.format("%02d) %c\n", st.lineno(), (char)st.ttype);
+        }
+      }
+
+      // BufferedReaderオブジェクトをクローズする
+      br.close();
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}

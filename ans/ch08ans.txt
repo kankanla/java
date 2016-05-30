@@ -1,0 +1,410 @@
+■第8章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第8章：前章の理解度チェック
+8.1：練習問題
+8.2：練習問題
+8.3：練習問題
+8.4：練習問題
+8.5：練習問題
+8.6：練習問題
+8.7：練習問題
+第8章：この章の理解度チェック
+第8章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第8章：前章の理解度チェック
+
+【1】 ポリモーフィズムは、「1つのインターフェイス、複数の実装」を意味します。クラスの宣言で、インターフェイスを実装することを明示できます。このクラスのサブクラスでは、このインターフェイスをさまざまな形で実装できます。実行時に、適切な実装がJavaの動的ディスパッチ機能によって選択されます。
+
+【2】 コンパイルエラーが起こります。どの変数を指しているのか判断できないためです。
+
+【3】 メソッドのシグネチャが同じで戻り値の型が異なる場合には、コンパイルエラーが起こります。
+
+【4】 
+interface PhysicalConstants {
+  // 定数を宣言
+  double G = 9.8;
+  double C = 3E8;
+  double A = 6.02E23;
+}
+
+class PhysicalConstantsDemo {
+  public static void main(String args[]) {
+    System.out.println(PhysicalConstants.G);
+    System.out.println(PhysicalConstants.C);
+    System.out.println(PhysicalConstants.A);
+  }
+}
+
+実行結果は次のとおりです。
+
+9.8
+3.0E8
+6.02E23
+
+【5】 短い名前で使うことはできません。java.awtのサブパッケージであるjava.awt.eventパッケージを短い名前で使うには、次のように宣言します。
+
+import java.awt.event.*;
+
+【6】 CLASSPATH環境変数は次のとおりです。
+
+.:c:\library\myJava
+
+D.classはカレントディレクトリ下のa\b\c\d\D.classとして配置します。F.classはc:\library\myJava\e\f\F.classとして配置します。
+
+8.1：練習問題
+
+【1】 
+Before cast
+java.lang.ClassCastException:  java.lang.Integer
+
+8.2：練習問題
+
+【1】 
+Before a
+Before b
+Before c
+Before d
+Before cast
+d: java.lang.ClassCastException: java.lang.Float cannot be cast to java.lang.Double
+Before division
+d: finally
+c: finally
+b: finally
+a: java.lang.ArithmeticException: / by zero
+a: finally
+After a
+main: finally
+
+【2】 コンパイルできません。catch(ArithmeticException e)の行まで処理が進むことが絶対にないため、コンパイルエラーになります。
+
+8.3：練習問題
+
+【1】 
+class ThrowExercise {
+  public static void main(String args[]) {
+    try {
+      System.out.println("Before a");
+      a();
+      System.out.println("After a");
+    }
+    catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("main: " + e);
+    }
+    finally {
+      System.out.println("main: finally");
+    }
+  }
+
+  public static void a() {
+    try {
+      System.out.println("Before b");
+      b();
+      System.out.println("After b");
+    }
+    catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("a: " + e);
+    }
+    finally {
+      System.out.println("a: finally");
+    }
+  }
+
+  public static void b() {
+    try {
+      System.out.println("Before c");
+      c();
+      System.out.println("After c");
+    }
+    catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("b: " + e);
+    }
+    finally {
+      System.out.println("b: finally");
+    }
+  }
+
+  public static void c() {
+    try {
+      System.out.println("Before d");
+      d();
+      System.out.println("After d");
+    }
+    catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("c: " + e);
+      throw e;
+    }
+    finally {
+      System.out.println("c: finally");
+    }
+  }
+
+  public static void d() {
+    try {
+      int array[] = new int[10];
+      System.out.println("Before assignment");
+      array[20] = 1;
+      System.out.println("After assignment");
+    }
+    catch(ArrayIndexOutOfBoundsException e) {
+      System.out.println("d: " + e);
+      throw e;
+    }
+    finally {
+      System.out.println("d: finally");
+    }
+  }
+}
+
+実行結果は次のとおりです。
+
+Before a
+Before b
+Before c
+Before d
+Before assignment
+d: java.lang.ArrayIndexOutOfBoundsException: 20
+d: finally
+c: java.lang.ArrayIndexOutOfBoundsException: 20
+c: finally
+b: java.lang.ArrayIndexOutOfBoundsException: 20
+b: finally
+After b
+a: finally
+After a
+main: finally
+
+【2】 
+Before a
+Before b
+Before c
+Before d
+d: finally
+c: finally
+b: java.lang.NumberFormatException: For input string: "45.67"
+b: finally
+After b
+a: finally
+After a
+main: finally
+
+8.4：練習問題
+
+【1】 java.lang.Errorとjava.lang.Exceptionです。java.lang.Errorは、捕獲する必要のない発生頻度の低い事態を表します（メモリ不足など）。java.lang.Exceptionは、捕獲して処理できる事態を表します（配列インデックスがはみ出した場合など）。
+
+【2】 ClassNotFoundException（、IllegalAccessException、InstantiationException、InterruptedException、NoSuchFieldException、NoSuchMethodException、RuntimeExceptionなど）
+
+【3】 ArithmeticException（、ArrayIndexOutOfBoundsException、ArrayStoreException、ClassCastException、IllegalArgumentException、NegativeArraySizeException、NullPointerException、SecurityException、TypeNotPresentException、UnsupportedOperationException）
+
+8.5：練習問題
+
+【1】 その必要はありません。RuntimeExceptionのサブクラスだからです。
+
+【2】 その必要があります。RuntimeExceptionのサブクラスではないからです。
+
+【3】 その必要はありません。
+
+【4】 
+class ThrowsExercise {
+  public static void main(String args[]) {
+    // 文字列配列を作成する
+    String strings[] = new String[6];
+    strings[0] = "45";
+    strings[1] = "-578";
+    strings[2] = "22";
+    strings[3] = "100";
+    strings[4] = "-1";
+    // 次の行を削除すると、NullPointerExceptionが生成される
+    strings[5] = "3000";
+    // 次の行を有効にすると、NumberFormatExceptionが生成される
+    // strings[5] = "300..";
+
+    // 文字列のサイズの平均を計算する
+    try {
+      System.out.println(average(strings));
+    }
+    catch(NullPointerException e) {
+      System.out.println("Null pointer exception");
+    }
+    catch(NumberFormatException e) {
+      System.out.println("Number format exception");
+    }
+  }
+
+  static double average(String array[])
+  throws NullPointerException, NumberFormatException {
+    double sum = 0;
+    for(int i = 0; i < array.length; i++) {
+      double d = Double.valueOf(array[i]).doubleValue();
+      sum += d;
+    }
+    return sum / array.length;
+  }
+}
+
+実行結果は次のとおりです。
+
+431.3333333333333
+
+8.6：練習問題
+
+【1】 
+class NegativeArgumentExceptionDemo {
+  public static void main(String args[])
+  throws NegativeArgumentException {
+    for(int i = 0; i < args.length; i++) {
+      double d = Double.valueOf(args[i]).doubleValue();
+      if (d < 0) {
+        String str = "Negative command line argument: ";
+        str += d;
+        throw new NegativeArgumentException(str);
+      }
+    }
+  }
+}
+
+class NegativeArgumentException extends Exception {
+  public NegativeArgumentException(String message) {
+    super(message);
+  }
+}
+
+たとえば-1を指定すると次のように表示されます。
+
+Exception in thread "main" NegativeArgumentException: Negative command line argument: -1.0
+        at NegativeArgumentExceptionDemo.main(NegativeArgumentExceptionDemo.java:10)
+
+【2】 コンパイルできません。tryブロック内のExceptionNが投げられないので、コンパイルエラーになります。
+
+8.7：練習問題
+
+【1】 
+class Transfer {
+  String account;
+
+  Transfer(String account) {
+    assert account.matches("^[0-9]{9}$") : "Invalid account number";
+    this.account = account;
+  }
+
+  void transfer(int sum) {
+    assert sum > 0 : "Sum must be > 0";
+    System.out.println("Transfered $" + sum + " to #" + this.account);
+  }
+}
+
+class TransferDemo {
+  public static void main(String args[]) {
+    Transfer t = new Transfer(args[0]);
+    t.transfer(Integer.valueOf(args[1]).intValue());
+  }
+}
+
+たとえば012345678 35を指定すると次のように表示されます。
+
+Transfered $35 to #123456789
+
+ABCDEFG 35を指定すると次のように表示されます。
+
+Exception in thread "main" java.lang.AssertionError: Invalid account number
+        at Transfer.<init>(TransferDemo.java:5)
+        at TransferDemo.main(TransferDemo.java:17)
+
+012345678 -1を指定すると次のように表示されます。
+
+Exception in thread "main" java.lang.AssertionError: Sum must be > 0
+        at Transfer.transfer(TransferDemo.java:10)
+        at TransferDemo.main(TransferDemo.java:18)
+
+第8章：第8章の理解度チェック
+
+【1】 例外とは、プログラムの実行中に発生した問題を通知するために生成されるオブジェクトのことです。
+
+【2】 算術例外が発生した場合（整数を0で除算した場合など）、配列のインデックスが実在しない要素を指していた場合（負の値または配列の領域を超える値）、不正な型のオブジェクトをオブジェクトの配列に格納しようとした場合、不正な型変換操作を試みた場合、不正な引数をメソッドに渡した場合、配列のサイズとして負の値を使った場合（、空のオブジェクトのフィールドまたはメソッドにアクセスを試みた場合、セキュリティ違反のため操作が拒否された場合、型の定義が見つからなかった場合、Java Collections Frameworkで要求された操作がサポートされていなかった場合）。
+
+【3】 java.lang.Throwable
+
+【4】 すべての非RuntimeException例外。
+
+【5】 AssertionErrorが発生し、その時点でプログラムは終了します。
+
+【6】 
+class MasteryExercise {
+  public static void main(String args[]) {
+    try {
+      System.out.println("The sum is " + add(args));
+    }
+    catch(NumberFormatException e) {
+      System.out.println(e);
+    }
+    catch(RangeException e) {
+      System.out.println(e);
+    }
+    finally {
+      System.out.println("Thanks for using this program");
+    }
+  }
+
+  static double add(String args[])
+  throws NumberFormatException, RangeException {
+    double sum = 0;
+    for(int i = 0; i < args.length; i++) {
+      double d = Double.valueOf(args[i]).doubleValue();
+      if (d < 0 || d > 1)
+        throw new RangeException(d); // RangeException例外を投げる
+      sum += d;
+    }
+    return sum;
+  }
+}
+
+class RangeException extends Exception { // 例外クラス
+  double d;
+
+  public RangeException(double d) {
+    this.d = d;
+  }
+
+  public String toString() {
+    return "Argument " + d + " must be between 0 and 1";
+  }
+}
+
+実行結果はたとえば次のようになります（2を指定）。
+
+Argument 2.0 must be between 0 and 1
+Thanks for using this program
+
+第8章：総合理解度チェック
+
+【1】 結果は非数値（Infinity、-Infinity、NaNのいずれか）になります。浮動小数点数を0で割っても例外は生成されません。整数を0で割ると、ArithmeticException例外が生成されます。
+
+【2】 
+class CountSuperclasses {
+  public static void main(String args[]) {
+    try {
+      int count = countSuperclasses(args[0]);
+      System.out.println(count);
+    }
+    catch(ClassNotFoundException e) { // 指定のクラスが存在しない例外
+      System.out.println("Class was not found");
+    }
+    catch(Exception e) { // その他の例外
+      System.out.println("Specify class name as argument");
+    }
+  }
+
+  static int countSuperclasses(String classname)
+  throws ClassNotFoundException {
+    Class cls = Class.forName(classname);
+    int count = 0;
+    while((cls = cls.getSuperclass()) != null) {
+      ++count;
+    }
+    return count;
+  }
+}
+
+実行結果はたとえば次のようになります（java.lang.Nothingという存在しないクラスを指定）。
+
+Class was not found

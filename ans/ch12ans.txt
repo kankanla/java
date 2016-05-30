@@ -1,0 +1,601 @@
+■第12章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第12章：前章の理解度チェック
+12.1：練習問題
+12.2：練習問題
+12.3：練習問題
+12.4：練習問題
+第12章：第12章の理解度チェック
+第12章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第12章：前章の理解度チェック
+
+【1】 
+import java.io.*;
+
+class LetterCounter {
+  public static void main(String args[]) {
+    try {
+      // カウントした文字数を保持する配列を割り当てる
+      int counts[] = new int[26];
+
+      // ファイルリーダーを作成する
+      FileReader fr = new FileReader(args[0]);
+
+      // 文字を読み取る
+      int i;
+      while((i = fr.read()) != -1) {
+        char c = Character.toLowerCase((char)i);
+        int k = c - 'a';
+        if (k >= 0 && k < 26)
+          ++counts[k];
+      }
+
+      // 文字数を表示する
+      for(int j = 0; j < 26; j++) {
+        char c = (char)('a' + j);
+        System.out.print(c + "=");
+        System.out.print(counts[j] + "; ");
+      }
+      System.out.println("");
+
+      // ファイルリーダーを閉じる
+      fr.close();
+    }
+    catch(Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+実行結果はたとえば次のようになります（LetterCounter.javaを指定）。
+
+a=20; b=1; c=23; d=4; e=27; f=7; g=3; h=7; i=25; j=6; k=4; l=10; m=6; n=21; o=17; p=8; q=0; r=27; s=19; t=33; u=9; v=2; w=4; x=2; y=5; z=0;
+
+【2】 
+import java.io.*;
+
+class ArithmeticQuiz {
+  static BufferedReader br;
+
+  public static void main(String args[]) {
+    try {
+      // 標準入力用のバッファ付きリーダーを取得する
+      InputStreamReader isr =
+        new InputStreamReader(System.in);
+      br = new BufferedReader(isr);
+
+      while(true) {
+        // オペランドと演算子を作成する
+        int i = (int)(12 * Math.random());
+        int j = (int)(12 * Math.random());
+        int op = (int)(2 * Math.random());
+
+        // 質問を作成する
+        String q;
+        int a;
+        if (op < 1) {
+          q = i + " + " + j + " ?";
+          a = i + j;
+          question(q, a);
+        }
+        else {
+          q = i + " - " + j + " ?";
+          a = i - j;
+          question(q, a);
+        }
+      }
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+      return;
+    }
+  }
+
+  static void question(String q, int a)
+  throws IOException {
+    // 質問を表示する
+    System.out.println(q);
+
+    // ユーザーからの入力を取得する
+    String str = br.readLine();
+
+    // 答えを検証し、フィードバックを表示する
+    int answer = Integer.parseInt(str);
+    if (answer == a)
+      System.out.println("Correct!");
+    else {
+      System.out.print("Incorrect! ");
+      System.out.println("The answer is " + a);
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+5 + 5 ?
+10
+Correct!
+
+【3】
+import java.io.*;
+import java.util.*;
+
+class FileSlice {
+  public static void main(String args[]) {
+    try {
+      // バッファ付きリーダーを作成する
+      FileReader fr = new FileReader(args[0]);
+      BufferedReader br = new BufferedReader(fr);
+
+      // 開始フィールドと終了フィールドのインデックスを取得する
+      int f1 = Integer.parseInt(args[1]);
+      int f2 = Integer.parseInt(args[2]);
+
+      // 無限ループを作成する
+      while(true) {
+        // ファイルから1行を読み取る
+        String line = br.readLine();
+        if (line == null)
+          break;
+
+        // 文字列トークナイザーを作成する
+        StringTokenizer st = new StringTokenizer(line);
+
+        // トークンを処理する
+        String output = "";
+        int f = 0;
+        while(st.hasMoreTokens()) {
+          ++f;
+          String token = st.nextToken();
+          if (f >= f1 && f <= f2) {
+             output += token + " ";
+          }
+        }
+
+        // 出力を画面に表示する
+        System.out.println(output);
+      }
+      br.close();
+    }
+    catch(Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+たとえば次のようなデータファイルdata.txtがあるとします。
+
+a b c
+d e f
+g h i j
+
+実行結果はたとえば次のようになります（data.txt 3 4を指定）。
+
+c
+f
+i j
+
+12.1：練習問題
+
+【1】 
+import java.net.*;
+
+class LocalAddress {
+  public static void main(String args[]) {
+    try {
+      // ローカルマシンの名前とアドレスを取得する
+      InetAddress ia = InetAddress.getLocalHost();
+      String name = ia.getHostName();
+      System.out.println(name);
+      String address = ia.getHostAddress();
+      System.out.println(address);
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+localhost
+127.0.0.1
+
+12.2：練習問題
+
+【1】 
+import java.io.*;
+import java.net.*;
+
+class SquareClient {
+  private final static int BUFSIZE = 20;
+
+  public static void main(String args[]) {
+    try {
+      // サーバー、ポート、値を取得する
+      String server = args[0];
+      int port = Integer.parseInt(args[1]);
+      double value = Double.valueOf(args[2]).doubleValue();
+
+      // ソケットを作成する
+      Socket s = new Socket(server, port);
+
+      // サーバーに値を書き込む
+      OutputStream os = s.getOutputStream();
+      DataOutputStream dos = new DataOutputStream(os);
+      dos.writeDouble(value);
+
+      // サーバーから結果を読み取る
+      InputStream is = s.getInputStream();
+      DataInputStream dis = new DataInputStream(is);
+      value = dis.readDouble();
+
+      // 結果を表示する
+      System.out.println(value);
+
+      // ストリームをクローズする
+      dis.close();
+      dos.close();
+    }
+    catch(Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+import java.io.*;
+import java.net.*;
+
+class SquareServer {
+  private final static int BUFSIZE = 20;
+
+  public static void main(String args[]) {
+    try {
+      // ポートを取得する
+      int port = Integer.parseInt(args[0]);
+
+      // サーバーソケットを作成する
+      ServerSocket ss = new ServerSocket(port);
+
+      // 無限ループを作成する
+      while(true) {
+        // 送られてきた要求を受け入れる
+        Socket s = ss.accept();
+
+        // クライアントからの値を読み取る
+        InputStream is = s.getInputStream();
+        DataInputStream dis = new DataInputStream(is);
+        double value = dis.readDouble();
+
+        // 入力された値を2乗する
+        value *= value;
+
+        // 結果をクライアントに書き込む
+        OutputStream os = s.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(os);
+        dos.writeDouble(value);
+
+        // ストリームをクローズする
+        dis.close();
+        dos.close();
+      }
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+クライアントの実行結果はたとえば次のようになります（3つ目の引数に3.5を指定）。
+
+12.25
+
+12.3：練習問題
+
+【1】 
+import java.net.*;
+
+class DatagramReceiver2 {
+  private final static int BUFSIZE = 20;
+
+  public static void main(String args[]) {
+    try {
+      // ポートを取得する
+      int port = Integer.parseInt(args[0]);
+
+      // ポートのDatagramSocketオブジェクトを作成する
+      DatagramSocket ds = new DatagramSocket(port);
+
+      // 送られてきたデータを保持するバッファを作成する
+      byte buffer[] = new byte[BUFSIZE];
+
+      // 無限ループを作成する
+      while(true) {
+        // データグラムパケットを作成する
+        DatagramPacket dp =
+          new DatagramPacket(buffer, buffer.length);
+
+        // データを受け取る
+        ds.receive(dp);
+
+        // データグラムパケットからアドレスを表示する
+        InetAddress ia = dp.getAddress();
+        System.out.println(ia);
+
+        // データグラムパケットからポートを表示する
+        System.out.println(dp.getPort());
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+/127.0.0.1
+32770
+
+12.4：練習問題
+
+【1】 
+import java.net.*;
+
+class URLDemo2 {
+  private final static int BUFSIZE = 20;
+
+  public static void main(String args[]) {
+    try {
+      // URLを取得する
+      URL url = new URL(args[0]);
+
+      // プロトコル、ホスト、ポート、ファイルを取得する
+      String protocol = url.getProtocol();
+      String host = url.getHost();
+      int port = url.getPort();
+      String file = url.getFile();
+
+      // データを表示する
+      System.out.println("url = " + url);
+      System.out.println("protocol = " + protocol);
+      System.out.println("host = " + host);
+      System.out.println("port = " + port);
+      System.out.println("file = " + file);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります（http://www.example.jp:80/index.htmlを指定）。
+
+url = http://www.example.jp:80/index.html
+protocol = http
+host = www.example.jp
+port = 80
+file = /index.html
+
+第12章：第12章の理解度チェック
+
+【1】 ドット10進表記とドットストリング表記。
+
+【2】 InetAddress
+
+【3】 サーバーソケットはサーバーが使用し、クライアントから送られてきた要求を受け入れる。ソケットは、2つのマシン間の双方向通信路の一端である。
+
+【4】 java.net.DatagramPacketとjava.net.DatagramSocket。
+
+【5】 protocol://host:port/filename[?queries]
+
+第12章：総合理解度チェック
+
+【1】 
+import java.io.*;
+import java.net.*;
+
+class AdderClient {
+  private final static int BUFSIZE = 512;
+
+  public static void main(String args[]) {
+    try {
+      // サーバーとポートを取得する
+      String server = args[0];
+      int port = Integer.parseInt(args[1]);
+
+      // ソケットを作成する
+      Socket s = new Socket(server, port);
+
+      // ソケット用の入力ストリームと出力ストリームを作成する
+      InputStream is = s.getInputStream();
+      DataInputStream dis = new DataInputStream(is);
+      OutputStream os = s.getOutputStream();
+      DataOutputStream dos = new DataOutputStream(os);
+
+      // コンソール用のバッファ付きリーダーを作成する
+      InputStreamReader isr =
+        new InputStreamReader(System.in);
+      BufferedReader br =
+        new BufferedReader(isr);
+
+      // 無限ループを作成する
+      while(true) {
+        // ユーザーから数値を取得する
+        System.out.print("Input number: ");
+        String str = br.readLine();
+        double d = Double.valueOf(str).doubleValue();
+
+        // サーバーに数値を送信する
+        dos.writeDouble(d);
+
+        // 合計をサーバーから読み取る
+        double total = dis.readDouble();
+
+        // 合計を表示する
+        System.out.println("Current total: " + total);
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+}
+
+import java.io.*;
+import java.net.*;
+
+class ServerThread extends Thread {
+  private Socket s;
+  private double total = 0;
+
+  public ServerThread(Socket s) {
+    this.s = s;
+    total = 0;
+  }
+
+  public void run() {
+    try {
+      // 入力ストリームと出力ストリームを取得する
+      InputStream is = s.getInputStream();
+      DataInputStream dis = new DataInputStream(is);
+      OutputStream os = s.getOutputStream();
+      DataOutputStream dos = new DataOutputStream(os);
+
+      // 無限ループを作成する
+      while(true) {
+        // クライアントから値を読み取る
+        double value = dis.readDouble();
+
+        // 合計値に値を加算する
+        total += value;
+
+        // 加算結果をクライアントに書き込む
+        dos.writeDouble(total);
+      }
+    }
+    catch(Exception e) {
+    }
+  }
+}
+
+class ThreadedServer {
+  private final static int BUFSIZE = 512;
+
+  public static void main(String args[]) {
+    try {
+      // ポートを取得する
+      int port = Integer.parseInt(args[0]);
+
+      // サーバーソケットを作成する
+      ServerSocket ss = new ServerSocket(port);
+
+      // 無限ループを作成する
+      while(true) {
+        // 着信した要求を受け入れる
+        Socket s = ss.accept();
+
+        // クライアントを処理するスレッドを開始する
+        ServerThread st = new ServerThread(s);
+        st.start();
+      }
+    }
+    catch (Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+クライアントの実行結果はたとえば次のようになります。
+
+Input number: 100
+Current total: 100.0
+Input number: 21
+Current total: 121.0
+…
+
+【2】 
+import java.net.*;
+
+class Sensor {
+  public static void main(String args[]) {
+    try  {
+      // 宛先インターネットアドレスを作成する
+      InetAddress ia =
+        InetAddress.getByName(args[0]);
+
+      // 宛先ポートを取得する
+      int port = Integer.parseInt(args[1]);
+
+      // データグラムソケットを作成する
+      DatagramSocket ds = new DatagramSocket();
+
+      // 無限ループを作成する
+      while(true) {
+        // ランダムな測定値を作成する
+        int value = (int)(20 * Math.random());
+        String s = "" + value;
+        System.out.println("Sensor value is " + s);
+
+        // データグラムパケットを作成する
+        byte buffer[] = s.getBytes();
+        DatagramPacket dp =
+          new DatagramPacket(buffer, buffer.length, ia, port);
+
+        // データグラムパケットを送信する
+        ds.send(dp);
+
+        // 20秒間スリープする
+        Thread.sleep(20000);
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+import java.net.*;
+
+class Collector {
+  private final static int BUFSIZE = 20;
+
+  public static void main(String args[]) {
+    try {
+      // ポートを取得する
+      int port = Integer.parseInt(args[0]);
+
+      // ポートのDatagramSocketオブジェクトを作成する
+      DatagramSocket ds = new DatagramSocket(port);
+
+      // 無限ループを作成する
+      while(true) {
+        // 着信データを保持するバッファを作成する
+        byte buffer[] = new byte[BUFSIZE];
+
+        // データグラムパケットを作成する
+        DatagramPacket dp =
+          new DatagramPacket(buffer, buffer.length);
+
+        // データを受け取る
+        ds.receive(dp);
+
+        // データグラムパケットからデータを取得する
+        String str = new String(dp.getData());
+
+        // データを表示する
+        System.out.println(str);
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+クライアントの実行結果はたとえば次のようになります。
+
+Sensor value is 10
+Sensor value is 4
+Sensor value is 6

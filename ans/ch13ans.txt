@@ -1,0 +1,831 @@
+■第13章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第13章：前章の理解度チェック
+13.2：練習問題
+13.3：練習問題
+13.4：練習問題
+13.5：練習問題
+13.6：練習問題
+13.7：練習問題
+13.8：練習問題
+13.9：練習問題
+13.10：練習問題
+13.11：練習問題
+13.12：練習問題
+第13章：第13章の理解度チェック
+第13章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第13章：前章の理解度チェック
+
+【1】 ソケット経由で情報を転送するのに使用される信頼性のあるプロトコルは、TCP（Transmission Control Protocol）です。
+
+【2】 データグラムを転送するのに使用されるプロトコルは、UDP（User Datagram Protocol）です。
+
+【3】 
+// コマンド形式：
+//   java TCPRandomNumberServer port
+// portは、サーバーがクライアントからの要求を
+// 受け取るポート。
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+class TCPBroadcastThread extends Thread {
+  Vector<DataOutputStream> dataOutputStreams = new Vector<DataOutputStream>();
+
+  public void run() {
+    try {
+      // 無限ループを作成する
+      while(true) {
+        // 2秒間休止する
+        Thread.sleep(2000);
+
+        // 乱数を生成する
+        int r = (int)(100 * Math.random());
+
+        // 値を各出力ストリームに送る
+        Enumeration<DataOutputStream> e = dataOutputStreams.elements();
+        while(e.hasMoreElements()) {
+          try {
+            DataOutputStream dos;
+            dos = e.nextElement();
+            dos.writeInt(r);
+          }
+          catch (Exception e1) {
+          }
+        }
+      }
+    }
+    catch(Exception e2) {
+    }
+  }
+
+  void addDataOutputStream(DataOutputStream dos) {
+    dataOutputStreams.add(dos);
+  }
+}
+
+class TCPRandomNumberServer {
+  static TCPBroadcastThread tcpBroadcastThread;
+
+  public static void main(String args[]) {
+    // ポートを取得する
+    int port = Integer.parseInt(args[0]);
+
+    try {
+      // クライアントに乱数をブロードキャストするために
+      // 独立したスレッドを作成する
+      tcpBroadcastThread = new TCPBroadcastThread();
+      tcpBroadcastThread.start();
+
+      // サーバーソケットを作成する
+      ServerSocket ss = new ServerSocket(port);
+
+      // 無限ループを作成する
+      while(true) {
+        // 受信された要求を受け取る
+        Socket s = ss.accept();
+
+        // このソケットのためにデータ出力ストリームを取得する
+        OutputStream os = s.getOutputStream();
+        DataOutputStream dos = new DataOutputStream(os);
+
+        // ブロードキャスト用スレッドに出力ストリーム
+        // の情報を与える
+        tcpBroadcastThread.addDataOutputStream(dos);
+      }
+    }
+    catch(Exception e) {
+      System.out.println("Exception: " + e);
+    }
+  }
+}
+
+// コマンド形式：
+//   java TCPRandomNumberClient server port
+// serverは、ドット付き10進数またはドット付き
+// 文字列のサーバー名で、portは、サーバーが要求
+// を待機するポートを表す。
+
+import java.io.*;
+import java.net.*;
+
+class TCPRandomNumberClient {
+  private final static int BUFSIZE = 512;
+
+  public static void main(String args[]) {
+    try {
+      // サーバーとポートを取得する
+      String server = args[0];
+      int port = Integer.parseInt(args[1]);
+
+      // ソケットを作成する
+      Socket s = new Socket(server, port);
+
+      // データ入力ストリームを作成する
+      InputStream is = s.getInputStream();
+      DataInputStream dis = new DataInputStream(is);
+
+      // 無限ループを作成する
+      while(true) {
+        // サーバーから乱数を読み取る
+        int i = dis.readInt();
+
+        // 乱数を表示する
+        System.out.println(i);
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+}
+
+クライアントの実行結果はたとえば次のようになります。
+
+7
+22
+65
+61
+83
+…
+
+13.2：練習問題
+
+【1】 （省略）
+
+【2】 
+import java.applet.Applet;
+import java.awt.Graphics;
+/*
+  <applet code="DrawLines" width=200 height=200>
+  </applet>
+*/
+
+public class DrawLines extends Applet {
+  public void paint(Graphics g) {
+    g.drawLine(50, 50, 200, 200);
+    g.drawLine(0, 0, 100, 200);
+    g.drawLine(0, 200, 180, 20);
+  }
+}
+
+13.3：練習問題
+
+【1】 4つのメソッドとは、init()、start()、stop()、destroy()です。init()メソッドはアプレットの実行開始時、start()メソッドはinit()メソッドの実行が終わった後・アプレットが埋め込まれたページが最大化された・別のWebページから再びアプレットを埋め込んだページが表示されたとき、stop()メソッドはアプレットの最小化をした・アプレットが埋め込まれたWebページを表示しているブラウザに別のページが表示されたとき、destroy()メソッドはアプレットが終了する直前にそれぞれ呼び出されます。
+
+13.4：練習問題
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="DrawRectangle" width=500 height=300>
+  </applet>
+*/
+
+public class DrawRectangle extends Applet {
+  public void paint(Graphics g) {
+    g.drawRect(100, 50, 300, 200);
+  }
+}
+
+【2】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="DrawCircle" width=500 height=300>
+  </applet>
+*/
+
+public class DrawCircle extends Applet {
+  public void paint(Graphics g) {
+    g.drawOval(150, 50, 200, 200);
+  }
+}
+
+13.5：練習問題
+
+【1】 
+import java.applet.Applet;
+import java.awt.*;
+/*
+  <applet code="HorizontalColorBars" width=200 height=200>
+  </applet>
+*/
+
+public class HorizontalColorBars extends Applet {
+  Color colors[] = { Color.black, Color.blue, Color.cyan,
+    Color.darkGray, Color.gray, Color.green, Color.lightGray,
+    Color.magenta, Color.orange, Color.pink, Color.red,
+    Color.white, Color.yellow };
+
+  public void paint(Graphics g) {
+    int deltay = 200 / colors.length;
+    for(int i = 0; i < colors.length; i++) {
+      g.setColor(colors[i]);
+      g.fillRect(0, i * deltay, 200, (i + 1) * deltay);
+    }
+  }
+}
+
+【2】 （省略）
+
+13.6：練習問題
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="FontDemo2" width=250 height=200>
+  </applet>
+*/
+
+public class FontDemo2 extends Applet {
+  public void paint(Graphics g) {
+    // ベースラインを描画する
+    int baseline = 100;
+    g.setColor(Color.lightGray);
+    g.drawLine(0, baseline, 250, baseline);
+
+    // 文字列を描画する
+    g.setFont(new Font("SansSerif", Font.ITALIC, 80));
+    g.setColor(Color.black);
+    g.drawString("Wxyz", 5, baseline);
+  }
+}
+
+【2】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="FontMetricsDemo2" width=300 height=200>
+  </applet>
+*/
+
+public class FontMetricsDemo2 extends Applet {
+  public void paint(Graphics g) {
+    // ベースラインを描画する
+    int baseline = 100;
+    g.setColor(Color.lightGray);
+    g.drawLine(0, baseline, 300, baseline);
+
+    // 文字列を描画する
+    Font font = new Font("SansSerif", Font.PLAIN, 18);
+    g.setFont(font);
+    g.setColor(Color.black);
+    g.drawString("Wxyz", 5, baseline);
+    g.setColor(Color.lightGray);
+
+    // フォントメトリックスを取得する
+    FontMetrics fm = g.getFontMetrics(font);
+
+    // ベースライン - アセントの位置に線を描画する
+    int ascent = fm.getAscent();
+    int y = baseline - ascent;
+    g.drawLine(0, y, 300, y);
+
+    // ベースライン + ディセントの位置に線を描画する
+    int descent = fm.getDescent();
+    y = baseline + descent;
+    g.drawLine(0, y, 300, y);
+
+    // ベースライン + ディセント + レディングの位置に線を描画する
+    int leading = fm.getLeading();
+    y = baseline + descent + leading;
+    g.drawLine(0, y, 300, y);
+
+    // ベースライン + 高さの位置に線を描画する
+    int height = fm.getHeight();
+    y = baseline + height;
+    g.drawLine(0, y, 300, y);
+
+    // 文字列を描画する
+    g.setColor(Color.black);
+    g.drawString("\"'?/^{9}|[0]*@#", 5, y);
+    g.setColor(Color.lightGray);
+
+    // ベースライン + ディセント + 高さの位置に線を描画する
+    y = baseline + height + descent;
+    g.drawLine(0, y, 300, y);
+  }
+}
+
+13.7：練習問題
+
+【1】
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="X" width=200 height=200>
+  </applet>
+*/
+
+public class X extends Applet {
+  public void paint(Graphics g) {
+    Dimension d = getSize();
+    // d.width、d.heightは大きさを示しているので、隅の座標としては1減らす必要がある
+    g.drawLine(0, 0, d.width - 1, d.height - 1);
+    g.drawLine(d.width - 1, 0, 0, d.height - 1);
+  }
+}
+
+【2】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="Harmonics" width=400 height=200>
+  </applet>
+*/
+
+public class Harmonics extends Applet  {
+  public void paint(Graphics g) {
+    // 表示域の周囲に四角形を描画する
+    Dimension d = getSize();
+    int width = d.width;
+    int height = d.height;
+    g.setColor(Color.blue);
+    g.drawRect(0, 0, width - 1, height - 1);
+
+    // x軸とy軸の線を描画する
+    int y = height / 2;
+    g.drawLine(0, y, width, y);
+    g.drawLine(width / 2, 0, width / 2, height);
+
+    // データ値を計算し、最大値と最小値を
+    // 記録しておく
+    double max = 0;
+    double min = 0;
+    double deltax = 2 * Math.PI / (width - 1);
+    double x = -Math.PI;
+    double data[] = new double[width];
+    for(int i = 0; i < width; i++) {
+      double value = f(x);
+      data[i] = value;
+      min = (value < min) ? value : min;
+      max = (value > max) ? value : max;
+      x += deltax;
+    }
+
+    // 目盛りの間隔を決め、データ値を変換する
+    double scale = height / (max - min);
+    for(int i = 0; i < width; i++) {
+      double value = data[i];
+      double k = (value - min) / (max - min);
+      data[i] = height * (1 - k);
+    }
+
+    // データ値の曲線を描画する
+    g.setColor(Color.black);
+    for(int i = 1; i < width; i++) {
+      g.drawLine(i - 1, (int)data[i - 1], i, (int)data[i]);
+    }
+  }
+
+  private double f(double x) {
+    double value = 0;
+    for(int i = 0; i < 4; i++) {
+        value += ((double)1 / (i + 1)) * Math.sin((i + 1) * x);
+    }
+    return value;
+  }
+}
+
+13.8：練習問題
+
+【1】 コードベースはhost2/example、ドキュメントベースはhost2です。Example2.classファイルはコードベースから取得されます。.htmlファイルと.jpgファイルはドキュメントベースから取得されます。
+
+13.9：練習問題
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+import java.net.*;
+/*
+  <applet code="Ellipse" width=200 height=200>
+  <param name="major" value=140>
+  <param name="minor" value=70>
+  </applet>
+*/
+
+public class Ellipse extends Applet {
+  public void paint(Graphics g) {
+    String major = getParameter("major"); // パラメータを処理
+    String minor = getParameter("minor");
+    int majoraxis = Integer.parseInt(major);
+    int minoraxis = Integer.parseInt(minor);
+    Dimension d = getSize();
+    int x = d.width / 2 - majoraxis / 2;
+    int y = d.height / 2 - minoraxis / 2;
+    g.drawOval(x, y, majoraxis, minoraxis);
+  }
+}
+
+【2】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="MagentaCircle" width=120 height=120>
+  </applet>
+*/
+
+public class MagentaCircle extends Applet {
+  public void paint(Graphics g) {
+    setBackground(Color.cyan); // 背景色をシアンに設定
+    Dimension d = getSize();
+    int xc = d.width / 2;
+    int yc = d.height / 2;
+    int radius = 50;
+    g.setColor(Color.magenta); // 描画色をマゼンタに設定
+    g.fillOval(xc - radius, yc - radius, 2 * radius, 2 * radius);
+  }
+}
+
+13.10：練習問題
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+import java.util.*;
+/*
+  <applet code="ShowDate" width=200 height=200>
+  </applet>
+*/
+
+public class ShowDate extends Applet {
+  String[] monthNames = {
+    "January", "February", "March",
+    "April", "May", "June",
+    "July", "August", "September",
+    "October", "November", "December" };
+
+  public void paint(Graphics g) {
+    // 日付情報を取得する
+    Calendar calendar = Calendar.getInstance();
+    int month = calendar.get(Calendar.MONTH);
+    int date = calendar.get(Calendar.DATE);
+    int year = calendar.get(Calendar.YEAR);
+
+    // 日付情報を含む文字列を作成する
+    String str = monthNames[month] + " " + date + " " + year;
+
+    // ウィンドウの中心に表示する
+    Font font = getFont();
+    FontMetrics fm = getFontMetrics(font);
+    Dimension d = getSize();
+    int x = (d.width - fm.stringWidth(str)) / 2;
+    int y = d.height / 2;
+    g.drawString(str, x, y);
+
+    // ステータス行に表示する
+    showStatus(str);
+  }
+}
+
+13.11：練習問題
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="DrawRandomImage" width=280 height=280>
+  <param name="count" value="8">
+  <param name="file0" value="file0.jpg">
+  <param name="file1" value="file1.jpg">
+  <param name="file2" value="file2.jpg">
+  <param name="file3" value="file3.jpg">
+  <param name="file4" value="file4.jpg">
+  <param name="file5" value="file5.jpg">
+  <param name="file6" value="file6.jpg">
+  <param name="file7" value="file7.jpg">
+  </applet>
+*/
+
+public class DrawRandomImage extends Applet {
+  Image image;
+
+  public void init() {
+    // 無作為にイメージを選択する
+    String str = getParameter("count");
+    int count = Integer.parseInt(str);
+    int n = (int)(count * Math.random());
+    String filename = getParameter("file" + n);
+
+    // イメージを取得する
+    image = getImage(getDocumentBase(),
+      filename);
+  }
+
+  public void paint(Graphics g) {
+    g.drawImage(image, 0, 0, this);
+  }
+}
+
+13.12：練習問題
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="MovingDot" width=250 height=250>
+  </applet>
+*/
+
+public class MovingDot extends Applet
+implements Runnable {
+  double radians = 0;
+  Thread t;
+
+  public void init() {
+    // スレッドを起動する
+    t = new Thread(this);
+    t.start();
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        // 再描画を要求する
+        repaint();
+
+        // 休止してからドットを移動する
+        Thread.sleep(100);
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+
+  public void paint(Graphics g) {
+    // ウィンドウの中心を計算する
+    Dimension d = getSize();
+    int xcenter = d.width / 2;
+    int ycenter = d.height / 2;
+
+    // ドットの場所を計算する
+    int x = xcenter + (int)(100 * Math.cos(radians));
+    int y = ycenter - (int)(100 * Math.sin(radians));
+
+    //ドットを表示する
+    g.fillRect(x - 2, y - 2, 5, 5);
+
+    // ラジアンの値を増やす
+    radians += Math.PI / 180;
+  }
+}
+
+【2】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="ConnectedDots" width=250 height=100>
+  </applet>
+*/
+
+public class ConnectedDots extends Applet
+implements Runnable {
+  int xlast, ylast;
+  Thread t;
+
+  public void init() {
+    // xlastとylastの値を更新する
+    xlast = -1;
+    ylast = 1;
+
+    // スレッドを起動する
+    t = new Thread(this);
+    t.start();
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        // 再描画を要求する
+        repaint();
+
+        // 休止してから次のドットを表示する
+        Thread.sleep(200);
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+
+  public void update(Graphics g) {
+    paint(g);
+  }
+
+  public void paint(Graphics g) {
+    // ウィンドウ内の無作為な場所を選択する
+    Dimension d = getSize();
+    int x = (int)(Math.random() * d.width);
+    int y = (int)(Math.random() * d.height);
+
+    // ドットを描画する
+    g.fillRect(x - 2, y - 2, 5, 5);
+
+    // 直前のドットと最新のドットを線で結ぶ
+    if (xlast != -1) {
+      g.drawLine(xlast, ylast, x, y);
+    }
+
+    // xlastとylastの値を更新する
+    xlast = x;
+    ylast = y;
+  }
+}
+
+第13章：第13章の理解度チェック
+
+【1】 ローカルディスクを読み書きできない、ネイティブコードを実行できない、ほかのアプリケーションを起動できない、ダウンロード元のホストにしかソケットを開けない、の4つです。
+
+【2】 java.awt.Graphics
+
+【3】 アセント：ベースラインより上にあるピクセル数。
+   ディセント：ベースラインより下にあるピクセル数。
+   レディング：ある行のディセントと次の行のアセントの間にあるピクセル数。
+   高さ：アセント、ディセント、レディングの合計。
+
+【4】 getFont()、getFontMetrics()、getForeground()、getSize()、paint()、repaint()、setBackground()、setFont()、setForeground()、update() （およびcreateImage()など）
+
+【5】 appletタグ（またはobjectタグ、embedタグ）
+
+【6】 コードベースはアプレットの.classファイルがある場所です。ドキュメントベースは.htmlその他のファイルがある場所です。2つの値が一致しないのは、appletタグでコードベースの値を明示的に設定した場合です。
+
+【7】 showDocument()：URLで指定したファイルを取得して表示する。
+      showStatus()：文字列をステータス行に表示する。
+      （その他、getApplet()、getApplets()、getAudioClip()、getImage()など）
+
+【8】 init()、start()、stop()、destroy()
+
+第13章：総合理解度チェック
+
+【1】 
+import java.applet.*;
+import java.awt.*;
+/*
+  <applet code="ImageAnimation" width=280 height=280>
+  <param name="count" value="4">
+  <param name="file0" value="slide0.jpg">
+  <param name="file1" value="slide1.jpg">
+  <param name="file2" value="slide2.jpg">
+  <param name="file3" value="slide3.jpg">
+  <param name="msec" value="1000">
+  </applet>
+*/
+
+public class ImageAnimation extends Applet
+implements Runnable {
+  int count;
+  Image images[];
+  int msec;
+  Thread thread;
+  int index;
+
+  public void init() {
+    // パラメータcountを読み取る
+    String str = getParameter("count");
+    count = Integer.parseInt(str);
+
+    // イメージの配列を作成して初期化する
+    images = new Image[count];
+    for(int i = 0; i < count; i++) {
+      String filename = getParameter("file" + i);
+      images[i] = getImage(getDocumentBase(),
+        filename);
+    }
+
+    // パラメータmsecを読み取る
+    str = getParameter("msec");
+    msec = Integer.parseInt(str);
+
+    // スレッドを作成して起動する
+    thread = new Thread(this);
+    thread.start();
+  }
+
+  public void paint(Graphics g) {
+    g.drawImage(images[index], 0, 0, this);
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        Thread.sleep(msec);
+        ++index;
+        if (index >= count)
+          index = 0;
+        repaint();
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+}
+
+【2】
+import java.applet.*;
+import java.awt.*;
+import java.util.*;
+
+/*
+  <applet code="DailyImage" width=280 height=280>
+  <param name="day1" value="sun.jpg">
+  <param name="day2" value="mon.jpg">
+  <param name="day3" value="tue.jpg">
+  <param name="day4" value="wed.jpg">
+  <param name="day5" value="thu.jpg">
+  <param name="day6" value="fri.jpg">
+  <param name="day7" value="sat.jpg">
+  </applet>
+*/
+
+public class DailyImage extends Applet {
+  Image image;
+
+  public void init() {
+    // 今日の曜日を調べる
+    Calendar calendar = Calendar.getInstance();
+    int dow = calendar.get(Calendar.DAY_OF_WEEK);
+
+    // Imageオブジェクトを取得する
+    image = getImage(getDocumentBase(),
+      getParameter("day" + dow));
+  }
+
+  public void paint(Graphics g) {
+    g.drawImage(image, 0, 0, this);
+  }
+}
+
+【3】 
+import java.applet.*;
+import java.awt.*;
+import java.util.*;
+
+/*
+  <applet code="Clock" width=200 height=200>
+  </applet>
+*/
+
+public class Clock extends Applet
+implements Runnable {
+  Thread t;
+
+  public void init() {
+    t = new Thread(this);
+    t.start();
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        Thread.sleep(60000); // 1分間待つ
+        repaint();
+      }
+    }
+    catch (Exception e) {
+    }
+  }
+
+  public void paint(Graphics g) {
+    // 円を描画する
+    Dimension d = getSize();
+    int xc = d.width / 2;
+    int yc = d.height / 2;
+    int radius = (int)((d.width < d.height) ?
+      0.4 * d.width : 0.4 * d.height);
+    g.drawOval(xc - radius, yc - radius, 2 * radius, 2 * radius);
+
+    // 時を表す目盛りを円周上に描画する
+    for(int i = 0; i < 12; i++) {
+      double degrees = i * 30;
+      double radians = degrees * Math.PI / 180;
+      int xa = xc + (int)(0.9 * radius * Math.cos(radians));
+      int ya = yc - (int)(0.9 * radius * Math.sin(radians));
+      int xb = xc + (int)(radius * Math.cos(radians));
+      int yb = yc - (int)(radius * Math.sin(radians));
+      g.drawLine(xa, ya, xb, yb);
+    }
+
+    // 現在の日付/時刻で初期化したカレンダーを取得する
+    Calendar calendar = Calendar.getInstance();
+
+    // 分針を描画する
+    int minute = calendar.get(Calendar.MINUTE);
+    double degrees = 90 - 6 * minute;
+    double radians = degrees * Math.PI / 180;
+    int xh = xc + (int)(0.8 * radius * Math.cos(radians));
+    int yh = yc - (int)(0.8 * radius * Math.sin(radians));
+    g.drawLine(xc, yc, xh, yh);
+
+    // 時針を描画する
+    int hour = calendar.get(Calendar.HOUR_OF_DAY) % 24;
+    degrees = 90 - 30 * hour - 30 * (minute / 60.0f);
+    radians = degrees * Math.PI / 180;
+    int xm = xc + (int)(0.5 * radius * Math.cos(radians));
+    int ym = yc - (int)(0.5 * radius * Math.sin(radians));
+    g.drawLine(xc, yc, xm, ym);
+  }
+}

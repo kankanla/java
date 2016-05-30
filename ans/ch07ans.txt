@@ -1,0 +1,647 @@
+■第7章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第7章：前章の理解度チェック
+7.1：練習問題
+7.2：練習問題
+7.3：練習問題
+7.4：練習問題
+7.5：練習問題
+7.6：練習問題
+7.7：練習問題
+7.8：練習問題
+第7章：第7章の章の理解度チェック
+第7章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第7章：前章の理解度チェック
+
+【1】 スーパークラスの変数と同じ名前の変数をサブクラスで宣言することです。
+
+【2】 abstract、final、public
+
+【3】 final、private、protected、public、static、transient、volatile
+
+【4】 private、protected、public
+
+【5】 abstract、final、native、private、protected、public、static、synchronized
+
+【6】 スーパークラスのコンストラクタを実行した後で、クラスのコンストラクタを実行します。
+
+【7】
+class Water {
+  // 定数を設定
+  public final static float BOILING = 100;
+  public final static float FREEZING = 0;
+  public final static float DENSITY = 1;
+}
+
+class WaterDemo {
+  public static void main(String args[]) {
+    System.out.println(Water.FREEZING);
+    System.out.println(Water.BOILING);
+    System.out.println(Water.DENSITY);
+  }
+}
+
+実行結果は次のとおりです。
+
+0.0
+100.0
+1.0
+
+7.1：練習問題
+
+【1】 インターフェイスとは、定数とメソッドの宣言を集めたものです。実行すべきことを抽象的に表すだけで、その具体的な方法は定めません。
+
+【2】 同じパッケージ内のコードだけがアクセスできます。
+
+【3】 インターフェイスにpublic修飾子を指定すると、ほかのパッケージ内のコードから参照できるようになります。
+
+【4】 public、static、final
+
+【5】 publicとabstract
+
+【6】 
+interface AntiLockBrakes {
+  void antiLockBrakes();
+}
+
+interface CruiseControl {
+  void cruiseControl();
+}
+
+interface PowerSteering {
+  void powerSteering();
+}
+
+abstract class Auto {
+}
+
+class Model1 extends Auto
+implements PowerSteering { // PowerSteeringインターフェイスを実装
+  public void powerSteering() {
+    System.out.println("Model1: powerSteering");
+  }
+}
+
+class Model2 extends Auto
+implements AntiLockBrakes, CruiseControl { // AntiLockBrakesインターフェイスとCruiseControlインターフェイスを実装
+  public void antiLockBrakes() {
+    System.out.println("Model2: antiLockBrakes");
+  }
+  public void cruiseControl() {
+    System.out.println("Model2: cruiseControl");
+  }
+}
+
+class Model3 extends Auto
+implements CruiseControl { // cruiseControlインターフェイスを実装
+  public void cruiseControl() {
+    System.out.println("Model3: cruiseControl");
+  }
+}
+
+class Autos {
+  public static void main(String args[]) {
+    Model1 model1 = new Model1();
+    model1.powerSteering();
+
+    Model2 model2 = new Model2();
+    model2.antiLockBrakes();
+    model2.cruiseControl();
+
+    Model3 model3 = new Model3();
+    model3.cruiseControl();
+  }
+}
+
+実行結果は次のとおりです。
+
+Model1: powerSteering
+Model2: antiLockBrakes
+Model2: cruiseControl
+Model3: cruiseControl
+
+7.2：練習問題
+
+【1】 代入できないデータ型なので、b = new D1();の行でエラーが発生します。D1クラスはBインターフェイスを実装していません。
+
+【2】 
+interface LuminousObject { // 2つのメソッドを持つインターフェイス
+  void lightOff();
+  void lightOn();
+}
+
+class SolidObject {
+}
+
+class Cone extends SolidObject {
+}
+
+class LuminousCone extends Cone
+implements LuminousObject { // LuminousObjectインターフェイスを実装
+
+  public void lightOff() {
+    System.out.println("LuminousCone: lightOff");
+  }
+
+  public void lightOn() {
+    System.out.println("LuminousCone: lightOn");
+  }
+}
+
+class Cube extends SolidObject {
+}
+
+class LuminousCube extends Cube
+implements LuminousObject { // LuminousObjectインターフェイスを実装
+
+  public void lightOff() {
+    System.out.println("LuminousCube: lightOff");
+  }
+
+  public void lightOn() {
+    System.out.println("LuminousCube: lightOn");
+  }
+}
+
+class LuminousObjects {
+  private final static int NUMOBJECTS = 2;
+
+  public static void main(String args[]) {
+    LuminousObject luminousObjects[];
+    luminousObjects = new LuminousObject[NUMOBJECTS];
+
+    luminousObjects[0] = new LuminousCone();
+    luminousObjects[1] = new LuminousCube();
+
+    for(int i = 0; i < NUMOBJECTS; i++)
+      luminousObjects[i].lightOn(); // インターフェイスメソッドの参照
+
+    for(int i = 0; i < NUMOBJECTS; i++)
+      luminousObjects[i].lightOff(); // インターフェイスメソッドの参照
+  }
+}
+
+実行結果は次のとおりです。
+
+LuminousCone: lightOn
+LuminousCube: lightOn
+LuminousCone: lightOff
+LuminousCube: lightOff
+
+7.3：練習問題
+
+【1】 
+interface P {
+  int p = 0;
+  void fp();
+}
+
+interface P1 extends P {
+  int p1 = 1;
+  void fp1();
+}
+
+interface P2 extends P {
+  int p2 = 2;
+  void fp2();
+}
+
+interface P12 extends P1, P2 {
+  int p12 = 12;
+  void fp12();
+}
+
+class Q implements P12 {
+  // すべての抽象メソッドを実装
+  public void fp() {
+    System.out.println("fp: " + p);
+  }
+  public void fp1() {
+    System.out.println("fp1: " + p1);
+  }
+  public void fp2() {
+    System.out.println("fp2: " + p2);
+  }
+  public void fp12() {
+    System.out.println("fp12: " + p12);
+  }
+}
+
+class InheritanceExample {
+  public static void main(String args[]) {
+    Q q = new Q();
+    q.fp();
+    q.fp1();
+    q.fp2();
+    q.fp12();
+  }
+}
+
+実行結果は次のとおりです。
+
+fp: 0
+fp1: 1
+fp2: 2
+fp12: 12
+
+【2】 
+interface K1 {
+  int intK = 1;
+  void methodK();
+}
+
+interface K2 extends K1 {
+  void methodK();
+}
+
+interface K3 extends K2 {
+  void methodK();
+}
+
+class U implements K3 {
+  public void methodK() {
+    System.out.println(intK);
+  }
+}
+
+class InheritanceExercise {
+  public static void main(String args[]) {
+    U u = new U();
+    u.methodK();
+  }
+}
+
+実行結果は次のとおりです。
+
+1
+
+7.4：練習問題
+
+【1】 
+interface I1 {
+}
+
+interface I2 {
+}
+
+interface I3 extends I1, I2 {
+}
+
+interface I4 {
+}
+
+class X implements I3 {
+}
+
+class W extends X implements I4 {
+}
+
+class InstanceofTest {
+  public static void main(String args[]) {
+    W w = new W();
+    if (w instanceof I1)
+      System.out.println("w implements I1");
+    if (w instanceof I2)
+      System.out.println("w implements I2");
+    if (w instanceof I3)
+      System.out.println("w implements I3");
+    if (w instanceof I4)
+      System.out.println("w implements I4");
+    if (w instanceof X)
+      System.out.println("w is an instance of X");
+  }
+}
+
+実行結果は次のとおりです。
+
+w implements I1
+w implements I2
+w implements I3
+w implements I4
+w is an instance of X
+
+7.5：練習問題
+
+【1】 パッケージとは、クラスとインターフェイスのグループです。
+
+【2】 既定のパッケージに割り当てられます。
+
+【3】 サブディレクトリa\b\c\d（カレントディレクトリからの相対）にあります。コンパイルするには、javac a\b\c\d\X.javaというコマンドを使います。実行するには、java a.b.c.d.Xというコマンドを使います。
+
+7.6：練習問題
+
+【1】 次のコマンドで設定します。
+
+set CLASSPATH=.c:\lab8;c:\freshman\chem101;.
+
+7.7：練習問題
+
+【1】 1つは、特定の型をインポートする場合の構文で、import fullyQualifiedTypeName;という形式の構文です。もう1つは、特定のパッケージ内のすべての型をインポートする構文で、import packageName.*;といった形式になります。なお、静的メソッドや静的変数のクラス名を省略するために、import static packageName.className.*;のような形式も利用できます。
+
+【2】 （省略）
+
+【3】 （省略）
+
+7.8：練習問題
+
+【1】 変数、コンストラクタ、またはメソッドに対するほかのクラスからの参照が許可されます。
+
+【2】 変数、コンストラクタ、またはメソッドに対する同じパッケージまたは別のパッケージのサブクラス内のコードからの参照が許可されます。
+
+【3】 変数、コンストラクタ、またはメソッドに対する同じクラス内のコードからの参照が許可されます。
+
+【4】 f\F.javaの場合：e.Eクラスの変数e3に対してf.Fクラスからアクセスできないためエラーになります。
+   g\G.javaの場合：e.Eクラスの変数e2とe3に対してg.Gクラスからアクセスできないためエラーになります。
+
+第7章：第7章の理解度チェック
+
+【1】 インターフェイスを宣言するには、一般的に次のような構文を使います。
+
+intfModifier interface intfName extends intfList {
+  // インターフェイス変数とメソッドの宣言
+}
+
+【2】 instanceof演算子は、オブジェクトが特定のクラスであるか、または特定のインターフェイスを実装しているかを評価します。
+
+【3】 packageステートメントは、ファイルのクラスとインターフェイスを割り当てるパッケージを指定します。
+
+【4】 CLASSPATHは、ディレクトリとアーカイブのリストを格納する環境変数です。JDK/JREツールは、Javaの既定のクラスライブラリを検索し、ファイルが見つからない場合は、CLASSPATHに格納された場所を検索します。CLASSPATHを設定しない場合の既定は、カレントディレクトリです。
+
+【5】 importステートメントは、パッケージ内の特定のクラスまたはインターフェイス、もしくはすべてのクラスとインターフェイスを短い名前で使えるようにします。staticを付けると、クラスの静的メソッドを、クラス名を省略して使用できます。
+
+【6】 java.lang
+
+【7】 
+class AnimalTypes {
+  private final static int NUMANIMALS = 7;
+
+  public static void main(String args[]) {
+    // 配列の領域を宣言して割り当てる
+    Animal animals[] = new Animal[NUMANIMALS];
+
+    // 配列のエントリを初期化する
+    animals[0] = new Dove();
+    animals[1] = new Eagle();
+    animals[2] = new Hawk();
+    animals[3] = new Penguin();
+    animals[4] = new Seagull();
+    animals[5] = new Rattlesnake();
+    animals[6] = new Turtle();
+
+    // 冷血動物をすべて表示する
+    System.out.println("Cold blooded animals:");
+    for(int i = 0; i < NUMANIMALS; i++) {
+      if (animals[i] instanceof ColdBlooded) {
+        System.out.println(animals[i]);
+      }
+    }
+
+    // 海生動物をすべて表示する
+    System.out.println("Ocean dwelling animals:");
+    for(int i = 0; i < NUMANIMALS; i++) {
+      if (animals[i] instanceof OceanDwelling) {
+        System.out.println(animals[i]);
+      }
+    }
+  }
+}
+
+interface ColdBlooded {
+}
+
+interface OceanDwelling {
+}
+
+abstract class Animal {
+}
+
+abstract class Bird extends Animal {
+}
+
+class Dove extends Bird {
+  public String toString() {
+    return "Dove";
+  }
+}
+
+class Eagle extends Bird {
+  public String toString() {
+    return "Eagle";
+  }
+}
+
+class Hawk extends Bird {
+  public String toString() {
+    return "Hawk";
+  }
+}
+
+class Penguin extends Bird
+implements OceanDwelling {
+  public String toString() {
+    return "Penguin";
+  }
+}
+
+class Seagull extends Bird
+implements OceanDwelling {
+  public String toString() {
+    return "Seagull";
+  }
+}
+
+abstract class Reptile extends Animal
+implements ColdBlooded {
+}
+
+class Rattlesnake extends Reptile {
+  public String toString() {
+    return "Rattlesnake";
+  }
+}
+
+class Turtle extends Reptile
+implements OceanDwelling {
+  public String toString() {
+    return "Turtle";
+  }
+}
+
+実行結果は次のとおりです。
+
+Cold blooded animals:
+Rattlesnake
+Turtle
+Ocean dwelling animals:
+Penguin
+Seagull
+Turtle
+
+第7章：総合理解度チェック
+
+【1】 
+class RobotTypes {
+  private final static int NUMROBOTS = 7;
+
+  public static void main(String args[]) {
+    // 配列の領域を宣言して割り当てる
+    Robot robots[] = new Robot[NUMROBOTS];
+
+    // 配列のエントリを初期化する
+    robots[0] = new RobotA();
+    robots[1] = new RobotA1();
+    robots[2] = new RobotB();
+    robots[3] = new RobotB1();
+    robots[4] = new RobotB2();
+    robots[5] = new RobotC();
+    robots[6] = new RobotC1();
+
+    // Soundインターフェイスを実装して
+    // いるすべてのロボットのbeepメソッドを試す
+    for(int i = 0; i < NUMROBOTS; i++) {
+      if (robots[i] instanceof Sound) {
+        Sound sound = (Sound)robots[i];
+        sound.beep();
+      }
+    }
+
+    // Locomotionインターフェイスを実装して
+    // いるすべてのロボットのstopメソッドを試す
+    for(int i = 0; i < NUMROBOTS; i++) {
+      if (robots[i] instanceof Locomotion) {
+        Locomotion locomotion = (Locomotion)robots[i];
+        locomotion.stop();
+      }
+    }
+  }
+}
+
+interface Locomotion {
+  void forward();
+  void reverse();
+  void stop();
+}
+
+interface Sound {
+  void beep();
+}
+
+abstract class Robot {
+}
+
+class RobotA extends Robot {
+}
+
+class RobotA1 extends RobotA
+implements Sound {
+
+  public void beep() {
+    System.out.println("RobotA1: beep");
+  }
+}
+
+class RobotB extends Robot
+implements Locomotion {
+  public void forward() {
+    System.out.println("RobotB: forward");
+  }
+
+  public void reverse() {
+    System.out.println("RobotB: reverse");
+  }
+
+  public void stop() {
+    System.out.println("RobotB: stop");
+  }
+}
+
+class RobotB1 extends RobotB
+implements Sound {
+  public void beep() {
+    System.out.println("RobotB1: beep");
+  }
+}
+
+class RobotB2 extends RobotB {
+}
+
+class RobotC extends Robot
+implements Locomotion, Sound {
+  public void forward() {
+    System.out.println("RobotC: forward");
+  }
+
+  public void reverse() {
+    System.out.println("RobotC: reverse");
+  }
+
+  public void stop() {
+    System.out.println("RobotC: stop");
+  }
+
+  public void beep() {
+    System.out.println("RobotC: beep");
+  }
+}
+
+class RobotC1 extends RobotC {
+}
+
+実行結果は次のとおりです。
+
+RobotA1: beep
+RobotB1: beep
+RobotC: beep
+RobotC: beep
+RobotB: stop
+RobotB: stop
+RobotB: stop
+RobotC: stop
+RobotC: stop
+
+【2】 
+package tents;
+
+abstract class Tent {
+}
+
+class TentA extends Tent {
+}
+
+class TentB extends Tent
+implements Waterproof {
+}
+
+class TentC extends Tent {
+}
+
+class TentD extends Tent
+implements Waterproof {
+}
+
+interface Waterproof {
+}
+
+class Tents {
+  public static void main(String args[]) {
+    Tent tents[] = new Tent[4];
+    tents[0] = new TentA();
+    tents[1] = new TentB();
+    tents[2] = new TentC();
+    tents[3] = new TentD();
+
+    for(int i = 0; i < 4; i++) {
+      if (tents[i] instanceof Waterproof) {
+        Class cls = tents[i].getClass();
+        System.out.println(cls.getName());
+      }
+    }
+  }
+}
+
+実行結果は次のとおりです。
+
+tents.TentB
+tents.TentD

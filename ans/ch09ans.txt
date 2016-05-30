@@ -1,0 +1,487 @@
+■第9章の解答：目次■
+・・・・・・・・・・・・・・・・・・・・・
+第9章：前章の理解度チェック
+9.2：練習問題
+9.3：練習問題
+9.4：練習問題
+9.5：練習問題
+第9章：第9章の理解度チェック
+第9章：総合理解度チェック
+・・・・・・・・・・・・・・・・・・・・・
+
+第9章：前章の理解度チェック
+
+【1】 try、throw、catch、finally、throws
+
+【2】 例外ハンドラの検索は、例外が発生したtryブロックの直後のcatchブロックから開始されます。例外オブジェクトの種類とcatchブロックのパラメータが一致するかどうかが、順番に確認されます。一致した場合、そのcatchブロックが実行されます。一致しなければ、さらに検索が継続されます。すべてのtryステートメントに関連付けられたcatchブロックがチェックされます。メソッド内に該当するcatchブロックがなければ、呼び出し元のメソッド内で検索が継続されます。この手順で、main()メソッドまでさかのぼって検索されます。最終的にcatchブロックが見つからなかった場合は、既定の例外ハンドラが呼び出され、メッセージの表示後、プログラムの実行が終了します。
+
+【3】 常に実行されます。
+
+【4】 
+class StringIndexOutOfBounds {
+  public static void main(String args[]) {
+    try {
+      String s = "This is a string";
+      int length = s.length();
+      System.out.println(s.charAt(length));
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+【5】 
+Before integer division-by-zero
+Inner catch block
+Inner finally block
+Outer catch block
+Outer finally block
+
+9.2：練習問題
+
+【1】 
+class MyThread3 extends Thread {
+  String str;
+  long msec;
+
+  MyThread3(String str, long msec) {
+    this.str = str;
+    this.msec = msec;
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        Thread.sleep(msec);
+        System.out.println(str);
+      }
+    }
+    catch(InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class ThreadDemo3 {
+  public static void main(String args[]) {
+    MyThread3 ta = new MyThread3("A", 1000); // 1000ミリ秒ごとにAを表示するスレッド
+    MyThread3 tb = new MyThread3("B", 3000); // 3000ミリ秒ごとにBを表示するスレッド
+    ta.start();
+    tb.start();
+  }
+}
+
+実行結果は次のとおりです。
+
+A
+A
+B
+A
+A
+A
+B
+…
+
+【2】 
+class MyThread4 implements Runnable {
+  String str;
+  long msec;
+
+  MyThread4(String str, long msec) {
+    this.str = str;
+    this.msec = msec;
+    new Thread(this).start();
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        Thread.sleep(msec);
+        System.out.println(str);
+      }
+    }
+    catch(InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class ThreadDemo4 {
+  public static void main(String args[]) {
+    MyThread4 ta = new MyThread4("A", 1000); // 1000ミリ秒ごとにAを表示するスレッド
+    MyThread4 tb = new MyThread4("B", 3000); // 1000ミリ秒ごとにBを表示するスレッド
+  }
+}
+
+実行結果は次のとおりです。
+
+A
+A
+B
+A
+A
+A
+B
+…
+
+【3】 
+class MyThread extends Thread {
+  public void run() {
+    try {
+      for(int i = 0; i < 10; i++) {
+        int msec = (int)(300 + 500 * Math.random());
+        Thread.sleep(msec);
+        System.out.print('x');
+      }
+    }
+    catch(InterruptedException ex) {
+      ex.printStackTrace();
+    }
+  }
+}
+
+class FiveThreads {
+  private static int NUMTHREADS = 5;
+
+  public static void main(String args[]) {
+    // スレッドを作成する
+    MyThread threads[] = new MyThread[NUMTHREADS];
+    for(int i = 0; i < NUMTHREADS; i++) {
+      threads[i] = new MyThread();
+    }
+
+    // スレッドを起動する
+    for(int i = 0; i < NUMTHREADS; i++) {
+      threads[i].start();
+    }
+
+    // スレッドの完了を待機する
+    for(int i = 0; i < NUMTHREADS; i++) {
+      try {
+        threads[i].join();
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    // メッセージを表示する
+    System.out.println("\nAll threads have completed");
+  }
+}
+
+実行結果は次のとおりです。
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+All threads have completed
+
+9.3：練習問題
+
+【1】 最終的な残高が10000000にならないことがあります。また、プログラムの実行結果が一定ではなくなります。
+なお、高速なマシンではどうしても10000000にしかならないかもしれません。そのようなときには、deposit()メソッドのコードをfor (int i = 0; i < amount; i++) balance++; のように変更して、deposit()メソッド呼び出し時の引数も10ではなく100とすると、その変位がわかります。
+
+【2】 
+class Account2 {
+  private int balance;
+
+  void deposit(int amount) {
+    synchronized(this) {
+      balance += amount;
+    }
+  }
+
+  int getBalance() {
+    return balance;
+  }
+}
+
+class Customer2 extends Thread {
+  Account2 account;
+
+  Customer2(Account2 account) {
+    this.account = account;
+  }
+
+  public void run() {
+    try {
+      for(int i = 0; i < 100000; i++) {
+        account.deposit(10);
+      }
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+class BankDemo2 {
+  private final static int NUMCUSTOMERS = 10;
+
+  public static void main(String args[]) {
+    // 口座を作成する
+    Account2 account = new Account2();
+
+    // 顧客スレッドを作成して起動する
+    Customer2 customers[] = new Customer2[NUMCUSTOMERS];
+    for(int i = 0; i < NUMCUSTOMERS; i++) {
+      customers[i] = new Customer2(account);
+      customers[i].start();
+    }
+
+    // 顧客スレッドの完了を待機する
+    for(int i = 0; i < NUMCUSTOMERS; i++) {
+      try {
+        customers[i].join();
+      }
+      catch(InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+
+    // 残高を表示する
+    System.out.println(account.getBalance());
+  }
+}
+
+実行結果は次のとおりです。
+
+10000000
+
+9.4：練習問題
+
+【1】 デッドロックは起こりません。このプログラムには複数のスレッドがありますが、それらは1つのオブジェクトへのアクセスを待機するだけです。互いの必要とするロックを保持する事態は起こり得ません。また、synchronizedメソッドx1()でsynchronizedメソッドx2()を呼び出していることに注意してください。これもデッドロックの原因とはなりません。オブジェクトのロックを取得する場合、スレッドは同じオブジェクトのsynchronizedメソッドをいくつでも呼び出すことができます。
+
+9.5：練習問題
+
+【1】 
+Calling wait
+Calling notifyAll
+Done
+Done
+
+2つのスレッドが作成されます。先にk1メソッドを呼び出したスレッドはflagをtrueにし、「Calling wait」を表示してwait()に入ります。後からk1メソッドを呼び出したスレッドはflagがすでにtrueになっているので「Calling notifyAll」を表示してnotifyAll()を実行します。それぞれのスレッドが終了し、「Done」が表示されます。
+
+第9章：第9章の理解度チェック
+
+【1】 スレッドとは、プロセス内の実行手順のことです。
+
+【2】 Threadクラスを拡張する方法と、Runnableインターフェイスを実装する方法です。
+
+【3】 デッドロックとは、2つ以上のスレッドが、相手からロックが解放されるのを永久に待ち続けている場合に起こるエラー状態のことです。
+
+【4】 wait()、notify()、notifyAll()メソッドを使います。
+
+【5】 低い優先順位のスレッド（LowPriorityThread）が2秒間実行されます。その間に、そのスレッドではカウンタ値を増やしてメッセージを表示します。次に、通常の優先順位のスレッド（NormPriorityThread）が起動され、メッセージを表示します。低い優先順位のスレッドの実行は中断されます。通常の優先順位のスレッドが数秒間実行されます。その間、低い優先順位のスレッドのメッセージは表示されません。このスレッドの実行が完了した後で、低い優先順位のスレッドが再開されます。
+
+【6】 
+class Resource {
+  boolean allocated;
+  int rid;
+
+  Resource(int rid) {
+    allocated = false;
+    this.rid = rid;
+  }
+
+  void use(int uid) {
+    try {
+      System.out.println("User " + uid + " uses resource " + rid);
+      Thread.sleep((int)(5000 + 5000 * Math.random()));
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+class ResourceCoordinator {
+  private final static int NUMRESOURCES = 3;
+  private int totalAllocated;
+  private Resource resources[];
+
+  ResourceCoordinator() {
+    // totalAllocatedを初期化する
+    totalAllocated = 0;
+
+    // リソースを作成する
+    resources = new Resource[NUMRESOURCES];
+    for(int rid = 0; rid < NUMRESOURCES; rid++) {
+      resources[rid] = new Resource(rid);
+    }
+  }
+
+  synchronized Resource get() {
+    // 使用可能なリソースを待機する
+    while(totalAllocated == NUMRESOURCES) {
+      try {
+        wait();
+      }
+      catch(InterruptedException ie) {
+        ie.printStackTrace();
+        System.exit(0);
+      }
+    }
+
+    // 使用可能なリソースを割り当てる
+    Resource r = null;
+    for(int i = 0; i < NUMRESOURCES; i++) {
+      if (resources[i].allocated == false) {
+        resources[i].allocated = true;
+        r = resources[i];
+        break;
+      }
+    }
+
+    // totalAllocatedに1を足す
+    ++totalAllocated;
+
+    // 待機中のスレッドに通知を送る
+    notifyAll();
+
+    // リソースを返す
+    return r;
+  }
+
+  synchronized void put(Resource r) {
+    // リソースに使用可能のマークを付ける
+    r.allocated = false;
+
+    // totalAllocatedから1を引く
+    --totalAllocated;
+
+    // 待機中のスレッドに通知を送る
+    notifyAll();
+  }
+}
+
+class User extends Thread {
+  ResourceCoordinator rc;
+  int uid;
+
+  User(ResourceCoordinator rc, int uid) {
+    this.rc = rc;
+    this.uid = uid;
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        Resource r = rc.get();
+        r.use(uid);
+        rc.put(r);
+        sleep(3000);
+      }
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+class ResourcePoolDemo {
+  private final static int NUMUSERS = 10;
+
+  public static void main(String args[]) {
+    // リソースの調整役を作成する
+    ResourceCoordinator rc = new ResourceCoordinator();
+
+    // ユーザースレッドを作成して起動する
+    for(int uid = 0; uid < NUMUSERS; uid++) {
+      new User(rc, uid).start();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+User 0 uses resource 0
+User 1 uses resource 1
+User 2 uses resource 2
+User 3 uses resource 1
+User 4 uses resource 0
+User 5 uses resource 2
+User 6 uses resource 0
+User 7 uses resource 1
+…
+
+第9章：総合理解度チェック
+
+【1】 synchronizedメソッドまたはsynchronizedブロック内で例外が発生した場合、オブジェクトのロックが解放されます。これは、ほかのスレッドがロックの解放を永久に待ち続けることがないようにするためです。
+
+【2】 
+class RandomIntegers {
+  public static void main(String args[]) {
+    try {
+      while(true) {
+        int i = (int)(5 * Math.random() + 5);
+        System.out.println(i);
+        Thread.sleep(3000);
+      }
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+9
+5
+5
+8
+6
+8
+6
+…
+
+【3】 
+class Grasshopper extends Thread {
+  public final static int NUMGRASSHOPPERS = 6;
+
+  int x, y;
+
+  public Grasshopper() {
+    x = (int)(100 * Math.random());
+    y = (int)(100 * Math.random());
+  }
+
+  public void run() {
+    try {
+      while(true) {
+        int msec = (int)(10000 * Math.random() + 2000);
+        Thread.sleep(msec);
+        x = (int)(100 * Math.random());
+        y = (int)(100 * Math.random());
+        System.out.println("Grasshopper at x = " + x +
+          " y = " + y);
+      }
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+class GrasshopperDemo {
+  public static void main(String args[]) {
+    for(int i = 0; i < Grasshopper.NUMGRASSHOPPERS; i++) {
+      new Grasshopper().start();
+    }
+  }
+}
+
+実行結果はたとえば次のようになります。
+
+Grasshopper at x = 76 y = 41
+Grasshopper at x = 29 y = 44
+Grasshopper at x = 26 y = 9
+Grasshopper at x = 2 y = 47
+Grasshopper at x = 93 y = 65
+Grasshopper at x = 75 y = 97
+Grasshopper at x = 25 y = 71
+Grasshopper at x = 88 y = 13
+Grasshopper at x = 72 y = 96
+Grasshopper at x = 58 y = 49
+…
