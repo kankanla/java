@@ -1,44 +1,39 @@
-‘æ2Í ƒTƒ“ƒvƒ‹ƒR[ƒh
-EEEEEEEEEEEEEEEEEEEEE
-–ÚŸiƒy[ƒW”Ô†j
-¡P52
-¡P53-1
-¡P53-2
-¡P56-1
-¡P56-2
-¡P58
-¡P59-1
-¡P59-2
-¡P61
-¡P62-1
-¡P62-2
-¡P64
-¡P71
-¡P74
-¡P76-1
-¡P76-2
-¡P77
-¡P78
-¡P80
-EEEEEEEEEEEEEEEEEEEEE
+ç¬¬2ç«  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
+ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»
+ç›®æ¬¡ï¼ˆãƒšãƒ¼ã‚¸ç•ªå·ï¼‰
+â– P52
+â– P53-1
+â– P53-2
+â– P56-1
+â– P56-2
+â– P58
+â– P59-1
+â– P59-2
+â– P61
+â– P62-1
+â– P62-2
+â– P64
+â– P71
+â– P74
+â– P76-1
+â– P76-2
+â– P77
+â– P78
+â– P80
+ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»ãƒ»
 
-¡P52
+â– P52
 class MathDemo {
   public static void main(String args[]) {
-    System.out.println("Max of -8 and -4 is " +
-      Math.max(-8, -4));
-    System.out.println("Min of -8 and -4 is " +
-      Math.min(-8, -4));
-    System.out.println("Absolute value of -18 is " +
-      Math.abs(-18));
-    System.out.println("The ceiling of 45.7 is " +
-      Math.ceil(45.7));
-    System.out.println("The floor of 45.7 is " +
-      Math.floor(45.7));
+    System.out.println("Max of -8 and -4 is " + Math.max(-8, -4));
+    System.out.println("Min of -8 and -4 is " + Math.min(-8, -4));
+    System.out.println("Absolute value of -18 is " + Math.abs(-18));
+    System.out.println("The ceiling of 45.7 is " + Math.ceil(45.7));
+    System.out.println("The floor of 45.7 is " + Math.floor(45.7));
   }
 }
 
-¡P53-1
+â– P53-1
 class EPI {
   public static void main(String args[]) {
     System.out.println("E = " + Math.E);
@@ -46,40 +41,40 @@ class EPI {
   }
 }
 
-¡P53-2
+â– P53-2
 class AreaCircumference {
   public static void main(String args[]) {
     double radius = 5;
     double area = Math.PI * radius * radius;
     double circumference = 2 * Math.PI * radius;
-    System.out.println("Radius is " + radius); // ”¼Œa
-    System.out.println("Area is " + area);     // –ÊÏ
+    System.out.println("Radius is " + radius); // åŠå¾„
+    System.out.println("Area is " + area);     // é¢ç©
     System.out.println("Circumference is " +
-       circumference);                         // ‰~ü‚Ì’·‚³
+       circumference);                         // å††å‘¨ã®é•·ã•
   }
 }
 
-¡P56-1
+â– P56-1
 class First10Chars {
   public static void main(String args[]) {
     String s = "One Two Three Four Five Six Seven";
     String substring = s.substring(0, 10);
-    // Å‰‚Ì10•¶š‚ğ”²‚«o‚·
+    // æœ€åˆã®10æ–‡å­—ã‚’æŠœãå‡ºã™
     System.out.println(substring);
   }
 }
 
-¡P56-2
+â– P56-2
 class DollarAmount {
   public static void main(String args[]) {
     String s1 = "The total cost is $45.67";
-    int i1 = s1.indexOf('$'); // $‚Ån‚Ü‚é•¶š—ñ‚ğ’T‚µA‚»‚ÌˆÊ’u‚ğ•Ô‚·
-    String s2 = s1.substring(i1); // i1‚ÌˆÊ’uˆÈ~‚Ì•¶š—ñ‚ğ”²‚«o‚·
+    int i1 = s1.indexOf('$'); // $ã§å§‹ã¾ã‚‹æ–‡å­—åˆ—ã‚’æ¢ã—ã€ãã®ä½ç½®ã‚’è¿”ã™
+    String s2 = s1.substring(i1); // i1ã®ä½ç½®ä»¥é™ã®æ–‡å­—åˆ—ã‚’æŠœãå‡ºã™
     System.out.println(s2);
   }
 }
 
-¡P58
+â– P58
 class StringToInt {
   public static void main(String args[]) {
     String s = "125";
@@ -90,30 +85,30 @@ class StringToInt {
   }
 }
 
-¡P59-1
+â– P59-1
 class StringToInt2 {
   public static void main(String args[]) {
     String s = "125";
-    int i = Integer.valueOf(s).intValue(); // 1‚Â‚É‚Ü‚Æ‚ß‚Ä‘ã“ü
+    int i = Integer.valueOf(s).intValue(); // 1ã¤ã«ã¾ã¨ã‚ã¦ä»£å…¥
     i += 10;
     System.out.println(i);
   }
 }
 
-¡P59-2
+â– P59-2
 class BinaryHexOctal {
   public static void main(String args[]) {
     int i = 11;
     System.out.println("Binary is " +
-      Integer.toBinaryString(i)); // 2i”
+      Integer.toBinaryString(i)); // 2é€²æ•°
     System.out.println("Hex is " +
-      Integer.toHexString(i));    // 16i”
+      Integer.toHexString(i));    // 16é€²æ•°
     System.out.println("Octal is " +
-      Integer.toOctalString(i));  // 8i”
+      Integer.toOctalString(i));  // 8é€²æ•°
   }
 }
 
-¡P61
+â– P61
 class IntegerConstructors {
   public static void main(String args[]) {
     Integer iobj1 = new Integer(5);
@@ -127,7 +122,7 @@ class IntegerConstructors {
   }
 }
 
-¡P62-1
+â– P62-1
 class MultipleReferences {
   public static void main(String args[]) {
     Integer obj1 = new Integer(5);
@@ -139,7 +134,7 @@ class MultipleReferences {
   }
 }
 
-¡P62-2
+â– P62-2
 class MultipleObjects {
   public static void main(String args[]) {
     Integer obj = new Integer(5);
@@ -151,35 +146,35 @@ class MultipleObjects {
   }
 }
 
-¡P64
+â– P64
 class GarbageCollectionDemo {
   public static void main(String args[]) {
     Integer i = new Integer(5);
-    // Å‰‚ÌƒIƒuƒWƒFƒNƒg‚ğ¶¬
+    // æœ€åˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
     System.out.println(i);
     i = new Integer(6);
-    // V‚µ‚¢ƒIƒuƒWƒFƒNƒg‚ğ¶¬
+    // æ–°ã—ã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
     System.out.println("Integer(5) can be recycled.");
     System.out.println(i);
   }
 }
 
-¡P71
+â– P71
 class DoubleDemo {
   public static void main(String args[]) {
-    // •Ï”‚ğéŒ¾‚µ‚Ä‰Šú‰»‚·‚é
+    // å¤‰æ•°ã‚’å®£è¨€ã—ã¦åˆæœŸåŒ–ã™ã‚‹
     double d1 = 0;
     double d2 = 0;
 
-    // œZ
+    // é™¤ç®—
     double d3 = d1 / d2;
     System.out.println(d3);
 
-    // –³ŒÀ‚ÆNaN‚ÌƒeƒXƒg
+    // ç„¡é™ã¨NaNã®ãƒ†ã‚¹ãƒˆ
     System.out.println(Double.isInfinite(d3));
     System.out.println(Double.isNaN(d3));
 
-    // Å‘åAÅ¬A–³ŒÀ‚ÌŠe’l‚ğ•\¦‚·‚é
+    // æœ€å¤§ã€æœ€å°ã€ç„¡é™ã®å„å€¤ã‚’è¡¨ç¤ºã™ã‚‹
     System.out.println(Double.MAX_VALUE);
     System.out.println(Double.MIN_VALUE);
     System.out.println(Double.POSITIVE_INFINITY);
@@ -187,13 +182,13 @@ class DoubleDemo {
   }
 }
 
-¡P74
+â– P74
 class StringBufferDemo {
   public static void main(String args[]) {
-    StringBuffer sb1 = new StringBuffer(); // 16•¶š•ª‚Ìƒoƒbƒtƒ@
-    StringBuffer sb2 = new StringBuffer(30); // 30•¶š•ª‚Ìƒoƒbƒtƒ@
-    StringBuffer sb3 = new StringBuffer("abcde"); // abcd‚Ì5•¶š
-                                              // +16•¶š•ª‚Ìƒoƒbƒtƒ@
+    StringBuffer sb1 = new StringBuffer(); // 16æ–‡å­—åˆ†ã®ãƒãƒƒãƒ•ã‚¡
+    StringBuffer sb2 = new StringBuffer(30); // 30æ–‡å­—åˆ†ã®ãƒãƒƒãƒ•ã‚¡
+    StringBuffer sb3 = new StringBuffer("abcde"); // abcdã®5æ–‡å­—
+                                              // +16æ–‡å­—åˆ†ã®ãƒãƒƒãƒ•ã‚¡
     System.out.println("sb1.capacity = " +
       sb1.capacity());
     System.out.println("sb1.length = " + sb1.length());
@@ -206,7 +201,7 @@ class StringBufferDemo {
   }
 }
 
-¡P76-1
+â– P76-1
 class StringArray {
   public static void main(String args[]) {
     String array[] = new String[5];
@@ -223,7 +218,7 @@ class StringArray {
   }
 }
 
-¡P76-2
+â– P76-2
 class StringAverage {
   public static void main(String args[]) {
     String array[] = new String[5];
@@ -239,11 +234,11 @@ class StringAverage {
     total += array[3].length();
     total += array[4].length();
     System.out.println("The average string size is " +
-      total / array.length); // •½‹Ï‚ğ•\¦
+      total / array.length); // å¹³å‡ã‚’è¡¨ç¤º
   }
 }
 
-¡P77
+â– P77
 class CommandLineArguments {
   public static void main(String args[]) {
     System.out.println("args.length = " + args.length);
@@ -253,27 +248,27 @@ class CommandLineArguments {
   }
 }
 
-¡P78
+â– P78
 class Add2Integers {
   public static void main(String args[]) {
-    // Å‰‚Ì®”‚ğæ“¾‚·‚é
+    // æœ€åˆã®æ•´æ•°ã‚’å–å¾—ã™ã‚‹
     int i = Integer.parseInt(args[0]);
 
-    // Ÿ‚Ì®”‚ğæ“¾‚·‚é
+    // æ¬¡ã®æ•´æ•°ã‚’å–å¾—ã™ã‚‹
     int j = Integer.parseInt(args[1]);
 
-    // ‡Œv‚ğ•\¦‚·‚é
+    // åˆè¨ˆã‚’è¡¨ç¤ºã™ã‚‹
     int sum = i + j;
     System.out.println("Sum is " + sum);
   }
 }
 
-¡P80
+â– P80
 class ArrayCopy {
   public static void main(String args[]) {
     int array1[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     int array2[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    System.arraycopy(array1, 0, array2, 0, 5); // ”z—ñ‚ğƒRƒs[
+    System.arraycopy(array1, 0, array2, 0, 5); // é…åˆ—ã‚’ã‚³ãƒ”ãƒ¼
     System.out.print("array2: ");
     System.out.print(array2[0] + " ");
     System.out.print(array2[1] + " ");
