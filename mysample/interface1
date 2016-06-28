@@ -1,0 +1,38 @@
+interface bb{
+    double all();
+    double test();
+}
+
+
+
+class buy implements bb{
+    double cost;
+    int totle;
+    double all;
+    
+    buy(double cost,int totle){
+        this.cost = cost;
+        this.totle = totle;
+    }
+    
+    public double all(){
+        all = cost * totle;
+        return all;
+    }
+    
+    public double test(){
+        return Math.PI;
+    }
+    
+}
+
+class Main{
+    public static void main(String[] args){
+        buy x = new buy(1.22,100);
+        System.out.println(x.all());
+        
+        bb b = new buy(0.33,10);
+        System.out.println(b.all());
+        System.out.println(b.test());
+    }
+}
