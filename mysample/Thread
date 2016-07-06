@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
         test x = new test();
         test2 w = new test2();
         x.start();
@@ -10,23 +11,34 @@ public class Main {
     }
 }
 
+
 class test extends Thread{
     public void run(){
-        for(int i = 1 ; i<101; i++){
-            System.out.println();
-                for(int j = 1; j < 101; j++){
-                    System.out.print('-');
-                }
-        }
+        pint a = new pint("-");
+        a.px();
     }
 }
+
 class test2 extends Thread{
     public void run(){
-        for(int i = 1 ; i<101; i++){
+        pint a = new pint("*");
+        a.px();
+    }
+}
+
+
+class pint{
+    String x;
+    pint(String x){
+        this.x = x;
+    }
+    public synchronized void px(){
+        for(int i = 1; i<101; i++){
             System.out.println();
-                for(int j = 1; j < 101; j++){
-                    System.out.print('|');
+                for(int j=1; j < 101; j++){
+                    System.out.print(x);
                 }
         }
     }
+    
 }
