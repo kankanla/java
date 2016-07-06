@@ -11,7 +11,6 @@ public class Main {
     }
 }
 
-
 class test extends Thread{
     public void run(){
         pint a = new pint("-");
@@ -26,16 +25,16 @@ class test2 extends Thread{
     }
 }
 
-
 class pint{
     String x;
+    final int end = 100;
     pint(String x){
         this.x = x;
     }
-    public synchronized void px(){
-        for(int i = 1; i<101; i++){
+     synchronized void px(){
+        for(int i = 1; i<end; i++){
             System.out.println();
-                for(int j=1; j < 101; j++){
+                for(int j=1; j < end; j++){
                     System.out.print(x);
                 }
         }
