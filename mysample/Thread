@@ -26,17 +26,18 @@ class test2 extends Thread{
 
 class pint{
     String x;
-    final int end = 100;
+    final int endlength = 100;
     pint(String x){
         this.x = x;
     }
      synchronized void px(){
-        for(int i = 1; i<end; i++){
+        for(int i = 1; i< endlength; i++){
             System.out.println();
-                for(int j=1; j < end; j++){
+                for(int j=1; j < endlength; j++){
                     System.out.print(x);
                 }
         }
     }
     
 }
+
