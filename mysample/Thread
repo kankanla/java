@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        test x = new test();
+        test2 w = new test2();
+        x.start();
+        w.start();
+    }
+}
+
+class test extends Thread{
+    synchronized public void run(){
+        for(int i = 1 ; i<101; i++){
+            System.out.println();
+                for(int j = 1; j < 101; j++){
+                    System.out.print('-');
+                }
+        }
+    }
+}
+class test2 extends Thread{
+    public void run(){
+        for(int i = 1 ; i<101; i++){
+            System.out.println();
+                for(int j = 1; j < 101; j++){
+                    System.out.print('|');
+                }
+        }
+    }
+}
