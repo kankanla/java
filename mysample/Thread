@@ -3,7 +3,6 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
         test x = new test();
         test2 w = new test2();
         x.start();
