@@ -8,28 +8,38 @@ public class Main {
     }
 }
 
+
 class T{
     T(){
         try{
             
-            File f = new File("//tmp//t.txt");
-            FileWriter fw  = new FileWriter(f);
+            File a = new File("//tmp//t.txt");
+            FileWriter fw  = new FileWriter(a);
             fw.write("abc");
             fw.close();
-            System.out.println(f.isFile());
+            System.out.println(a.isFile());
 
-            FileReader fr = new FileReader(f);
+            FileReader fr = new FileReader(a);
             System.out.println(fr.read());
             System.out.println(fr.read());
             System.out.println(fr.read());
             System.out.println(fr.read());
             
             System.out.println("FileInputStream");
-            FileInputStream fis = new FileInputStream(f);
+            FileInputStream fis = new FileInputStream(a);
             System.out.println(fis.read());
             System.out.println(fis.read());
             System.out.println(fis.read());
             System.out.println(fis.read());
+            
+            
+            System.out.println("FileOutputStream");
+            File b = new File("\\tmp\\fb.txt");
+            FileOutputStream bb = new FileOutputStream(b);
+            bb.write(97);
+            
+            FileInputStream bi = new FileInputStream(b);
+            System.out.println((char)bi.read());
             
             
         }catch(Exception e){
