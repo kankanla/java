@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        T t = new T();
+    }
+}
+
+class T{
+    T(){
+        try{
+            
+            File f = new File("//tmp//t.txt");
+            FileWriter fw  = new FileWriter(f);
+            fw.write("abc");
+            fw.close();
+            System.out.println(f.isFile());
+
+            FileReader fr = new FileReader(f);
+            System.out.println(fr.read());
+            System.out.println(fr.read());
+            System.out.println(fr.read());
+            System.out.println(fr.read());
+            
+            System.out.println("FileInputStream");
+            FileInputStream fis = new FileInputStream(f);
+            System.out.println(fis.read());
+            System.out.println(fis.read());
+            System.out.println(fis.read());
+            System.out.println(fis.read());
+            
+            
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+    }
+}
