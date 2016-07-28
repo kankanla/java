@@ -32,15 +32,19 @@ class T{
             System.out.println(fis.read());
             System.out.println(fis.read());
             
-            
             System.out.println("FileOutputStream");
             File b = new File("\\tmp\\fb.txt");
             FileOutputStream bb = new FileOutputStream(b);
-            bb.write(97);
+            for(int i =0;i<1000;i++){
+                bb.write(i);
+            }
+            bb.close();
             
             FileInputStream bi = new FileInputStream(b);
-            System.out.println((char)bi.read());
-            
+            System.out.println(bi.available());
+            for(int i = 0; i<bi.available(); i++){
+                System.out.print((char)bi.read());
+            }
             
         }catch(Exception e){
             System.out.println(e.toString());
