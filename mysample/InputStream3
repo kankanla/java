@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        T t = new T();
+        t.test();
+        t.fi();
+    }
+}
+
+class T {
+
+
+    public void test() throws Exception {
+        FileOutputStream x = new FileOutputStream("zzz.txt");
+        BufferedOutputStream xx = new BufferedOutputStream(x);
+
+        for(int i = 0; i<1000000;i++){
+           xx.write((byte)i);
+            xx.flush();
+            
+        }
+        xx.flush();
+        xx.close();
+        
+    }
+    
+    public void fi() throws Exception{
+        FileInputStream x = new FileInputStream("zzz.txt");
+        InputStreamReader xx = new InputStreamReader(x);
+        BufferedReader xxx = new BufferedReader(xx);
+        
+        String qq = null;
+        while((qq = xxx.readLine())!=null ){
+            System.out.println(qq);
+        }
+
+        xxx.close();
+
+    }
+        
+}
