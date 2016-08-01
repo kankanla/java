@@ -1,0 +1,37 @@
+import java.io.*;
+import java.util.*;
+
+
+class main{
+	public static void main(String[] args) {
+		System.out.println("test");
+		T t = new T();
+
+	}
+}
+
+class T{
+	T(){
+		try{
+			// InputStream x = System.in;
+			// InputStreamReader xx = new InputStreamReader(x);
+			// BufferedReader xxx = new BufferedReader(xx);
+			BufferedReader xxx = new BufferedReader(new InputStreamReader(System.in));
+
+			// FileOutputStream ff = new FileOutputStream("c:\\java\\x.txt");
+			// OutputStream y = System.out;
+			// OutputStreamWriter yy = new OutputStreamWriter(ff);
+			// BufferedWriter yyy = new BufferedWriter(yy);
+
+			BufferedWriter yyy = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("c:\\java\\x.txt")));
+
+			yyy.write(xxx.readLine());
+			yyy.flush();
+			yyy.close();
+
+		}catch(Exception e){
+
+		}
+	}
+}
+
