@@ -24,10 +24,14 @@ class T{
 			// BufferedWriter yyy = new BufferedWriter(yy);
 
 			BufferedWriter yyy = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("c:\\java\\x.txt")));
+			BufferedWriter iii = new BufferedWriter(new OutputStreamWriter(System.out));
 
-			yyy.write(xxx.readLine());
+			String temp = xxx.readLine();
+			yyy.write(temp);
 			yyy.flush();
 			yyy.close();
+			iii.write(temp);
+			iii.flush();
 
 		}catch(Exception e){
 
