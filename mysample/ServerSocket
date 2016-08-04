@@ -1,0 +1,47 @@
+package xxx;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		try {
+			ServerSocket ss = new ServerSocket(1923);
+			System.out.println("start");
+			FileInputStream f = new FileInputStream("c:\\a.exe");
+			BufferedInputStream bf = new BufferedInputStream(f);
+			byte[] buf = new  byte[1024];
+			
+			while(true){
+				
+				Socket s = ss.accept();
+				OutputStream os = s.getOutputStream();
+				BufferedOutputStream oos = new BufferedOutputStream(os);
+
+				while(bf.read(buf) != -1){
+					oos.write(buf);
+					oos.flush();
+					System.out.println(".");
+				}
+				oos.close();
+				System.out.println();
+			
+			}
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+}
