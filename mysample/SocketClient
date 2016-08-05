@@ -1,24 +1,30 @@
 import java.net.*;
 import java.io.*;
 
-class main {
+class sc {
+  static String fname = "c:\\java_ss\\10180500.AVI";
   public static void main(String args[]) {
     try {
        Socket s = new Socket("192.168.11.114",1923);
        InputStream is = s.getInputStream();
-       BufferedInputStream bis = new BufferedInputStream(is);
+       // BufferedInputStream bis = new BufferedInputStream(is);
 
-       FileOutputStream wf = new FileOutputStream("d:\\javac\\w.exe");
-       BufferedOutputStream bwf = new BufferedOutputStream(wf);
-       byte[] buf = new byte[1024];
-
-      while(bis.read(buf) != -1){
-        bwf.write(buf);
-        bwf.flush();
+       FileOutputStream wf = new FileOutputStream(fname);
+       // BufferedOutputStream bwf = new BufferedOutputStream(wf);
+       byte[] buf = new byte[512];
+       int ll;
+      while((ll = is.read(buf)) > 0){
+        wf.write(buf,0,ll);
       } 
+        wf.flush();
 
-       bwf.close();
-       bis.close();
+       wf.close();
+       s.close();
+       is.close();
+
+       FileInputStream xx = new FileInputStream(fname);
+       System.out.println(xx.available());
+       xx.close();
 
     }
     catch (Exception e) {
