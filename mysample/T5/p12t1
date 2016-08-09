@@ -1,0 +1,27 @@
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+
+public class p12t1 {
+	public static void main(String[] args) throws Exception {
+		t1();
+	}
+
+	public static void t1() throws Exception{
+		int port = 1937;
+		DatagramSocket ds = new DatagramSocket(port);
+		
+		byte[] buf = new byte[20];
+		
+		while(true){
+			DatagramPacket dp = new DatagramPacket(buf,buf.length);
+			ds.receive(dp);
+			// System.out.println(dp.getData());
+
+			for(byte by:dp.getData()){
+				System.out.println(by);
+			}
+
+		}
+	}
+}
