@@ -1,0 +1,25 @@
+sample 1
+public class test2{
+	public static void main(String[] args) {
+		Text t = new Text();
+		Thread tt = new Thread(t);
+		tt.start();
+	}
+}
+class Text implements Runnable{
+	public void run(){
+		System.out.println("Runnable");
+	}
+}
+
+
+sample2
+class Test3{
+	public static void main(String[] args) {
+		new Thread(new Runnable(){
+			public void run(){
+				System.out.println("Runnable");
+			}
+		}).start();
+	}
+}
