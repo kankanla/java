@@ -1,3 +1,7 @@
+//Internal class 内部类
+//////////////////////////////////////
+
+
 package test;
 
 public class test {
@@ -12,6 +16,9 @@ public class test {
 		
 		subtest.incl si = s.new incl();     //初期化
 		System.out.println(si.getr());
+		
+		subtest.incl sii = (new subtest()).new incl();    //初期化
+		System.out.println(sii.getr());
 	}
 
 }
