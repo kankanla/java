@@ -1,0 +1,72 @@
+package test;
+
+public class test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		subtest s = new subtest(null, null);
+		s.set("seta", "setb");
+		System.out.println(s.get().length);
+		System.out.println(s.get()[1]);
+		System.out.println(s.get()[0]);
+		
+		subtest.incl si = s.new incl();     //初期化
+		System.out.println(si.getr());
+	}
+
+}
+
+
+
+/////////////////////////
+
+package test;
+
+public class subtest {
+
+	private String a = null;
+	private String b = null;
+	
+	public subtest(){
+		this.a = "null";
+		this.b = "null";
+	}
+		
+	public subtest(String a, String b ){
+		this.a = a;
+		this.b = b;
+	}
+	
+	
+	public void set(String a , String b){
+		this.a = a;
+		this.b = b;
+	}
+	
+	public String[] get(){
+		String[] x = new String[2];
+		x[0] = this.a;
+		x[1] = this.b;
+		return x;
+	}
+	
+	public void show (){
+		System.out.println("subtest.show");
+	}
+	
+	public class incl{
+		private double r = 3.14d;
+		
+		incl(){
+			this.r = 2.28d;
+		}
+		
+		incl(double r){
+			this.r = r;
+		}
+		
+		public double getr(){
+			return this.r;
+		}
+	}
+}
