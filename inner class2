@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        
+        test t = new test();
+        Thread tt = new Thread(t);
+        tt.start();
+        
+        test.t1 tx = new test.t1();
+        Thread ttx = new Thread(tx);
+        ttx.start();
+    }
+}
+
+class test implements Runnable{
+    public void run(){
+        System.out.println("run");
+    }
+    
+    public static class t1 implements Runnable{
+        public void run(){
+            System.out.println("Runnable");
+        }
+    }
+    
+}
